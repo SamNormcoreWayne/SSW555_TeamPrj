@@ -3,7 +3,7 @@ This is a project for SSW555 Team Projects.
 
 This project is aim to deal with GEDCOM files.
 
-#####Updated 2/7/2019
+####Updated 2/7/2019
 
 *Project 3*:
   1. Initializing our Github.
