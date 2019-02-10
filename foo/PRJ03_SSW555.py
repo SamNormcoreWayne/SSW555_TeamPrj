@@ -1,3 +1,6 @@
+import os
+
+
 class Family():
     __slots__ = {}
 
@@ -8,3 +11,13 @@ class Family():
         self.hus = hus
         self.wife = wife
         self.child_id = child_id
+
+
+class Repository():
+    def __init__(self, dir_path=os.getcwd()):
+        self.People = dict()
+        self.Family = dict()
+        self.working_path = dir_path
+
+    def Fmality():
+        
