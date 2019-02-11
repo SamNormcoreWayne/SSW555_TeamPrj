@@ -87,7 +87,7 @@ def get_fam(path, filename):
                 mar_date = 'NA'
                 div_date = 'NA'
 
-    return {'fam_ID': fam_ID, 'mar_date': mar_date, 'div_date': div_date, 'hus_name': hus_name, 'wife_name': wife_name, 'child_names': child_names}
+        yield {'fam_ID': fam_ID, 'mar_date': mar_date, 'div_date': div_date, 'hus_name': hus_name, 'wife_name': wife_name, 'child_names': child_names}
 
 
 def check_item(line_lst):

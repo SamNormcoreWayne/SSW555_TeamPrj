@@ -1,4 +1,11 @@
 import os
+from CheckGED import get_fam
+
+
+class Individual():
+    def __init__(self):
+        self.ID
+        self.name
 
 
 class Family():
@@ -19,5 +26,14 @@ class Repository():
         self.Family = dict()
         self.working_path = dir_path
 
-    def Fmality():
-        
+    def input_fmality():
+        path = os.path.getcwd()
+        filename = input("Input file name: ")
+        for fam_dic in get
+        fam_dic = get_fam(path, filename)
+        hus_id = get_individual_id(fam_dic)
+
+
+    def get_individual_id(name):
+        for name in People.values().name:
+            return ID
