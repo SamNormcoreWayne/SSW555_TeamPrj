@@ -100,7 +100,7 @@ def get_fam(path, filename):
                     mar_date = 'NA'
                 if date_type == 'DIV':
                     div_date = 'NA'
-            print("div_date: ", div_date)
+            #print("div_date: ", div_date)
             if (div_date != '' and date_type == 'DIV') or (div_date == '' and date_type == 'MARR'):
                 yield {'fam_ID': fam_ID, 'mar_date': mar_date, 'div_date': div_date, 'hus': hus_name, 'wife': wife_name, 'children': child_names}
 
