@@ -53,24 +53,24 @@ def get_fam(path, filename):
     div_date = ''
     for line in gedlst:
         tmp = line
-        print("line: {}".format(line))
+        # print("line: {}".format(line))
         # returndic = dict()
         if line.startswith("0|FAM|Y|"):
-                print("right line: ", line)
+                # print("right line: ", line)
                 tmp = tmp.split('|')
-                print("list: ", tmp)
+                # print("list: ", tmp)
                 fam_ID = tmp.pop()
-                print(fam_ID)
+                # print(fam_ID)
                 continue
         if line.startswith("1|HUSB|Y|"):
             tmp = tmp.split('|')
             hus_name = tmp.pop()
-            print("hus ", hus_name)
+            # print("hus ", hus_name)
             continue
         if line.startswith("1|WIFE|Y|"):
             tmp = tmp.split('|')
             wife_name = tmp.pop()
-            print("hus ", hus_name)
+            # print("hus ", hus_name)
             continue
         if line.startswith("1|CHIL|Y|"):
             tmp = tmp.split('|')
@@ -100,8 +100,9 @@ def get_fam(path, filename):
                     mar_date = 'NA'
                 if date_type == 'DIV':
                     div_date = 'NA'
-            if div_date != '':
-                yield {'fam_ID': fam_ID, 'mar_date': mar_date, 'div_date': div_date, 'hus_name': hus_name, 'wife_name': wife_name, 'child_names': child_names}
+            print("div_date: ", div_date)
+            if (div_date != '' and date_type == 'DIV') or (div_date == '' and date_type == 'MARR'):
+                yield {'fam_ID': fam_ID, 'mar_date': mar_date, 'div_date': div_date, 'hus': hus_name, 'wife': wife_name, 'children': child_names}
 
 
 def get_indi(path, filename):

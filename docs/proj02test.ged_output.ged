@@ -1,0 +1,116 @@
+--> 0 NOTE the lines until the next note are all correct
+<-- 0|NOTE|Y|the lines until the next note are all correct
+--> 0 HEAD
+<-- 0|HEAD|Y|
+--> 0 jc INDI
+<-- 0|INDI|Y|jc
+--> 1 NAME Jimmy /Connors/
+<-- 1|NAME|Y|Jimmy /Connors/
+--> 1 SEX M
+<-- 1|SEX|Y|M
+--> 1 BIRT
+<-- 1|BIRT|Y|
+--> 2 DATE 1 JAN 1950
+<-- 2|DATE|Y|1 JAN 1950
+--> 1 DEAT
+<-- 1|DEAT|Y|
+--> 2 DATE 31 DEC 2099
+<-- 2|DATE|Y|31 DEC 2099
+--> 1 FAMC f1
+<-- 1|FAMC|Y|f1
+--> 1 FAMS f2
+<-- 1|FAMS|Y|f2
+--> 0 f2 FAM
+<-- 0|FAM|Y|f2
+--> 1 HUSB jc
+<-- 1|HUSB|Y|jc
+--> 1 WIFE ce
+<-- 1|WIFE|Y|ce
+--> 1 CHIL aa
+<-- 1|CHIL|Y|aa
+--> 1 MARR 
+<-- 1|MARR|Y|
+--> 2 DATE 1 JUN 1960
+<-- 2|DATE|Y|1 JUN 1960
+--> 1 DIV
+<-- 1|DIV|Y|
+--> 2 DATE 1 JUN 1961
+<-- 2|DATE|Y|1 JUN 1961
+--> 0 TRLR
+<-- 0|TRLR|Y|
+--> 0 NOTE Everything past this line is invalid
+<-- 0|NOTE|Y|Everything past this line is invalid
+--> 0 INDI id
+<-- 0|INDI|N|id
+--> 0 FAM id
+<-- 0|FAM|N|id
+--> 0 NAME invalid
+<-- 0|NAME|N|invalid
+--> 0 SEX invalid
+<-- 0|SEX|N|invalid
+--> 0 BIRT invalid
+<-- 0|BIRT|N|invalid
+--> 0 DEAT invalid
+<-- 0|DEAT|N|invalid
+--> 0 FAMC invalid
+<-- 0|FAMC|N|invalid
+--> 0 FAMS invalid
+<-- 0|FAMS|N|invalid
+--> 0 MARR invalid
+<-- 0|MARR|N|invalid
+--> 0 HUSB invalid
+<-- 0|HUSB|N|invalid
+--> 0 WIFE invalid
+<-- 0|WIFE|N|invalid
+--> 0 CHIL invalid
+<-- 0|CHIL|N|invalid
+--> 0 DIV invalid
+<-- 0|DIV|N|invalid
+--> 0 DATE invalid
+<-- 0|DATE|N|invalid
+--> 1 INDI invalid
+<-- 1|INDI|N|invalid
+--> 1 FAM invalid
+<-- 1|FAM|N|invalid
+--> 1 HEAD 
+<-- 1|HEAD|N|
+--> 1 TRLR
+<-- 1|TRLR|N|
+--> 1 DATE
+<-- 1|DATE|N|
+--> 1 NOTE bad note
+<-- 1|NOTE|N|bad note
+--> 1 DATE 1 JUN 2017
+<-- 1|DATE|N|1 JUN 2017
+--> 2 INDI id
+<-- 2|INDI|N|id
+--> 2 FAM id
+<-- 2|FAM|N|id
+--> 2 NAME invalid
+<-- 2|NAME|N|invalid
+--> 2 SEX invalid
+<-- 2|SEX|N|invalid
+--> 2 BIRT invalid
+<-- 2|BIRT|N|invalid
+--> 2 DEAT invalid
+<-- 2|DEAT|N|invalid
+--> 2 FAMC invalid
+<-- 2|FAMC|N|invalid
+--> 2 FAMS invalid
+<-- 2|FAMS|N|invalid
+--> 2 MARR invalid
+<-- 2|MARR|N|invalid
+--> 2 HUSB invalid
+<-- 2|HUSB|N|invalid
+--> 2 WIFE invalid
+<-- 2|WIFE|N|invalid
+--> 2 CHIL invalid
+<-- 2|CHIL|N|invalid
+--> 2 DIV invalid
+<-- 2|DIV|N|invalid
+--> 1 INVALID invalid
+<-- 1|INVALID|N|invalid
+--> 3 INVALID invalid
+<-- 3|INVALID|N|invalid
+--> 4 NOTE invalid
+<-- 4|NOTE|N|invalid

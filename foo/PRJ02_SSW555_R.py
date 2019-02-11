@@ -109,7 +109,7 @@ def get_indi(path, filename):
 
         else:
             dd[id].append(result[i])
-    
+
     return dd
 
 def main():
