@@ -116,16 +116,17 @@ class Repository():
     def individual_pt(self):
         """Create prettytable for all instances of class Individual"""
         pt = PrettyTable(field_names=Individual.pt_labels)
-        for individual in self.People.values():
-            pt.add_row(individual.pt_row())
+        for i_id in sorted(self.People.keys()):
+            pt.add_row(self.People[i_id].pt_row())
 
+        print('\n', 'Inidividuals')
         print(pt, '\n')
 
     def input_family(self):
         path = self.working_path
         filename = self.filename
         fam_lst = list(get_fam(path, filename))
-        print("fam_lst: ", fam_lst)
+        # print("fam_lst: ", fam_lst)
         for fam_dic in fam_lst:
             # print(fam_dic)
             hus = self.getPeople(fam_dic['hus'])
@@ -152,7 +153,7 @@ class Repository():
         for family in self.Familis.values():
             table.add_row([family.fam_ID, family.mar_date, family.div_date, family.hus._id, family.hus._name, family.wife._id, family.wife._name, family.child_id])
 
-        print(table.get_string())
+        print(table.get_string(sortby='ID'))
 
 
 def main():
