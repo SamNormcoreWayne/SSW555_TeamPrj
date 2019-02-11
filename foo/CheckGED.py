@@ -33,61 +33,75 @@ def ged_reader(path, filename):
 
 def check_input_output(path, filename):
     # This method is unnecessary for  prj3.
-    if path != "":
-        path = os.path.join(path, filename)
-    else:
-        path = filename
-    fp = open("{}_output.ged".format(path), 'w')
-    for line in ged_reader(filename):
-        print("--> " + line)
-        fp.write("--> " + line + '\n')
+    # fp = open("{}_output.ged".format(path), 'w')
+    for line in ged_reader(path, filename):
+        # print("--> " + line)
+        # fp.write("--> " + line + '\n')
         line_lst = line.split(' ', 2)
         line_str = check_item(line_lst)
-        print("<-- " + line_str)
-        fp.write("<-- " + line_str + '\n')
-    fp.close()
+        yield line_str
+        # print("<-- " + line_str)
+        # fp.write("<-- " + line_str + '\n')
+    # fp.close()
 
 
 def get_fam(path, filename):
     # Output a dictionary of a family withour their IDs.
-    for line in ged_reader(path, filename):
-        line_lst = line.split(' ', 2)
-        tmp = line_lst
+    gedlst = list(check_input_output(path, filename))
+    date_type = str()
+    mar_date = ''
+    div_date = ''
+    for line in gedlst:
+        tmp = line
+        print("line: {}".format(line))
         # returndic = dict()
-        if tmp[0] == '0':
-            if tmp[2] == 'FAM':
-                fam_ID = tmp[1]
+        if line.startswith("0|FAM|Y|"):
+                print("right line: ", line)
+                tmp = tmp.split('|')
+                print("list: ", tmp)
+                fam_ID = tmp.pop()
+                print(fam_ID)
                 continue
-        if tmp[0] == '1':
-            if tmp[1] == 'HUSB':
-                hus_name = tmp[2]
-                continue
-            if tmp[1] == 'WIFE':
-                wife_name = tmp[2]
-                continue
-            if tmp[1] == 'CHIL':
-                child_names = tmp[2].split(' ')
-                continue
-            if tmp[1] == 'MARR':
-                date_type = 'MARR'
-                continue
-            if tmp[1] == 'DIV':
-                date_type = 'DIV'
-                continue
+        if line.startswith("1|HUSB|Y|"):
+            tmp = tmp.split('|')
+            hus_name = tmp.pop()
+            print("hus ", hus_name)
+            continue
+        if line.startswith("1|WIFE|Y|"):
+            tmp = tmp.split('|')
+            wife_name = tmp.pop()
+            print("hus ", hus_name)
+            continue
+        if line.startswith("1|CHIL|Y|"):
+            tmp = tmp.split('|')
+            child_names = tmp.pop().split(' ')
+            continue
 
-        if tmp[0] == '2':
-            if tmp[2] != '':
+        if line.startswith("1|MARR|Y"):
+            date_type = 'MARR'
+            continue
+        if line.startswith("1|DIV|Y"):
+            date_type = 'DIV'
+            continue
+
+        if line.startswith("2|DATE|Y|"):
+            if date_type == '':
+                continue
+            tmp = tmp.split('|')
+            if tmp[-1] != '':
                 if date_type == 'MARR':
-                    mar_date_type = datetime.strptime(tmp[2], "%d %b %Y")
+                    mar_date_type = datetime.strptime(tmp.pop(), "%d %b %Y")
                     mar_date = datetime.strftime(mar_date_type, "%Y-%m-%d")
                 if date_type == 'DIV':
-                    div_date_type = datetime.strptime(tmp[2], "%d %b %Y")
+                    div_date_type = datetime.strptime(tmp.pop(), "%d %b %Y")
                     div_date = datetime.strftime(div_date_type, "%Y-%m-%d")
             else:
-                mar_date = 'NA'
-                div_date = 'NA'
-
-        yield {'fam_ID': fam_ID, 'mar_date': mar_date, 'div_date': div_date, 'hus_name': hus_name, 'wife_name': wife_name, 'child_names': child_names}
+                if date_type == 'MARR':
+                    mar_date = 'NA'
+                if date_type == 'DIV':
+                    div_date = 'NA'
+            if div_date != '':
+                yield {'fam_ID': fam_ID, 'mar_date': mar_date, 'div_date': div_date, 'hus_name': hus_name, 'wife_name': wife_name, 'child_names': child_names}
 
 
 def check_item(line_lst):
@@ -138,7 +152,8 @@ def main():
     filename = input("Enter filename:")
     path = input("Enter path:")
     print(path)
-    check_input_output(path, filename)
+    # check_input_output(path, filename)
+    print(list(get_fam(path, filename)))
 
 
 if __name__ == '__main__':

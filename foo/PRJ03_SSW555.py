@@ -1,5 +1,6 @@
 import os
 from CheckGED import get_fam
+from prettytable import PrettyTable
 
 
 class Individual():
@@ -26,7 +27,7 @@ class Repository():
         self.Familis = dict()
         self.working_path = dir_path
 
-    def input_fmality(self):
+    def input_family(self):
         path = os.path.getcwd()
         filename = input("Input file name: ")
         child_ids = list()
@@ -49,4 +50,10 @@ class Repository():
             if name == individual.name:
                 return individual.ID
 
-    def out_put
+    def output_family(self):
+        field_name = ['ID', 'Married', 'Divorced', 'Husband ID', 'Husband Name', 'Wife ID', 'Wife Name', 'Children']
+        table = PrettyTable(field_names=field_name)
+        for family in self.Familis:
+            table.add_row([family.fam_ID, family.mar_date, family.div_date, family.hus.ID, family.hus.name, family.wife.ID, family.wife.name, family.child_ids])
+
+        print(table.get_string())
