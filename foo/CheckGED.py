@@ -100,8 +100,19 @@ def get_fam(path, filename):
                 if date_type == 'DIV':
                     div_date_type = datetime.strptime(tmp.pop(), "%d %b %Y")
                     div_date = datetime.strftime(div_date_type, "%Y-%m-%d")
+<<<<<<< HEAD
                     # print("div_date: ", div_date)
                     yield {'fam_ID': fam_ID, 'mar_date': mar_date, 'div_date': div_date, 'hus': hus_name, 'wife': wife_name, 'children': child_names}
+=======
+            else:
+                if date_type == 'MARR':
+                    mar_date = 'NA'
+                if date_type == 'DIV':
+                    div_date = 'NA'
+            #print("div_date: ", div_date)
+            if (div_date != '' and date_type == 'DIV') or (div_date == '' and date_type == 'MARR'):
+                yield {'fam_ID': fam_ID, 'mar_date': mar_date, 'div_date': div_date, 'hus': hus_name, 'wife': wife_name, 'children': child_names}
+>>>>>>> a4d80c6b15b1997029355504a46d7a50e2e7c721
 
 
 def get_indi(path, filename):
