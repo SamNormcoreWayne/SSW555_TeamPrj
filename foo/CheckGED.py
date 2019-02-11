@@ -1,6 +1,6 @@
 import os
 from datetime import datetime
-
+from collections import defaultdict
 
 top_level_1 = {'HEAD', 'TRLR', 'NOTE'}
 top_level_2 = {'INDI', 'FAM'}
@@ -102,6 +102,24 @@ def get_fam(path, filename):
                     div_date = 'NA'
             if div_date != '':
                 yield {'fam_ID': fam_ID, 'mar_date': mar_date, 'div_date': div_date, 'hus_name': hus_name, 'wife_name': wife_name, 'child_names': child_names}
+
+
+def get_indi(path, filename):
+    """ by Sherman """
+    result = list(check_input_output(path, filename))
+    dd = defaultdict(list)
+    id = 'NONE'
+    for i in range(len(result)):
+        if result[i].startswith('0|INDI|Y'):
+            id = result[i].split('|')[3]
+
+        elif id == "NONE":
+            continue
+
+        else:
+            dd[id].append(result[i])
+
+    return dd
 
 
 def check_item(line_lst):
