@@ -4,6 +4,6 @@ python:
   - 3.7
 sudo: true
 install:
-  - pip install -r PrettyTable
+  - pip install PrettyTable
 script:
   - pytest
