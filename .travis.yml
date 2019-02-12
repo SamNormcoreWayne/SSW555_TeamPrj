@@ -6,5 +6,4 @@ sudo: true
 install:
   - pip install PrettyTable
 script:
-  - cd foo
-  - pytest
+  - python -m compileall .
