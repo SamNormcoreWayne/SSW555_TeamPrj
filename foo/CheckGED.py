@@ -49,33 +49,35 @@ def get_fam(path, filename):
     # Output a dictionary of a family withour their IDs.
     gedlst = list(check_input_output(path, filename))
     date_type = str()
-    mar_date = ''
+    fam_ID = 'NA'
+    mar_date = 'NA'
     div_date = 'NA'
+    hus_name = 'NA'
+    wife_name = 'NA'
+    child_names = 'NA'
     for index in range(0, len(gedlst)):
+        if index == len(gedlst) - 1:
+            break
         tmp = gedlst[index]
-        # print("line: {}".format(line))
+        # print("line: {}".format(gedlst[index]))
         # returndic = dict()
         if gedlst[index].startswith("0|FAM|Y|"):
-                # print("right line: ", line)
+                # print("right line: ", gedlst[index])
                 tmp = tmp.split('|')
                 # print("list: ", tmp)
                 fam_ID = tmp.pop()
                 # print(fam_ID)
-                continue
         if gedlst[index].startswith("1|HUSB|Y|"):
             tmp = tmp.split('|')
             hus_name = tmp.pop()
             # print("hus ", hus_name)
-            continue
         if gedlst[index].startswith("1|WIFE|Y|"):
             tmp = tmp.split('|')
             wife_name = tmp.pop()
             # print("hus ", hus_name)
-            continue
         if gedlst[index].startswith("1|CHIL|Y|"):
             tmp = tmp.split('|')
             child_names = tmp.pop().split(' ')
-            continue
 
         if gedlst[index].startswith("1|MARR|Y"):
             date_type = 'MARR'
@@ -83,25 +85,28 @@ def get_fam(path, filename):
         if gedlst[index].startswith("1|DIV|Y"):
             date_type = 'DIV'
             continue
-
         if gedlst[index].startswith("2|DATE|Y|"):
-            if date_type == '':
-                continue
             tmp = tmp.split('|')
             if tmp[-1] != '':
                 if date_type == 'MARR':
                     mar_date_type = datetime.strptime(tmp.pop(), "%d %b %Y")
                     mar_date = datetime.strftime(mar_date_type, "%Y-%m-%d")
-                    index += 1
-                    if not gedlst[index].startswith("1|DIV|Y"):
-                        yield {'fam_ID': fam_ID, 'mar_date': mar_date, 'div_date': div_date, 'hus': hus_name, 'wife': wife_name, 'children': child_names}
-                    else:
-                        continue
                 if date_type == 'DIV':
                     div_date_type = datetime.strptime(tmp.pop(), "%d %b %Y")
                     div_date = datetime.strftime(div_date_type, "%Y-%m-%d")
                     # print("div_date: ", div_date)
-                    yield {'fam_ID': fam_ID, 'mar_date': mar_date, 'div_date': div_date, 'hus': hus_name, 'wife': wife_name, 'children': child_names}
+        if fam_ID != 'NA' and gedlst[index + 1].startswith("0|"):
+            yield {'fam_ID': fam_ID, 'mar_date': mar_date, 'div_date': div_date, 'hus': hus_name, 'wife': wife_name, 'children': child_names}
+
+
+"""
+if not gedlst[index].startswith("1|DIV|Y"):
+                        yield {'fam_ID': fam_ID, 'mar_date': mar_date, 'div_date': div_date, 'hus': hus_name, 'wife': wife_name, 'children': child_names}
+                    else:
+                        continue
+
+yield {'fam_ID': fam_ID, 'mar_date': mar_date, 'div_date': div_date, 'hus': hus_name, 'wife': wife_name, 'children': child_names}
+"""
 
 
 def get_indi(path, filename):
@@ -169,7 +174,7 @@ def to_str(lst):
 def main():
     filename = input("Enter filename:")
     path = input("Enter path:")
-    print(path)
+    # print(path)
     # check_input_output(path, filename)
     print(list(get_fam(path, filename)))
 

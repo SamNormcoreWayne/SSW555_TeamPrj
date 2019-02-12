@@ -74,8 +74,8 @@ class Family():
         self.fam_ID = fam_ID
         self.mar_date = married
         self.div_date = divorced
-        self.hus = hus
-        self.wife = wife
+        self.hus_id = hus
+        self.wife_id = wife
         self.child_id = child_id
 
 
@@ -129,29 +129,39 @@ class Repository():
         # print("fam_lst: ", fam_lst)
         for fam_dic in fam_lst:
             # print(fam_dic)
-            hus = self.getPeople(fam_dic['hus'])
-            wife = self.getPeople(fam_dic['wife'])
-            new_family = Family(fam_dic['fam_ID'], fam_dic['mar_date'], fam_dic['div_date'], hus, wife, fam_dic['children'])
+            new_family = Family(fam_dic['fam_ID'], fam_dic['mar_date'], fam_dic['div_date'], fam_dic['hus'], fam_dic['wife'], fam_dic['children'])
             self.Familis[fam_dic['fam_ID']] = new_family
 
+    '''
     def getPeople(self, ID):
         for ind_ID, individual in self.People.items():
             # print(ind_ID, individual._id, ID)
             if ind_ID == ID:
                 return individual
 
-    '''
+
     def getPeople_id(self, name):
         for individual in self.People.values():
             if name == individual._name:
                 return individual._id
     '''
 
+    def get_people_name(self, ID):
+        for individual in self.People.values():
+            if ID == individual._id:
+                return individual._name
+
     def output_family(self):
         field_name = ['ID', 'Married', 'Divorced', 'Husband ID', 'Husband Name', 'Wife ID', 'Wife Name', 'Children']
         table = PrettyTable(field_names=field_name)
+        hus_name = 'NA'
+        wife_name = 'NA'
         for family in self.Familis.values():
-            table.add_row([family.fam_ID, family.mar_date, family.div_date, family.hus._id, family.hus._name, family.wife._id, family.wife._name, family.child_id])
+            if family.hus_id != 'NA':
+                hus_name = self.get_people_name(family.hus_id)
+            if family.wife_id != 'NA':
+                wife_name = self.get_people_name(family.wife_id)
+            table.add_row([family.fam_ID, family.mar_date, family.div_date, family.hus_id, hus_name, family.wife_id, wife_name, family.child_id])
 
         print(table.get_string(sortby='ID'))
 
