@@ -38,13 +38,22 @@ class Individual:
         """Add gender information to instance"""
         self._gender = sex
 
+    def get_age(self):
+        """Calculate individual's age"""
+        dt1 = datetime.datetime.strptime(self._bday, '%d %b %Y')
+        if self._alive == False:
+            dt2 = datetime.datetime.strptime(self._dday, '%d %b %Y')
+        else:
+            dt2 = datetime.datetime.now()
+
+        self._age = ((dt2 - dt1).days) // 365
+
+
     def add_bday(self, bday):
         """Add birthday to instace"""
         if bday != '':
             self._bday = bday
-            dt1 = datetime.datetime.strptime(bday, '%d %b %Y')
-            dt2 = datetime.datetime.now()
-            self._age = ((dt2 - dt1).days) // 365
+
 
     def add_dday(self, dday):
         """Add death infotmation to istance is needed"""
@@ -112,6 +121,7 @@ class Repository():
                     self.People[i].add_spouse(dd[i][j].split('|')[3])
                 elif dd[i][j].startswith('1|FAMC|'):
                     self.People[i].add_child(dd[i][j].split('|')[3])
+            self.People[i].get_age()
 
     def individual_pt(self):
         """Create prettytable for all instances of class Individual"""
