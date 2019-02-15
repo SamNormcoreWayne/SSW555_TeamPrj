@@ -3,6 +3,8 @@ This is a project for SSW555 Team Projects.
 
 This project is aim to deal with GEDCOM files.
 
+Branch name convention: SprintX/USXX (X stands for number)
+
 [![build status of master](https://travis-ci.org/SamNormcoreWayne/SSW555_TeamPrj.svg?branch=master)](https://travis-ci.org/SamNormcoreWayne/SSW555_TeamPrj)
 
 
