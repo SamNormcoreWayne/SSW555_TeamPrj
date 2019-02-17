@@ -41,19 +41,17 @@ class Individual:
     def get_age(self):
         """Calculate individual's age"""
         dt1 = datetime.datetime.strptime(self._bday, '%d %b %Y')
-        if self._alive == False:
+        if not self._alive:
             dt2 = datetime.datetime.strptime(self._dday, '%d %b %Y')
         else:
             dt2 = datetime.datetime.now()
 
         self._age = ((dt2 - dt1).days) // 365
 
-
     def add_bday(self, bday):
         """Add birthday to instace"""
         if bday != '':
             self._bday = bday
-
 
     def add_dday(self, dday):
         """Add death infotmation to istance is needed"""
