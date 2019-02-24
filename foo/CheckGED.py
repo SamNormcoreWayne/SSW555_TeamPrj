@@ -40,12 +40,12 @@ def check_input_output(path, filename):
         print("Cannot open")
     for line in ged_reader(path, filename):
         # print("--> " + line)
-        # fp.write("--> " + line + '\n')
+        fp.write("--> " + line + '\n')
         line_lst = line.split(' ', 2)
         line_str = check_item(line_lst)
         yield line_str
         # print("<-- " + line_str)
-        # fp.write("<-- " + line_str + '\n')
+        fp.write("<-- " + line_str + '\n')
     fp.close()
 
 
