@@ -32,8 +32,12 @@ def ged_reader(path, filename):
 
 
 def check_input_output(path, filename):
-    # This method is unnecessary for  prj3.
-    # fp = open("{}_output.ged".format(path), 'w')
+    # This method is unnecessary for  prj3.    
+    file_dir = os.path.join(path, filename)
+    try:
+        fp = open("{}_output.ged".format(file_dir), 'w')
+    except FileNotFoundError:
+        print("Cannot open")
     for line in ged_reader(path, filename):
         # print("--> " + line)
         # fp.write("--> " + line + '\n')
@@ -42,7 +46,7 @@ def check_input_output(path, filename):
         yield line_str
         # print("<-- " + line_str)
         # fp.write("<-- " + line_str + '\n')
-    # fp.close()
+    fp.close()
 
 
 def get_fam(path, filename):
@@ -50,11 +54,6 @@ def get_fam(path, filename):
     gedlst = list(check_input_output(path, filename))
     date_type = str()
     fam_ID = 'NA'
-    mar_date = 'NA'
-    div_date = 'NA'
-    hus_name = 'NA'
-    wife_name = 'NA'
-    child_names = 'NA'
     for index in range(0, len(gedlst)):
         if index == len(gedlst) - 1:
             break
@@ -62,6 +61,12 @@ def get_fam(path, filename):
         # print("line: {}".format(gedlst[index]))
         # returndic = dict()
         if gedlst[index].startswith("0|FAM|Y|"):
+                
+                mar_date = 'NA'
+                div_date = 'NA'
+                hus_name = 'NA'
+                wife_name = 'NA'
+                child_names = 'NA'
                 # print("right line: ", gedlst[index])
                 tmp = tmp.split('|')
                 # print("list: ", tmp)
@@ -94,7 +99,9 @@ def get_fam(path, filename):
                 if date_type == 'DIV':
                     div_date_type = datetime.strptime(tmp.pop(), "%d %b %Y")
                     div_date = datetime.strftime(div_date_type, "%Y-%m-%d")
-                    # print("div_date: ", div_date)
+                    print("div_date: ", div_date)
+
+                date_type = ""
         if fam_ID != 'NA' and gedlst[index + 1].startswith("0|"):
             yield {'fam_ID': fam_ID, 'mar_date': mar_date, 'div_date': div_date, 'hus': hus_name, 'wife': wife_name, 'children': child_names}
 
@@ -172,10 +179,10 @@ def to_str(lst):
 
 
 def main():
-    filename = input("Enter filename:")
-    path = input("Enter path:")
-    # print(path)
-    # check_input_output(path, filename)
+    filename = "Project01_Xiaomeng Xu.ged"
+    path = r"C:\Users\64937\OneDrive\Documents\SSW\555\SSW555_TeamPrj\docs"
+    print(path)
+    # list(check_input_output(path, filename))
     print(list(get_fam(path, filename)))
 
 
