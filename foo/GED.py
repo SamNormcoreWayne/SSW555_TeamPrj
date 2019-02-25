@@ -177,6 +177,100 @@ class Repository():
 
         print(table.get_string(sortby='ID'))
 
+
+    #us_02
+    def us02_birth_b4_marriage(self, fam_id):
+        """For a givenn fam_id, check the family marriage date and birthday for each individual, retuen the result"""
+        result = ''
+
+        if self.Familis[fam_id].mar_date == 'NA':
+            result = 'No marriage date'
+
+        else:
+            mdt = datetime.datetime.strptime(self.Familis[fam_id].mar_date, '%Y-%m-%d')
+            child_id = self.Familis[fam_id].child_id
+            bdates = [self.People[i]._bday for i in child_id]
+            for i in bdates:
+                if i == 'N/A':
+                    raise ValueError("Not birthday found for this person")
+                else:
+                    bdt = datetime.datetime.strptime(i, '%d %b %Y')
+                    if bdt < mdt:
+                        result = 'Error: Birth before marriage'
+                        break
+            
+            else:
+                result = 'Good'
+
+        return f"Family ID: {fam_id}, Result: {result}"
+
+    #us_03
+    def find_indi_ddate(self, indi_id):
+        ''' find individual death date by id in family tree'''
+        for i in self.People.values():
+
+            if indi_id == i._id:
+                if i._dday != 'N/A':
+                    return i._dday
+                else:
+                    return None
+                #return i._dday if i._dday != "N/A" else None
+        else:
+            raise ValueError
+
+    def find_indi_bdate(self, indi_id):
+        ''' find individual birth date by id in family tree'''
+        for i in self.People.values():
+
+            if indi_id == i._id:
+                return i._bday if i._bday != "N/A" else None
+        else:
+            raise ValueError
+
+    def us03_birth_b4_death(self, indi_id):
+        ''' compare individual death date and married date by id in family tree'''
+
+        birth_date = self.find_indi_bdate(indi_id)
+
+        death_date = self.find_indi_ddate(indi_id)
+
+        if death_date == None:
+            raise ValueError(f"ID: {indi_id}, Death date not available")
+        elif birth_date == None:
+            raise ValueError(f"ID: {indi_id}, Birth date not available")
+        else:
+
+            #death_date_type = datetime.datetime.strptime(death_date, "%d %b %Y")
+            death_date = datetime.datetime.strptime(death_date, "%d %b %Y")
+            birth_date = datetime.datetime.strptime(birth_date, "%d %b %Y")
+
+        if death_date < birth_date:
+            return f"ID: {indi_id}, Result: Err: Birth before Death"
+        else:
+            return f"ID: {indi_id}, Result: Good"
+
+    #us_04
+    def us04_marriage_b4_divoce(self, fam_id):
+        """Compare marriage date and divoce date(if available) for each family"""
+
+        #result = ''
+        mar_date = self.Familis[fam_id].mar_date
+        div_date = self.Familis[fam_id].div_date
+        if mar_date == 'NA':
+            result = "No marriage date"
+        elif div_date == 'NA':
+            result = "No divoce date"
+        else:
+            mar_dt = datetime.datetime.strptime(mar_date, "%Y-%m-%d")
+            div_dt = datetime.datetime.strptime(div_date, "%Y-%m-%d")
+            if mar_dt > div_dt: #Check if marriage date comes after divoce date
+                result = "Err: Divoce before Marriage"
+            else:
+                result = "Good"
+
+        return f"ID: {fam_id}, Result: {result}"
+
+    #us_05
     def us05_marriage_b4_death(self, fam_id):
         """For a given fam_id, check the family marriage date and death date for each individual belongs to this family, return the result of checking"""
         result = ''
@@ -204,6 +298,80 @@ class Repository():
         
         return f"Family ID: {fam_id}, Result: {result}"
 
+    #us_06
+    def store_divorce_date(self, id):
+        the_date = str()
+        for family in self.Familis.values():
+            if family.fam_ID == id:
+                if family.div_date == 'NA':
+                    return None
+                else:
+                    the_date = family.div_date
+                    break
+        else:
+            raise ValueError("Check Family ID")
+        
+        return the_date
+
+    def store_death_date(self, id):
+        the_date = str()
+        for people in self.People.values():
+            if people._id == id:
+                if people._dday == 'N/A':
+                    return None
+                else:
+                    the_date = people._dday
+                    break
+        else:
+            raise ValueError("Check Individual ID")
+
+        return the_date
+
+    def compare_divrdate_ddate(self, fam_ID, ind_ID_1, ind_ID_2):
+        try:
+            fam_date = self.store_divorce_date(fam_ID)
+            ind_date_1 = self.store_death_date(ind_ID_1)
+            ind_date_2 = self.store_death_date(ind_ID_2)
+        except ValueError:
+            raise ValueError("Check Individual ID or Family ID")
+        else:
+            if (fam_date is None) or (ind_date_1 is None) or (ind_date_2 is None):
+                raise ValueError("Birthday or divorce date does not exist")
+            else:
+                return True
+
+    #us_07
+    def us07_age_less_150(self, individual_ID):
+        # result = ''
+
+        # bdt = datetime.datetime.strptime(self.People[individual_ID]._bday, '%d %b %y')
+        for people in self.People.values():
+            if people._id == individual_ID:
+                if people._age > 150:
+                    raise(ValueError("The age is more than 150"))
+                else:
+                    break
+        return True
+    
+    #us_10
+    def us10_marriage_after_14(self, fam_id):
+        """For a given fam_id, check the family marriage date and death date for each individual belongs to this family, return the result of checking"""
+        
+        result='No Marriage date'
+
+        if self.Familis[fam_id].mar_date != 'NA':   #check for marriage date, if there is not marriage date, change result
+            mdt = datetime.datetime.strptime(self.Familis[fam_id].mar_date, '%Y-%m-%d') #If there is marriage date, covert it to datetime object
+            hus_id = self.Familis[fam_id].hus_id
+            wife_id = self.Familis[fam_id].wife_id
+            hbdt = datetime.datetime.strptime(self.People[hus_id]._bday, '%d %b %Y')
+            wbdt = datetime.datetime.strptime(self.People[wife_id]._bday, '%d %b %Y')
+            hmage = mdt.year-hbdt.year-((mdt.month, mdt.day) < (hbdt.month, hbdt.day))
+            wmage= mdt.year-wbdt.year-((mdt.month, mdt.day) < (wbdt.month, wbdt.day))
+            if hmage<14 or wmage < 14:
+                    result = 'ERROR'
+            else:
+                result = 'Good'
+        return f"ID: {fam_id}, Result: {result}"
 
 def main():
     path = input("Input path: ")
