@@ -7,7 +7,7 @@
 
 import os
 import unittest
-from foo.GED import Individual, Repository
+from GED import Individual, Repository
 #from HW04_pli import store_divorce_date,store_death_date,test_compare_divrdate_ddate
 
 '''US06	Divorce before death'''
