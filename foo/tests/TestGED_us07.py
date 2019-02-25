@@ -4,7 +4,7 @@
 
 import unittest
 import datetime
-from US07 import Repository
+from GED import Repository
 """
     FOR DEVELOPERS!!!!
     Please make sure that you put this test file in a right directory so that this testing script
