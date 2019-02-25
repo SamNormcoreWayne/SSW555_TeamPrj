@@ -350,8 +350,8 @@ class Repository():
                 if people._age > 150:
                     raise(ValueError("The age is more than 150"))
                 else:
-                    break
-        return True
+                    return True
+        return False
     
     #us_10
     def us10_marriage_after_14(self, fam_id):

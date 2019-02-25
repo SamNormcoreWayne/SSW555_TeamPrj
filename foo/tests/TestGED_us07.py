@@ -59,7 +59,7 @@ class TestGedcom(unittest.TestCase):
                     To make sure every one has birthday and age.
                 """
         with self.assertRaises(ValueError):
-            self.assertEqual(print(a.us07_age_less_150('@I2@')), ValueError("The age is more than 150"))
+            self.assertEqual(a.us07_age_less_150('@I2@'), True)
             """
                 If the age is more than 150 then should raise a ValueError and print("The age is more than 150")
             """
