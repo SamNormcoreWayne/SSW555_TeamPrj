@@ -2,7 +2,7 @@ import unittest
 import datetime
 import sys
 import os
-from US10 import Repository
+from GED import Repository
 
 
 a = Repository(filename='Project01_Xiaomeng Xu.ged', dir_path='/home/travis/build/SamNormcoreWayne/SSW555_TeamPrj/docs')
