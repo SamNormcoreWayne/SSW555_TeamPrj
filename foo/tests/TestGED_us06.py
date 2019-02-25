@@ -18,7 +18,7 @@ class TestGED(unittest.TestCase):
     def test_store_divorce_date(self):
         '''test store_divorce_date()'''
         #a = Repository("Project01_Xiaomeng Xu.ged", os.path.join(os.getcwd(), 'docs'))
-        self.assertEqual(a.store_divorce_date("@F3@"),"1980-05-05") # 幸福美满的家庭没有离婚的情况。。。
+        self.assertEqual(a.store_divorce_date("@F3@"),"1980-05-06") # 幸福美满的家庭没有离婚的情况。。。
         self.assertIsNone(a.store_divorce_date("@F4@")) # indi_id exist but death date doesn't exist return None
         with self.assertRaises(ValueError): # divr date doesn't exist -->raise valueError
             a.store_divorce_date("@F8@")
