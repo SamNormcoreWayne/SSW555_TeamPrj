@@ -1,6 +1,6 @@
 import unittest
 import datetime
-from gedcom import Repository
+from GED import Repository
 
 
 class TestGedcom(unittest.TestCase):
