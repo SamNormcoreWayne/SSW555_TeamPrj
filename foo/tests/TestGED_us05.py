@@ -3,10 +3,11 @@
 
 import unittest
 from GED import Repository
+import os
 
 
-GED1 = Repository(filename='Project01_Xiaomeng Xu.ged', dir_path='/Users/sherman/Desktop/SSW555')
-GED2 = Repository(filename='Project02.ged', dir_path='/Users/sherman/Desktop/SSW555')
+GED1 = Repository(filename='Project01_Xiaomeng Xu.ged', dir_path='/home/travis/build/SamNormcoreWayne/SSW555_TeamPrj/docs')
+GED2 = Repository(filename='Project02.ged', dir_path='/home/travis/build/SamNormcoreWayne/SSW555_TeamPrj/docs')
 class Test_us05_marriage_b4_death(unittest.TestCase):
     """This are the test cases for user story_05: check if a individual's marriage date is before death date."""
     
