@@ -180,7 +180,7 @@ class Repository():
     #us_01
     def us_01_birth_b4_now(self):
         for person in self.People.values():
-            yield person._bday
+            yield datetime.datetime.strptime(person._bday, '%d %b %Y')
 
     #us_02
     def us02_birth_b4_marriage(self, fam_id):
