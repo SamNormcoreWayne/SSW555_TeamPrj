@@ -66,7 +66,7 @@ def get_fam(path, filename):
                 div_date = 'NA'
                 hus_name = 'NA'
                 wife_name = 'NA'
-                child_names = 'NA'
+                child_names = ['NA']
                 # print("right line: ", gedlst[index])
                 tmp = tmp.split('|')
                 # print("list: ", tmp)
