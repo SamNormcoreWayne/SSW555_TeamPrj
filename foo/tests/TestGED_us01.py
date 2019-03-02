@@ -1,5 +1,6 @@
 import unittest
 import datetime
+import os
 from GED import Repository
 
 
@@ -17,7 +18,8 @@ class TestGedcom(unittest.TestCase):
     '''
 
     def test_birth_b4_now(self):
-        a = Repository(filename='Project01_Xiaomeng Xu.ged', dir_path='/home/travis/build/SamNormcoreWayne/SSW555_TeamPrj/docs')
+        docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
+        a = Repository(filename='Project01_Xiaomeng Xu.ged', dir_path=os.path.join(docs_dir, 'docs'))
         current_time = datetime.datetime.now()
         for result in a.us_01_birth_b4_now():
             with self.subTest():

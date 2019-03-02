@@ -6,8 +6,8 @@
 <-- 2|WWW|N|http://www.familyecho.com/
 --> 1 FILE My Family
 <-- 1|FILE|N|My Family
---> 1 DATE 28 JAN 2019
-<-- 1|DATE|N|28 JAN 2019
+--> 1 DATE 18 FEB 2019
+<-- 1|DATE|N|18 FEB 2019
 --> 1 DEST ANSTFILE
 <-- 1|DEST|N|ANSTFILE
 --> 1 GEDC
@@ -182,12 +182,10 @@
 <-- 1|WIFE|Y|@I5@
 --> 1 CHIL @I7@
 <-- 1|CHIL|Y|@I7@
---> 1 EVEN
-<-- 1|EVEN|N|
---> 2 TYPE Relationship
-<-- 2|TYPE|N|Relationship
---> 2 DATE 17 FEB 1996
-<-- 2|DATE|Y|17 FEB 1996
+--> 1 MARR
+<-- 1|MARR|Y|
+--> 2 DATE 15 SEP 2006
+<-- 2|DATE|Y|15 SEP 2006
 --> 1 EVEN
 <-- 1|EVEN|N|
 --> 2 TYPE Ending
@@ -204,20 +202,12 @@
 <-- 1|CHIL|Y|@I1@
 --> 1 MARR
 <-- 1|MARR|Y|
---> 2 DATE 5 MAY 1975
-<-- 2|DATE|Y|5 MAY 1975
---> 1 DIV
-<-- 1|DIV|Y|
---> 2 DATE 6 MAY 1980
-<-- 2|DATE|Y|6 MAY 1980
+--> 2 DATE 5 MAY 2005
+<-- 2|DATE|Y|5 MAY 2005
 --> 2 PLAC New York
 <-- 2|PLAC|N|New York
---> 1 EVEN
-<-- 1|EVEN|N|
---> 2 TYPE Ending
-<-- 2|TYPE|N|Ending
---> 1 _CURRENT N
-<-- 1|_CURRENT|N|N
+--> 1 _CURRENT Y
+<-- 1|_CURRENT|N|Y
 --> 0 @F4@ FAM
 <-- 0|FAM|Y|@F4@
 --> 1 HUSB @I1@

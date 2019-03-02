@@ -9,8 +9,9 @@
 
 import os
 import datetime
-from CheckGED import get_fam, get_indi
 from prettytable import PrettyTable
+from CheckGED import get_fam, get_indi
+
 
 
 class Individual:
@@ -131,8 +132,9 @@ class Repository():
         for i_id in sorted(self.People.keys()):
             pt.add_row(self.People[i_id].pt_row())
 
-        print('\n', 'Inidividuals')
-        print(pt, '\n')
+        # print('\n', 'Inidividuals')
+        # print(pt, '\n')
+        return pt.get_string(sortby='ID')
 
     def input_family(self):
         path = self.working_path
@@ -175,7 +177,8 @@ class Repository():
                 wife_name = self.get_people_name(family.wife_id)
             table.add_row([family.fam_ID, family.mar_date, family.div_date, family.hus_id, hus_name, family.wife_id, wife_name, family.child_id])
 
-        print(table.get_string(sortby='ID'))
+        # print(table.get_string(sortby='ID'))
+        return table.get_string(sortby='ID')
 
     #us_01
     def us_01_birth_b4_now(self):

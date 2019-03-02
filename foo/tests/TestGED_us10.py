@@ -5,8 +5,9 @@ import os
 from GED import Repository
 
 
-a = Repository(filename='Project01_Xiaomeng Xu.ged', dir_path='/home/travis/build/SamNormcoreWayne/SSW555_TeamPrj/docs')
-b = Repository(filename='Project_t10.ged', dir_path='/home/travis/build/SamNormcoreWayne/SSW555_TeamPrj/docs')
+docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
+a = Repository(filename='Project01_Xiaomeng Xu.ged', dir_path=os.path.join(docs_dir, 'docs'))
+b = Repository(filename='Project_t10.ged', dir_path=os.path.join(docs_dir, 'docs'))
 
 class Test_us_10_01(unittest.TestCase):
     """Test conducnt on file 'Project01_Xiaomeng Xu.ged"""

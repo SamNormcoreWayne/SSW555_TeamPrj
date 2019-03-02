@@ -4,6 +4,7 @@
 
 import unittest
 import datetime
+import os
 from GED import Repository
 """
     FOR DEVELOPERS!!!!
@@ -30,7 +31,7 @@ class TestGedcom(unittest.TestCase):
         '''
             This a test case for us04. If you are working on us10, please ignore this test case. 
         '''
-        a = Repository("Project01_Xiaomeng Xu.ged", r'/home/travis/build/SamNormcoreWayne/SSW555_TeamPrj/docs')
+        a = Repository("Project01_Xiaomeng Xu.ged", ros.path.join(docs_dir, 'docs'))
         result = datetime.datetime.strptime(a.us_01_birth_b4_now(), "%d %b %Y")
         current_time = datetime.datetime.now()
         for people in a.People:
@@ -50,7 +51,8 @@ class TestGedcom(unittest.TestCase):
             This test case is for us07
             You do not have to implement T07.01 because it has been implemented in project3 or project 2.
         """
-        a = Repository("Project01_Xiaomeng Xu.ged", '/home/travis/build/SamNormcoreWayne/SSW555_TeamPrj/docs')
+        docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
+        a = Repository("Project01_Xiaomeng Xu.ged", os.path.join(docs_dir, 'docs'))
         for people in a.People.values():
             with self.subTest("Individual id: {}".format(people._id)):
                 self.assertNotEqual(people._bday, "")

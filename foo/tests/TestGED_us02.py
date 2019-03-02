@@ -1,10 +1,12 @@
 """Unitest for user story 02"""
 import unittest
 from GED import Repository
+import os
 
 
-GED1 = Repository(filename='Project01_Xiaomeng Xu.ged', dir_path='/home/travis/build/SamNormcoreWayne/SSW555_TeamPrj/docs')
-GED2 = Repository(filename='TestGED_us02.ged', dir_path='/home/travis/build/SamNormcoreWayne/SSW555_TeamPrj/docs')
+docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
+GED1 = Repository(filename='Project01_Xiaomeng Xu.ged', dir_path=os.path.join(docs_dir, 'docs'))
+GED2 = Repository(filename='TestGED_us02.ged', dir_path=os.path.join(docs_dir, 'docs'))
 class Test_us02_birth_b4_marriage(unittest.TestCase):
     """This are the test cases for user story_02: check if a individual's birthday is before marriage date."""
     

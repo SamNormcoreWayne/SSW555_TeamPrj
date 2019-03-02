@@ -10,8 +10,10 @@ import unittest
 from GED import Individual, Repository
 #from HW04_pli import store_divorce_date,store_death_date,test_compare_divrdate_ddate
 
+
 '''US06	Divorce before death'''
-a = Repository(filename = "Project01_Xiaomeng Xu.ged", dir_path = '/home/travis/build/SamNormcoreWayne/SSW555_TeamPrj/docs')
+docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
+a = Repository(filename = "Project01_Xiaomeng Xu.ged", dir_path = os.path.join(docs_dir, 'docs'))
 class TestGED(unittest.TestCase):
     '''test store_divorce_date() ,store_death_date() and compare_divrdate_ddate()'''
 
