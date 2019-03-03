@@ -372,83 +372,72 @@ class Repository():
                 else:
                     return True
         return False
+
     # us_08
 
     def find_parents_mdate(self, indi_id):
         ''' find individual married date by id in family tree'''
-        fam = []
-        family_id = []
+
         for i in self.People.values():
             if indi_id == i._id:
-                
                 try:
-                    fam.append(self.Familis[i._child].mar_date)
-                except KeyError:
+                    self.Familis[i._child]
+                except KeyError:  # N/A didn't record parents
                     return "No parents"
                 else:
-                    family_id.append(i._child)
-                # break
-        #if family_id is []
-        for i in family_id:
-            if self.Familis[i].mar_date == min(fam):
-                return self.Familis[i].mar_date if self.Familis[i].mar_date != "NA" else None
-        else:
-            raise ValueError
+                    # NA didn't record married date
+                    return self.Familis[i._child].mar_date if self.Familis[i._child].mar_date != "NA" else None
 
     def find_parents_divdate(self, indi_id):
         ''' find individual divoice date by id in family tree'''
-        fam = []
-        family_id = []
+
         for i in self.People.values():
             if indi_id == i._id:
-                family_id.append(i._child)
                 try:
-                    fam.append(self.Familis[i._child].div_date)
-                except KeyError:
+                    self.Familis[i._child]
+                except KeyError:  # N/A didn't record parents
                     return "No parents"
-                # break
-        for i in family_id:
-            if self.Familis[i].div_date == min(fam):
-                return self.Familis[i].div_date if self.Familis[i].div_date != "NA" else None
-        else:
-            raise ValueError
+                else:
+                    # NA didn't record div date
+                    return self.Familis[i._child].div_date if self.Familis[i._child].div_date != "NA" else None
 
     def us08_birth_b4_parents_marriage(self, ind_id):
+
         birth_date = self.find_indi_bdate(ind_id)
         married_date = self.find_parents_mdate(ind_id)
         divoce_date = self.find_parents_divdate(ind_id)
 
-        if birth_date > married_date and divoce_date is None or birth_date > married_date and divoce_date + 9 >= birth_date:
+        if birth_date > married_date and divoce_date is None:
+            return True
+        elif birth_date > married_date and divoce_date + 9 >= birth_date:
             return True
         else:
             return False
 
     # us_09
     def find_mother_id(self, ind_id):
-        fam = []
+
         for i in self.People.values():
             if indi_id == i._id:
-                family_id = i._spouse
-                fam.append(family_id)
-                # break
-        for i in self.Familis:
-            if i == min(fam):
-                return self.Familis[i].wife_id if self.Familis[i].wife_id != "NA" else None
-        else:
-            raise ValueError
+                try:
+                    self.Familis[i._child]
+                except KeyError:  # N/A didn't record parents
+                    return "No parents"
+                else:
+                    # 1)NA didn't record married date 2) I think wife_id(indi's mother) have to exist
+                    return self.Familis[i._child].wife_id if self.Familis[i._child].wife_id != "NA" else None
 
     def find_father_id(self, ind_id):
-        fam = []
+
         for i in self.People.values():
             if indi_id == i._id:
-                family_id = i._spouse
-                fam.append(family_id)
-                # break
-        for i in self.Familis:
-            if i == min(fam):
-                return self.Familis[i].hus_id if self.Familis[i].hus_id != "NA" else None
-        else:
-            raise ValueError
+                try:
+                    self.Familis[i._child]
+                except KeyError:  # N/A didn't record parents
+                    return "No parents"
+                else:
+                    # 1)NA didn't record married date 2) I think wife_id(indi's mother) have to exist
+                    return self.Familis[i._child].hus_id if self.Familis[i._child].hus_id != "NA" else None
 
     '''def find_indi_ddate(self, indi_id):
         """ find individual death date by id in family tree"""
@@ -464,6 +453,7 @@ class Repository():
             raise ValueError'''
 
     def us09_birth_b4_parents_death(self, ind_id):
+        
         birth_date = self.find_indi_bdate(ind_id)
         mother_id = self.find_mother_id(ind_id)
         mother_ddate = self.find_indi_ddate(mother_id)
