@@ -383,7 +383,7 @@ class Repository():
                 try:
                     self.Familis[i._child]
                 except KeyError:  # N/A didn't record parents
-                    return "No parents"
+                    return "Can't find!"
                 else:
                     # NA didn't record married date
                     return self.Familis[i._child].mar_date if self.Familis[i._child].mar_date != "NA" else None
@@ -396,7 +396,7 @@ class Repository():
                 try:
                     self.Familis[i._child]
                 except KeyError:  # N/A didn't record parents
-                    return "No parents"
+                    return "Can't find!"
                 else:
                     # NA didn't record div date
                     return self.Familis[i._child].div_date if self.Familis[i._child].div_date != "NA" else None
@@ -406,38 +406,42 @@ class Repository():
         birth_date = self.find_indi_bdate(ind_id)
         married_date = self.find_parents_mdate(ind_id)
         divoce_date = self.find_parents_divdate(ind_id)
+        if divoce_date != "Can't find!" and married_date != "Can't find!":
+            last_date = datetime.datetime.strptime(divoce_date, "%Y-%m-%d")+ datetime.timedelta(days=+270)
 
-        if birth_date > married_date and divoce_date is None:
-            return True
-        elif birth_date > married_date and divoce_date + 9 >= birth_date:
-            return True
+            if birth_date > married_date and divoce_date is None:
+                return True
+            elif birth_date > married_date and last_date >= birth_date:
+                return True
+            else:
+                return False
         else:
-            return False
+            return "Can't find!"
 
     # us_09
     def find_mother_id(self, ind_id):
 
         for i in self.People.values():
-            if indi_id == i._id:
+            if ind_id == i._id:
                 try:
                     self.Familis[i._child]
                 except KeyError:  # N/A didn't record parents
-                    return "No parents"
+                    return "Can't find!"
                 else:
                     # 1)NA didn't record married date 2) I think wife_id(indi's mother) have to exist
-                    return self.Familis[i._child].wife_id if self.Familis[i._child].wife_id != "NA" else None
+                    return self.Familis[i._child].wife_id #if self.Familis[i._child].wife_id != "NA" else None
 
     def find_father_id(self, ind_id):
 
         for i in self.People.values():
-            if indi_id == i._id:
+            if ind_id == i._id:
                 try:
                     self.Familis[i._child]
                 except KeyError:  # N/A didn't record parents
-                    return "No parents"
+                    return "Can't find!"
                 else:
                     # 1)NA didn't record married date 2) I think wife_id(indi's mother) have to exist
-                    return self.Familis[i._child].hus_id if self.Familis[i._child].hus_id != "NA" else None
+                    return self.Familis[i._child].hus_id #if self.Familis[i._child].hus_id != "NA" else None
 
     '''def find_indi_ddate(self, indi_id):
         """ find individual death date by id in family tree"""
@@ -453,16 +457,23 @@ class Repository():
             raise ValueError'''
 
     def us09_birth_b4_parents_death(self, ind_id):
-        
+
         birth_date = self.find_indi_bdate(ind_id)
         mother_id = self.find_mother_id(ind_id)
         mother_ddate = self.find_indi_ddate(mother_id)
         father_id = self.find_father_id(ind_id)
         father_ddate = self.find_indi_ddate(father_id)
-        if birth_date > mother_ddate or birth_date > father_ddate+9:
-            return False
+        try:
+            datetime.datetime.strptime(father_ddate, "%Y-%m-%d")
+            datetime.datetime.strptime(mother_ddate, "%Y-%m-%d")
+        except TypeError:
+            return "Can't compare"
         else:
-            return True
+            last_date = datetime.datetime.strptime(father_ddate, "%Y-%m-%d") + datetime.timedelta(days=+270)
+            if birth_date < last_date and birth_date < mother_ddate:
+                return True
+            else:
+                return False
 
     # us_10
 
@@ -505,6 +516,7 @@ def main():
     # D:\sit study\SSW555\PJ
     # Project01_Xiaomeng Xu.ged
     print(rep.us08_birth_b4_parents_marriage("@I6@"))
+    print(rep.us09_birth_b4_parents_death("@I2@"))
 
 
 if __name__ == "__main__":
