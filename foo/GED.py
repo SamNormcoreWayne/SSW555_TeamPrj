@@ -11,6 +11,7 @@ import os
 import datetime
 from prettytable import PrettyTable
 from CheckGED import get_fam, get_indi
+from collections import defaultdict
 
 
 
@@ -379,6 +380,44 @@ class Repository():
             else:
                 result = 'Good'
         return f"ID: {fam_id}, Result: {result}"
+
+    #us_14
+    def us14_multiple_birth_less_5(self, fam_id):
+        """Given a fam_id, check for all child's birthday within the family, no more than 5 siblings should be born at the same time"""
+        fam = self.Familis[fam_id]
+        result = ''
+
+        if len(fam.child_id) < 5:
+            result = 'Good'
+        
+        else:
+            dd = defaultdict(int)
+            for i in fam.child_id:  #Initiate the defaultdict if there is nothing in dd.keys()
+                if dd.keys() == []:
+                    dd[self.People[i]._bday] += 1
+                else:
+                    for date in dd.keys():  #If there is something in dd,keys(), compare the birthday of new child_id with all existing key in dd.keys()
+                        dt1 = datetime.datetime.strptime(self.People[i]._bday, '%d %b %Y')
+                        dt2 = datetime.datetime.strptime(date, '%d %b %Y')
+                        days = int(abs(dt1 - dt2)/(24*60*60))   #How many dates in between birthday of new child_id and one existing key in dd
+                        if 0 <= days <= 1:  #If within one date, add to existing key
+                            dd[date] += 1
+                            break
+                    
+                    else:
+                        dd[self.People[i]._bday] += 1   #If more than one date, count as new key.
+            
+            for num in dd.values():
+                if num >= 5:
+                    result  = 'Error: Multiple birth more than 5'
+                    break
+            
+            else:
+                result = 'Good'
+
+        return f"ID: {fam_id}, Reslut: {reslut}"
+
+
 
 def main():
     path = input("Input path: ")
