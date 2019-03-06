@@ -82,7 +82,7 @@ def get_fam(path, filename):
             # print("hus ", hus_name)
         if gedlst[index].startswith("1|CHIL|Y|"):
             tmp = tmp.split('|')
-            child_names.append(tmp.pop().split(' '))
+            child_names += tmp.pop().split(' ')
 
         if gedlst[index].startswith("1|MARR|Y"):
             date_type = 'MARR'
