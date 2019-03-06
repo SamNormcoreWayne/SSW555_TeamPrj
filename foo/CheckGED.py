@@ -66,7 +66,7 @@ def get_fam(path, filename):
                 div_date = 'NA'
                 hus_name = 'NA'
                 wife_name = 'NA'
-                child_names = ['NA']
+                child_names = []
                 # print("right line: ", gedlst[index])
                 tmp = tmp.split('|')
                 # print("list: ", tmp)
@@ -82,7 +82,7 @@ def get_fam(path, filename):
             # print("hus ", hus_name)
         if gedlst[index].startswith("1|CHIL|Y|"):
             tmp = tmp.split('|')
-            child_names = tmp.pop().split(' ')
+            child_names.append(tmp.pop().split(' '))
 
         if gedlst[index].startswith("1|MARR|Y"):
             date_type = 'MARR'
@@ -103,7 +103,7 @@ def get_fam(path, filename):
 
                 date_type = ""
         if fam_ID != 'NA' and gedlst[index + 1].startswith("0|"):
-            yield {'fam_ID': fam_ID, 'mar_date': mar_date, 'div_date': div_date, 'hus': hus_name, 'wife': wife_name, 'children': child_names}
+            yield {'fam_ID': fam_ID, 'mar_date': mar_date, 'div_date': div_date, 'hus': hus_name, 'wife': wife_name, 'children': (child_names if child_names else ['NA'])}
 
 
 """

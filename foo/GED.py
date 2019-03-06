@@ -384,8 +384,8 @@ def main():
     path = input("Input path: ")
     filename = input("Input filename: ")
     rep = Repository(filename=filename, dir_path=path)
-    rep.individual_pt()
-    rep.output_family()
+    print(rep.individual_pt())
+    print(rep.output_family())
 
 
 if __name__ == "__main__":
