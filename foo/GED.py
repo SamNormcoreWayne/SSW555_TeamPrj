@@ -133,8 +133,8 @@ class Repository():
         for i_id in sorted(self.People.keys()):
             pt.add_row(self.People[i_id].pt_row())
 
-        # print('\n', 'Inidividuals')
-        # print(pt, '\n')
+        print('\n', 'Inidividuals')
+        print(pt, '\n')
         return pt.get_string(sortby='ID')
 
     def input_family(self):
@@ -178,7 +178,7 @@ class Repository():
                 wife_name = self.get_people_name(family.wife_id)
             table.add_row([family.fam_ID, family.mar_date, family.div_date, family.hus_id, hus_name, family.wife_id, wife_name, family.child_id])
 
-        # print(table.get_string(sortby='ID'))
+        print(table.get_string(sortby='ID'))
         return table.get_string(sortby='ID')
 
     #us_01
@@ -399,7 +399,7 @@ class Repository():
                     for date in dd.keys():  #If there is something in dd,keys(), compare the birthday of new child_id with all existing key in dd.keys()
                         dt1 = datetime.datetime.strptime(self.People[i]._bday, '%d %b %Y')
                         dt2 = datetime.datetime.strptime(date, '%d %b %Y')
-                        days = int(abs(dt1 - dt2)/(24*60*60))   #How many dates in between birthday of new child_id and one existing key in dd
+                        days = abs(dt1 - dt2).days      #How many dates in between birthday of new child_id and one existing key in dd
                         if 0 <= days <= 1:  #If within one date, add to existing key
                             dd[date] += 1
                             break
@@ -415,7 +415,7 @@ class Repository():
             else:
                 result = 'Good'
 
-        return f"ID: {fam_id}, Reslut: {reslut}"
+        return f"ID: {fam_id}, Reslut: {result}"
 
 
 
@@ -425,6 +425,8 @@ def main():
     rep = Repository(filename=filename, dir_path=path)
     rep.individual_pt()
     rep.output_family()
+    for i in rep.Familis.keys():
+        print(rep.us14_multiple_birth_less_5(i))
 
 
 if __name__ == "__main__":
