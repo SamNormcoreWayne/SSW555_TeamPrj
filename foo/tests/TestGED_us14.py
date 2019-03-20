@@ -24,3 +24,9 @@ class test_us_14(unittest.TestCase):
         self.assertEqual(a.us14_multiple_birth_less_5('@F4@'), 'ID: @F4@, Reslut: Error: Multiple birth more than 5')
 
 
+if __name__ == '__main__':
+    print('Running unit tests')
+    unittest.main(exit = False, verbosity= 2)
+
+
+
