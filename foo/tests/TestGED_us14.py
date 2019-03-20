@@ -19,7 +19,7 @@ class test_us_14(unittest.TestCase):
         """test us14_multiple_birth_less_5 on family 2"""
         self.assertEqual(a.us14_multiple_birth_less_5('@F2@'), 'ID: @F2@, Reslut: Good')
 
-        def test_family_04(self):
+    def test_family_04(self):
         """test us14_multiple_birth_less_5 on family 4"""
         self.assertEqual(a.us14_multiple_birth_less_5('@F4@'), 'ID: @F4@, Reslut: Error: Multiple birth more than 5')
 
