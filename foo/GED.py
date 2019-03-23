@@ -402,7 +402,7 @@ class Repository():
                     return self.Familis[i._child].div_date if self.Familis[i._child].div_date != "NA" else None
 
     def us08_birth_b4_parents_marriage(self, ind_id):
-
+        '''Children should be born after marriage of parents (and not more than 9 months after their divorce)'''
         birth_date = self.find_indi_bdate(ind_id)
         married_date = self.find_parents_mdate(ind_id)
         divoce_date = self.find_parents_divdate(ind_id)
@@ -442,7 +442,8 @@ class Repository():
                 else:
                     # 1)NA didn't record married date 2) I think wife_id(indi's mother) have to exist
                     return self.Familis[i._child].hus_id #if self.Familis[i._child].hus_id != "NA" else None
-
+    
+    # us3 defined the function below
     '''def find_indi_ddate(self, indi_id):
         """ find individual death date by id in family tree"""
         for i in self.People.values():
@@ -457,7 +458,7 @@ class Repository():
             raise ValueError'''
 
     def us09_birth_b4_parents_death(self, ind_id):
-
+        '''Child should be born before death of mother and before 9 months after death of father'''
         birth_date = self.find_indi_bdate(ind_id)
         mother_id = self.find_mother_id(ind_id)
         mother_ddate = self.find_indi_ddate(mother_id)
