@@ -381,23 +381,23 @@ class Repository():
 
     def us12_parents_not_2_old(self):
         for fam in self.Familis:
-            if fam.wife_id != 'N\A':
+            if fam.wife_id != 'N/A':
                 wife = self.getPeople(fam.wife_id)
-            if fam.hus_id != 'N\A':
+            if fam.hus_id != 'N/A':
                 hus = self.getPeople(fam.hus_id)
-            if fam.child_id != ['N\A']:
+            if fam.child_id != ['N/A']:
                 childs = list()
                 for child in fam.child_id:
                     childs.append(self.getPeople(child))
 
-        if wife._age == "N\A":
+        if wife._age == "N/A":
             raise TypeError("Wife age does not exist. ")
-        if hus._age == "N\A":
+        if hus._age == "N/A":
             raise TypeError("Husband age does not exist. ")
 
         for child in childs:
-            if child._age == "N\A":
-                raise TypeError("Child {id} age does not exist.".format(id=childs._id))
+            if child._age == "N/A":
+                raise TypeError("Child {id} age does not exist.".format(id=child._id))
 
         for child in childs:
             if (wife._age - child._age) < 60:
