@@ -169,18 +169,16 @@ class Repository():
         print(table.get_string(sortby='ID'))
 
     def US11_No_Bigamy(self):
-        for fam_1 in self.Familis:
-            for fam_2 in self.Familis:
-                if fam_1.fam_ID == fam_2.fam_ID:
-                    continue
-                if fam_1.hus_id == fam_2.hus_id or fam_1.wife_id == fam_2.wife_id:
-                    if fam_1.div_date == 'NA' or fam_2.div_date == 'NA':
-                        raise(TypeError('bigamy'))
-                    if fam_1.mar_date < fam_2.mar_date:
-                        if fam_1.div_date > fam_2.mar_date:
-                            raise(TypeError("bigamy"))
-                        else:
-                            return True
+        for fam_1 in self.Familis.values():
+            for fam_2 in self.Familis.values():
+                if fam_1.fam_ID != fam_2.fam_ID:
+                    if fam_1.hus_id == fam_2.hus_id or fam_1.wife_id == fam_2.wife_id:
+                        if fam_1.div_date == 'NA' and fam_2.div_date == 'NA':
+                            return 'bigamy'
+                        elif fam_1.mar_date < fam_2.mar_date and fam_1.div_date > fam_2.mar_date:
+                            return 'bigamy'
+        else:
+            return True
 
     def US15_Fewer_15_Child(self):
         for family in self.Familis:
