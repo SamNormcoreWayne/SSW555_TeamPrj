@@ -13,4 +13,5 @@ script:
   - python -m unittest tests.TestGED_us05
   - python -m unittest tests.TestGED_us06
   - python -m unittest tests.TestGED_us07
+  - python -m unittest tests.TestGED_us08
   - python -m unittest tests.TestGED_us10
