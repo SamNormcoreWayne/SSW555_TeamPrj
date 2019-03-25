@@ -380,7 +380,11 @@ class Repository():
         return f"ID: {fam_id}, Result: {result}"
 
     def us12_parents_not_2_old(self):
-        for fam in self.Familis:
+        """
+            Fixed a bug that in for loop, it should read values instead of key-value pairs.
+            Fixed a bug that the difference between father's age and child(ren)'s age should be less than 80 instead of 60
+        """
+        for fam in self.Familis.values():
             if fam.wife_id != 'N/A':
                 wife = self.getPeople(fam.wife_id)
             if fam.hus_id != 'N/A':
@@ -404,7 +408,7 @@ class Repository():
                 raise TypeError("Mother is too young or child {id} is too old!".format(id=child._id))
             else:
                 return True
-            if (hus._age - child._age) < 60:
+            if (hus._age - child._age) < 80:
                 raise TypeError("Father is too young or child {id} is too old!".format(id=child._id))
             else:
                 return True
