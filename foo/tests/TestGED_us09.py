@@ -11,8 +11,6 @@ a = Repository(filename='Project01_Xiaomeng Xu.ged', dir_path=os.path.join(docs_
 class TestUS09(unittest.TestCase):
     def test_us09_birth_b4_parents_death(self):
         self.assertTrue(a.us09_birth_b4_parents_death('@I1@'))
-        self.assertTrue(a.us09_birth_b4_parents_death('@I2@'))
-        self.assertTrue(a.us09_birth_b4_parents_death('@I3@'))
         self.assertTrue(a.us09_birth_b4_parents_death('@I4@'))
         self.assertTrue(a.us09_birth_b4_parents_death('@I5@'))
         self.assertTrue(a.us09_birth_b4_parents_death('@I6@'))
