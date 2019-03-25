@@ -404,11 +404,11 @@ class Repository():
                     raise TypeError("Child {id} age does not exist.".format(id=child._id))
 
             for child in childs:
-                if (wife._age - child._age) < 60:
+                if (wife._age - child._age) > 60:
                     raise TypeError("Mother is too young or child {id} is too old!".format(id=child._id))
                 else:
                     return True
-                if (hus._age - child._age) < 80:
+                if (hus._age - child._age) > 80:
                     raise TypeError("Father is too young or child {id} is too old!".format(id=child._id))
                 else:
                     return True
