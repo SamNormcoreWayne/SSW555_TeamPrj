@@ -403,22 +403,26 @@ class Repository():
 
     def us08_birth_b4_parents_marriage(self, ind_id):
         '''Children should be born after marriage of parents (and not more than 9 months after their divorce)'''
-        birth_date = self.find_indi_bdate(ind_id)
-        married_date = self.find_parents_mdate(ind_id)
-        divoce_date = self.find_parents_divdate(ind_id)
-        if divoce_date != "Can't find!" and married_date != "Can't find!":
-            last_date = datetime.datetime.strptime(divoce_date, "%Y-%m-%d")+ datetime.timedelta(days=+270)
-            birth_date= datetime.datetime.strptime (birth_date, "%d %b %Y")
-            divoce_date= datetime.datetime.strptime (divoce_date, "%Y-%m-%d")
-            married_date= datetime.datetime.strptime (married_date, "%Y-%m-%d")
-            if birth_date > married_date and divoce_date is None:
-                return True
-            elif birth_date > married_date and last_date >= birth_date:
-                return True
-            else:
-                return False
-        else:
+        try:
+            birth_date = self.find_indi_bdate(ind_id)
+            married_date = self.find_parents_mdate(ind_id)
+            divoce_date = self.find_parents_divdate(ind_id)
+        except ValueError:
             return "Can't find!"
+        else:
+            if divoce_date != "Can't find!" and married_date != "Can't find!":
+                last_date = datetime.datetime.strptime(divoce_date, "%Y-%m-%d")+ datetime.timedelta(days=+270)
+                birth_date= datetime.datetime.strptime (birth_date, "%d %b %Y")
+                divoce_date= datetime.datetime.strptime (divoce_date, "%Y-%m-%d")
+                married_date= datetime.datetime.strptime (married_date, "%Y-%m-%d")
+                if birth_date > married_date and divoce_date is None:
+                    return True
+                elif birth_date > married_date and last_date >= birth_date:
+                    return True
+                else:
+                    return False
+            else:
+                return "Can't find!"
 
     # us_09
     def find_mother_id(self, ind_id):
