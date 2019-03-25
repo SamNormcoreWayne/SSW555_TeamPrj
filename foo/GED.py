@@ -477,7 +477,7 @@ class Repository():
         except TypeError:
             return "Can't compare"
         else:
-            last_date = datetime.datetime.strptime(father_ddate, "%Y-%m-%d") + datetime.timedelta(days=+270)
+            last_date = datetime.datetime.strptime(father_ddate, "%d %b %Y") + datetime.timedelta(days=+270)
             if birth_date_dt < last_date and birth_date < mother_ddate:
                 return True
             else:
