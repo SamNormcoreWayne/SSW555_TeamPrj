@@ -394,24 +394,24 @@ class Repository():
                 for child in fam.child_id:
                     childs.append(self.getPeople(child))
 
-        if wife._age == "N/A":
-            raise TypeError("Wife age does not exist. ")
-        if hus._age == "N/A":
-            raise TypeError("Husband age does not exist. ")
+            if wife._age == "N/A":
+                raise TypeError("Wife age does not exist. ")
+            if hus._age == "N/A":
+                raise TypeError("Husband age does not exist. ")
 
-        for child in childs:
-            if child._age == "N/A":
-                raise TypeError("Child {id} age does not exist.".format(id=child._id))
+            for child in childs:
+                if child._age == "N/A":
+                    raise TypeError("Child {id} age does not exist.".format(id=child._id))
 
-        for child in childs:
-            if (wife._age - child._age) < 60:
-                raise TypeError("Mother is too young or child {id} is too old!".format(id=child._id))
-            else:
-                return True
-            if (hus._age - child._age) < 80:
-                raise TypeError("Father is too young or child {id} is too old!".format(id=child._id))
-            else:
-                return True
+            for child in childs:
+                if (wife._age - child._age) < 60:
+                    raise TypeError("Mother is too young or child {id} is too old!".format(id=child._id))
+                else:
+                    return True
+                if (hus._age - child._age) < 80:
+                    raise TypeError("Father is too young or child {id} is too old!".format(id=child._id))
+                else:
+                    return True
 
 
 def main():
