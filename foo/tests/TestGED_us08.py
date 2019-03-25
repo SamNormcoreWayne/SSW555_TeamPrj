@@ -12,8 +12,8 @@ b = Repository(filename='Project_t10.ged', dir_path=os.path.join(docs_dir, 'docs
 class TestUS08(unittest.TestCase):
     def test_us08_birth_b4_parents_marriage(self):
         self.assertTrue(a.us08_birth_b4_parents_marriage('@I1@'))
-         """self.assertRaises(ValueError):
-            a.us08_birth_b4_parents_marriagwithe('@I10@')"""
+        self.assertEqual(a.us08_birth_b4_parents_marriage('@I10@'),"Can't find!")
+        #with self.assertRaises(ValueError):a.us08_birth_b4_parents_marriage('@I10@')
 
 
 if __name__ == '__main__':
