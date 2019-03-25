@@ -471,13 +471,14 @@ class Repository():
         father_id = self.find_father_id(ind_id)
         father_ddate = self.find_indi_ddate(father_id)
         try:
-            datetime.datetime.strptime(father_ddate, "%Y-%m-%d")
-            datetime.datetime.strptime(mother_ddate, "%Y-%m-%d")
+            datetime.datetime.strptime(father_ddate, "%d %b %Y")
+            datetime.datetime.strptime(mother_ddate, "%d %b %Y")
+            birth_date_dt= datetime.datetime.strptime(mother_ddate, "%d %b %Y")
         except TypeError:
             return "Can't compare"
         else:
             last_date = datetime.datetime.strptime(father_ddate, "%Y-%m-%d") + datetime.timedelta(days=+270)
-            if birth_date < last_date and birth_date < mother_ddate:
+            if birth_date_dt < last_date and birth_date < mother_ddate:
                 return True
             else:
                 return False
