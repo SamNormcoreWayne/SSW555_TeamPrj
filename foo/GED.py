@@ -422,7 +422,7 @@ class Repository():
                 else:
                     return False
             else:
-                return "Can't find!"
+                return "Can't compare!"
 
     # us_09
     def find_mother_id(self, ind_id):
