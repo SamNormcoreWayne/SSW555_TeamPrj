@@ -43,7 +43,7 @@ class Test_us15_(unittest.TestCase):
         self.assertTrue(e.US15_Fewer_15_Child())
         self.assertTrue(f.US15_Fewer_15_Child())
         self.assertTrue(g.US15_Fewer_15_Child())
-        self.assertTrue(h.US15_Fewer_15_Child())
+        self.assertFalse(h.US15_Fewer_15_Child())
 
 
 if __name__ == '__main__':
