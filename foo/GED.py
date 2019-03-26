@@ -628,7 +628,7 @@ class Repository():
 
         if fam.hus_id == 'NA':
             raise ValueError("Husband not found")
-        elif fam.child_id == 'NA':
+        elif fam.child_id == ['NA']:
             raise ValueError("Child not found")
         else:
             hus_lastname = (self.People[fam.hus_id]._name).rstrip('/').split('/').pop()
