@@ -146,14 +146,14 @@ class Repository():
             new_family = Family(fam_dic['fam_ID'], fam_dic['mar_date'], fam_dic['div_date'], fam_dic['hus'], fam_dic['wife'], fam_dic['children'])
             self.Familis[fam_dic['fam_ID']] = new_family
 
-    '''
+    
     def getPeople(self, ID):
         for ind_ID, individual in self.People.items():
             # print(ind_ID, individual._id, ID)
             if ind_ID == ID:
                 return individual
 
-
+'''
     def getPeople_id(self, name):
         for individual in self.People.values():
             if name == individual._name:
