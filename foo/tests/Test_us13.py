@@ -29,7 +29,7 @@ class Test_us13_01(unittest.TestCase):
         self.assertTrue(a.us13_sibling_spacing("@F3@"))
         self.assertTrue(a.us13_sibling_spacing("@F4@"))
         with self.assertRaises(KeyError):
-            a.us13_sibling_spacing("F5")
+            a.us13_sibling_spacing("@F5@")
 
 if __name__ == '__main__':
     print('Running unit tests')
