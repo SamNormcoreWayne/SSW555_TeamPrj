@@ -153,7 +153,7 @@ class Repository():
             if ind_ID == ID:
                 return individual
 
-'''
+    '''
     def getPeople_id(self, name):
         for individual in self.People.values():
             if name == individual._name:
