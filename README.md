@@ -5,7 +5,7 @@ This project is aim to deal with GEDCOM files.
 
 Branch name convention: SprintX/USXX (X stands for number)
 
-[![build status of master](https://travis-ci.org/SamNormcoreWayne/SSW555_TeamPrj.svg?branch=Sprin01/Refactoring)](https://travis-ci.org/SamNormcoreWayne/SSW555_TeamPrj)
+[![build status of master](https://travis-ci.org/SamNormcoreWayne/SSW555_TeamPrj.svg?branch=Sprin02/Stage)](https://travis-ci.org/SamNormcoreWayne/SSW555_TeamPrj)
 
 
  <<<1st group meeting will be at library study room 311, 12PM 2/8/2019>>>

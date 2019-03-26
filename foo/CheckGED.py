@@ -99,7 +99,7 @@ def get_fam(path, filename):
                 if date_type == 'DIV':
                     div_date_type = datetime.strptime(tmp.pop(), "%d %b %Y")
                     div_date = datetime.strftime(div_date_type, "%Y-%m-%d")
-                    print("div_date: ", div_date)
+                    #print("div_date: ", div_date)
 
                 date_type = ""
         if fam_ID != 'NA' and gedlst[index + 1].startswith("0|"):
