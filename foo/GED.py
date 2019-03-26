@@ -155,7 +155,6 @@ class Repository():
                                 fam_dic['hus'], fam_dic['wife'], fam_dic['children'])
             self.Familis[fam_dic['fam_ID']] = new_family
 
-    
     def getPeople(self, ID):
         for ind_ID, individual in self.People.items():
             # print(ind_ID, individual._id, ID)
@@ -647,8 +646,33 @@ class Repository():
         
         return f"ID: {fam_id}, Result: {result}"
 
-
-
+    #us_13
+    def us13_sibling_spacing(self, fam_id):
+        '''Birth dates of siblings should be more than 8 months apart or less than 2 days apart (twins may be born one day apart'''
+        child_lst = list()
+        for fam in self.Familis.values():
+            if fam.fam_ID == fam_id:
+                for id in fam.child_id:
+                    child_lst.append(self.getPeople(id))
+                break
+        else:
+            raise KeyError
+        
+        if len(child_lst) <= 1:
+            """
+            No siblings
+            """
+            return True
+        else:
+            for child_1 in child_lst:
+                for child_2 in child_lst:
+                    if (child_1._id != child_2._id):
+                        """
+                            It cannot be the same person
+                        """
+                        if ((child_1._bday - child_2._bday).days > 2) or ((child_1._bday - child_2._bday).days < 240):
+                            raise TypeError("Wrong birthday between siblings")
+            return True
 
 def main():
     path = input("Input path: ")
