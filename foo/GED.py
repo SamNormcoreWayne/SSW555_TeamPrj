@@ -452,6 +452,32 @@ class Repository():
 
         return f"ID: {fam_id}, Reslut: {result}"
 
+    #us_11
+    def US11_No_Bigamy(self):
+      # For a given ind_id, check if the individual has more than 1 spounse during each marriage   
+        for fam_1 in self.Familis.values():
+            for fam_2 in self.Familis.values():
+                if fam_1.fam_ID != fam_2.fam_ID:
+                    if fam_1.hus_id == fam_2.hus_id or fam_1.wife_id == fam_2.wife_id:
+                        if fam_1.div_date == 'NA' and fam_2.div_date == 'NA':
+                            return 'bigamy'
+                        elif fam_1.mar_date < fam_2.mar_date and fam_1.div_date > fam_2.mar_date:
+                            return 'bigamy'
+        else:
+            return True
+        
+    #us_15
+    def US15_Fewer_15_Child(self):
+      # For a given fam_id, check if the family has more than 15 children
+
+        for family in self.Familis.values():
+            if len(family.child_id) >= 15:
+                flag = False
+                break
+        else:
+            flag = True
+            
+        return flag
 
 
 def main():
@@ -466,3 +492,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
+ 
