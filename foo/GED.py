@@ -388,8 +388,8 @@ class Repository():
                 for id in fam.child_id:
                     child_lst.append(self.getPeople(id))
                 break
-            else:
-                raise KeyError
+        else:
+            raise KeyError
         
         if len(child_lst) <= 1:
             """
