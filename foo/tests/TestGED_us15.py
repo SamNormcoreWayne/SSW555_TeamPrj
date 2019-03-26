@@ -31,7 +31,7 @@ class Test_us15_(unittest.TestCase):
     'Project_t04.ged'
     'Project_t10.ged'
     'Project_t16.ged'
-    'Peoject_t15.ged'
+    'Peoject_t15.ged'  #have 18 children in a family
     """
 
     def test_us15(self):
