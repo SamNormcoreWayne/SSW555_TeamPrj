@@ -480,6 +480,35 @@ class Repository():
         return flag
 
 
+    #us_16
+    def us16_male_last_names(self, fam_id):
+        """Check within a family to see if husband's lastname matches with child's lastname"""
+        fam = self.Familis[fam_id]
+        hus_lastname = ''
+        child_lastname = []
+
+        if fam.hus_id == 'NA':
+            raise ValueError("Husband not found")
+        elif fam.child_id == 'NA':
+            raise ValueError("Child not found")
+        else:
+            hus_lastname = (self.People[fam.hus_id]._name).rstrip('/').split('/').pop()
+            for i in fam.child_id:
+                child_lastname.append((self.People[i]._name).rstrip('/').split('/').pop())
+
+            for i in child_lastname:
+                if i != hus_lastname:
+                    result = "Error: Last names don't match"
+                    break
+            else:
+                result = "Good"
+        
+        print(hus_lastname, child_lastname)
+        
+        return f"ID: {fam_id}, Result: {result}"
+
+
+
 def main():
     path = input("Input path: ")
     filename = input("Input filename: ")
@@ -488,6 +517,10 @@ def main():
     rep.output_family()
     for i in rep.Familis.keys():
         print(rep.us14_multiple_birth_less_5(i))
+        try:
+            print(rep.us16_male_last_names(i))
+        except ValueError as err:
+            print(err)
 
 
 if __name__ == "__main__":
