@@ -11,6 +11,7 @@ import os
 import datetime
 from prettytable import PrettyTable
 from CheckGED import get_fam, get_indi
+from collections import defaultdict
 
 
 
@@ -132,8 +133,8 @@ class Repository():
         for i_id in sorted(self.People.keys()):
             pt.add_row(self.People[i_id].pt_row())
 
-        # print('\n', 'Inidividuals')
-        # print(pt, '\n')
+        print('\n', 'Inidividuals')
+        print(pt, '\n')
         return pt.get_string(sortby='ID')
 
     def input_family(self):
@@ -177,7 +178,7 @@ class Repository():
                 wife_name = self.get_people_name(family.wife_id)
             table.add_row([family.fam_ID, family.mar_date, family.div_date, family.hus_id, hus_name, family.wife_id, wife_name, family.child_id])
 
-        # print(table.get_string(sortby='ID'))
+        print(table.get_string(sortby='ID'))
         return table.get_string(sortby='ID')
 
     #us_01
@@ -415,12 +416,52 @@ class Repository():
                 else:
                     return True
 
+    #us_14
+    def us14_multiple_birth_less_5(self, fam_id):
+        """Given a fam_id, check for all child's birthday within the family, no more than 5 siblings should be born at the same time"""
+        fam = self.Familis[fam_id]
+        result = ''
+
+        if len(fam.child_id) < 5:
+            result = 'Good'
+        
+        else:
+            dd = defaultdict(int)
+            for i in fam.child_id:  #Initiate the defaultdict if there is nothing in dd.keys()
+                if dd.keys() == []:
+                    dd[self.People[i]._bday] += 1
+                else:
+                    for date in dd.keys():  #If there is something in dd,keys(), compare the birthday of new child_id with all existing key in dd.keys()
+                        dt1 = datetime.datetime.strptime(self.People[i]._bday, '%d %b %Y')
+                        dt2 = datetime.datetime.strptime(date, '%d %b %Y')
+                        days = abs(dt1 - dt2).days      #How many dates in between birthday of new child_id and one existing key in dd
+                        if 0 <= days <= 1:  #If within one date, add to existing key
+                            dd[date] += 1
+                            break
+                    
+                    else:
+                        dd[self.People[i]._bday] += 1   #If more than one date, count as new key.
+            
+            for num in dd.values():
+                if num >= 5:
+                    result  = 'Error: Multiple birth more than 5'
+                    break
+            
+            else:
+                result = 'Good'
+
+        return f"ID: {fam_id}, Reslut: {result}"
+
+
+
 def main():
     path = input("Input path: ")
     filename = input("Input filename: ")
     rep = Repository(filename=filename, dir_path=path)
-    print(rep.individual_pt())
-    print(rep.output_family())
+    rep.individual_pt()
+    rep.output_family()
+    for i in rep.Familis.keys():
+        print(rep.us14_multiple_birth_less_5(i))
 
 
 if __name__ == "__main__":
