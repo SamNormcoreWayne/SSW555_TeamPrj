@@ -24,10 +24,10 @@ class Test_us13_01(unittest.TestCase):
 
     def test_US13_sibling_spacing(self):
         """Test us13_sibling_spacing()"""
-        self.assertTrue(a.us13_sibling_spacing("F1"))
-        self.assertTrue(a.us13_sibling_spacing("F2"))
-        self.assertTrue(a.us13_sibling_spacing("F3"))
-        self.assertTrue(a.us13_sibling_spacing("F4"))
+        self.assertTrue(a.us13_sibling_spacing("@F1@"))
+        self.assertTrue(a.us13_sibling_spacing("@F2@"))
+        self.assertTrue(a.us13_sibling_spacing("@F3@"))
+        self.assertTrue(a.us13_sibling_spacing("@F4@"))
         with self.assertRaises(KeyError):
             a.us13_sibling_spacing("F5")
 
