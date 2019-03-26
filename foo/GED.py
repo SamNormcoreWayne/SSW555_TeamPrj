@@ -417,6 +417,7 @@ class Repository():
                     if ((hus._age - child._age) > 80) and (hus is not None):
                         raise TypeError("Father is too young or child {id} is too old!".format(id=child._id))
                 return True
+            return "No Children"
 
 def main():
     path = input("Input path: ")
