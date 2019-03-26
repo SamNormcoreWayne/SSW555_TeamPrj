@@ -651,21 +651,15 @@ class Repository():
 
 
 def main():
-    #path = input("Input path: ")
-    path = "D:\sit study\SSW555\PJ"
-    #filename = "Project01_Xiaomeng Xu.ged"
-    filename = "Project01_Pli.ged"
-    #filename = input("Input filename: ")
+    path = input("Input path: ")
+    filename = input("Input filename: ")
     rep = Repository(filename=filename, dir_path=path)
     rep.individual_pt()
     rep.output_family()
-    # D:\sit study\SSW555\PJ
-    # Project01_Xiaomeng Xu.ged
-    print(rep.us08_birth_b4_parents_marriage("@I6@"))
-    print(rep.us09_birth_b4_parents_death("@I2@"))
+
 
 
 if __name__ == "__main__":
     main()
     
- 
+
