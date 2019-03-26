@@ -146,7 +146,6 @@ class Repository():
             new_family = Family(fam_dic['fam_ID'], fam_dic['mar_date'], fam_dic['div_date'], fam_dic['hus'], fam_dic['wife'], fam_dic['children'])
             self.Familis[fam_dic['fam_ID']] = new_family
 
-    
     def getPeople(self, ID):
         for ind_ID, individual in self.People.items():
             # print(ind_ID, individual._id, ID)
@@ -379,19 +378,18 @@ class Repository():
             else:
                 result = 'Good'
         return f"ID: {fam_id}, Result: {result}"
-    
-#us_12
+
     def us12_parents_not_2_old(self):
         """
             Fixed a bug that in for loop, it should read values instead of key-value pairs.
             Fixed a bug that the difference between father's age and child(ren)'s age should be less than 80 instead of 60
         """
         for fam in self.Familis.values():
-            if fam.wife_id != 'NA':
+            if fam.wife_id != 'N/A':
                 wife = self.getPeople(fam.wife_id)
-            if fam.hus_id != 'NA':
+            if fam.hus_id != 'N/A':
                 hus = self.getPeople(fam.hus_id)
-            if fam.child_id != ['NA']:
+            if fam.child_id != ['N/A']:
                 childs = list()
                 for child in fam.child_id:
                     childs.append(self.getPeople(child))
@@ -414,6 +412,7 @@ class Repository():
                     raise TypeError("Father is too young or child {id} is too old!".format(id=child._id))
                 else:
                     return True
+
 
 def main():
     path = input("Input path: ")
