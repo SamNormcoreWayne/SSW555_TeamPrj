@@ -387,11 +387,11 @@ class Repository():
             Fixed a bug that the difference between father's age and child(ren)'s age should be less than 80 instead of 60
         """
         for fam in self.Familis.values():
-            if fam.wife_id != 'N/A':
+            if fam.wife_id != 'NA':
                 wife = self.getPeople(fam.wife_id)
-            if fam.hus_id != 'N/A':
+            if fam.hus_id != 'NA':
                 hus = self.getPeople(fam.hus_id)
-            if fam.child_id != ['N/A']:
+            if fam.child_id != ['NA']:
                 childs = list()
                 for child in fam.child_id:
                     childs.append(self.getPeople(child))
