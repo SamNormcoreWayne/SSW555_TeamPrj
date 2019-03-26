@@ -397,11 +397,14 @@ class Repository():
     #us_15
     def US15_Fewer_15_Child(self):
       # For a given fam_id, check if the family has more than 15 children
-        flag = True
+
         for family in self.Familis.values():
             if len(family.child_id) >= 15:
                 flag = False
                 break
+        else:
+            flag = True
+            
         return flag
 
 
