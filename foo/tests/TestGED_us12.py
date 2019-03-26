@@ -10,8 +10,7 @@ import sys
 import os
 from GED import Repository
 
-a = Repository(filename='Project01_Pli.ged',
-               dir_path='/home/travis/build/SamNormcoreWayne/SSW555_TeamPrj/docs')
+
 b = Repository(filename='Project01_Xiaomeng Xu.ged',
                dir_path='/home/travis/build/SamNormcoreWayne/SSW555_TeamPrj/docs')
 c = Repository(filename='Project02.ged',
@@ -41,7 +40,7 @@ class Test_us12_01(unittest.TestCase):
 
     def test_us12_parents_not_2_old(self):
         """Test us12_parents_not_2_old()"""
-        self.assertTrue(a.us12_parents_not_2_old())
+
         self.assertTrue(b.us12_parents_not_2_old())
         self.assertTrue(c.us12_parents_not_2_old())
         self.assertTrue(d.us12_parents_not_2_old())
