@@ -414,12 +414,9 @@ class Repository():
                 for child in childs:
                     if ((wife._age - child._age) > 60) and (wife is not None):
                         raise TypeError("Mother is too young or child {id} is too old!".format(id=child._id))
-                    else:
-                        return True
                     if ((hus._age - child._age) > 80) and (hus is not None):
                         raise TypeError("Father is too young or child {id} is too old!".format(id=child._id))
-                    else:
-                        return True
+                return True
 
 def main():
     path = input("Input path: ")
