@@ -524,31 +524,37 @@ class Repository():
         for fam in self.Familis.values():
             if fam.wife_id != 'NA':
                 wife = self.getPeople(fam.wife_id)
+                if wife._age == "N/A":
+                    raise TypeError("Wife age does not exist. ")
+            else:
+                wife = None
             if fam.hus_id != 'NA':
                 hus = self.getPeople(fam.hus_id)
+                if hus._age == "N/A":
+                    raise TypeError("Husband age does not exist. ")
+            else:
+                hus = None
             if fam.child_id != ['NA']:
                 childs = list()
                 for child in fam.child_id:
                     childs.append(self.getPeople(child))
+            else:
+                childs = None
 
-            if wife._age == "N/A":
-                raise TypeError("Wife age does not exist. ")
-            if hus._age == "N/A":
-                raise TypeError("Husband age does not exist. ")
+            if (childs is not None):
+                for child in childs:
+                    if child._age == "N/A":
+                        raise TypeError("Child {id} age does not exist.".format(id=child._id))
 
-            for child in childs:
-                if child._age == "N/A":
-                    raise TypeError("Child {id} age does not exist.".format(id=child._id))
-
-            for child in childs:
-                if (wife._age - child._age) > 60:
-                    raise TypeError("Mother is too young or child {id} is too old!".format(id=child._id))
-                else:
-                    return True
-                if (hus._age - child._age) > 80:
-                    raise TypeError("Father is too young or child {id} is too old!".format(id=child._id))
-                else:
-                    return True
+                for child in childs:
+                    if ((wife._age - child._age) > 60) and (wife is not None):
+                        raise TypeError("Mother is too young or child {id} is too old!".format(id=child._id))
+                    else:
+                        return True
+                    if ((hus._age - child._age) > 80) and (hus is not None):
+                        raise TypeError("Father is too young or child {id} is too old!".format(id=child._id))
+                    else:
+                        return True
 
     #us_14
     def us14_multiple_birth_less_5(self, fam_id):
