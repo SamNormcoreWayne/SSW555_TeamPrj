@@ -10,20 +10,22 @@ import sys
 import os
 from GED import Repository
 
+
+docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
 a = Repository(filename='Project01_Pli.ged',
-               dir_path='/home/travis/build/SamNormcoreWayne/SSW555_TeamPrj/docs')
+               dir_path=os.path.join(docs_dir, 'docs'))
 b = Repository(filename='Project01_Xiaomeng Xu.ged',
-               dir_path='/home/travis/build/SamNormcoreWayne/SSW555_TeamPrj/docs')
+               dir_path=os.path.join(docs_dir, 'docs'))
 c = Repository(filename='Project02.ged',
-               dir_path='/home/travis/build/SamNormcoreWayne/SSW555_TeamPrj/docs')
+               dir_path=os.path.join(docs_dir, 'docs'))
 d = Repository(filename='Project_t03.ged',
-               dir_path='/home/travis/build/SamNormcoreWayne/SSW555_TeamPrj/docs')
+               dir_path=os.path.join(docs_dir, 'docs'))
 e = Repository(filename='Project_t04.ged',
-               dir_path='/home/travis/build/SamNormcoreWayne/SSW555_TeamPrj/docs')
+               dir_path=os.path.join(docs_dir, 'docs'))
 f = Repository(filename='Project_t10.ged',
-               dir_path='/home/travis/build/SamNormcoreWayne/SSW555_TeamPrj/docs')
+               dir_path=os.path.join(docs_dir, 'docs'))
 g = Repository(filename='Project_t16.ged',
-               dir_path='/home/travis/build/SamNormcoreWayne/SSW555_TeamPrj/docs')
+               dir_path=os.path.join(docs_dir, 'docs'))
 
 
 class Test_us11_01(unittest.TestCase):

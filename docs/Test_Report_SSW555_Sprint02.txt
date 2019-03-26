@@ -95,9 +95,12 @@ test_family_03 (TestGED_us10.Test_us_10_02)
 Test us10_marriage_after_14() on family 3 ... ok
 test_family_04 (TestGED_us10.Test_us_10_02)
 Test us10_marriage_after_14() on family 4 ... ok
-TestGED_us11 (unittest.loader._FailedTest) ... ERROR
-TestGED_us12 (unittest.loader._FailedTest) ... ERROR
-TestGED_us13 (unittest.loader._FailedTest) ... ERROR
+test_US11_No_Bigamy (TestGED_us11.Test_us11_01)
+Test US11_No_Bigamy() ... ok
+test_us12_parents_not_2_old (TestGED_us12.Test_us12_01)
+Test us12_parents_not_2_old() ... ok
+test_US13_sibling_spacing (TestGED_us13.Test_us13_01)
+Test us13_sibling_spacing() ... ok
 test_family_01 (TestGED_us14.test_us_14)
 test us14_multiple_birth_less_5 on family 1 ... ok
 test_family_02 (TestGED_us14.test_us_14)
@@ -106,97 +109,20 @@ test_family_04 (TestGED_us14.test_us_14)
 test us14_multiple_birth_less_5 on family 4 ... ok
 test_us15 (TestGED_us15.Test_us15_)
 Test no more than 15 children in a family ... ok
-TestGED_us16 (unittest.loader._FailedTest) ... ERROR
-
-======================================================================
-ERROR: TestGED_us11 (unittest.loader._FailedTest)
-----------------------------------------------------------------------
-ImportError: Failed to import test module: TestGED_us11
-Traceback (most recent call last):
-  File "C:\ProgramData\Anaconda3\lib\unittest\loader.py", line 434, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "C:\ProgramData\Anaconda3\lib\unittest\loader.py", line 375, in _get_module_from_name
-    __import__(name)
-  File "C:\Users\64937\OneDrive\Documents\SSW\555\SSW555_TeamPrj\foo\tests\TestGED_us11.py", line 14, in <module>
-    dir_path='/home/travis/build/SamNormcoreWayne/SSW555_TeamPrj/docs')
-  File "C:\Users\64937\OneDrive\Documents\SSW\555\SSW555_TeamPrj\foo\GED.py", line 105, in __init__
-    self.read_indi()
-  File "C:\Users\64937\OneDrive\Documents\SSW\555\SSW555_TeamPrj\foo\GED.py", line 111, in read_indi
-    dd = get_indi(self.working_path, self.filename)
-  File "C:\Users\64937\OneDrive\Documents\SSW\555\SSW555_TeamPrj\foo\CheckGED.py", line 121, in get_indi
-    result = list(check_input_output(path, filename))
-  File "C:\Users\64937\OneDrive\Documents\SSW\555\SSW555_TeamPrj\foo\CheckGED.py", line 49, in check_input_output
-    fp.close()
-UnboundLocalError: local variable 'fp' referenced before assignment
-
-
-======================================================================
-ERROR: TestGED_us12 (unittest.loader._FailedTest)
-----------------------------------------------------------------------
-ImportError: Failed to import test module: TestGED_us12
-Traceback (most recent call last):
-  File "C:\ProgramData\Anaconda3\lib\unittest\loader.py", line 434, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "C:\ProgramData\Anaconda3\lib\unittest\loader.py", line 375, in _get_module_from_name
-    __import__(name)
-  File "C:\Users\64937\OneDrive\Documents\SSW\555\SSW555_TeamPrj\foo\tests\TestGED_us12.py", line 15, in <module>
-    dir_path='/home/travis/build/SamNormcoreWayne/SSW555_TeamPrj/docs')
-  File "C:\Users\64937\OneDrive\Documents\SSW\555\SSW555_TeamPrj\foo\GED.py", line 105, in __init__
-    self.read_indi()
-  File "C:\Users\64937\OneDrive\Documents\SSW\555\SSW555_TeamPrj\foo\GED.py", line 111, in read_indi
-    dd = get_indi(self.working_path, self.filename)
-  File "C:\Users\64937\OneDrive\Documents\SSW\555\SSW555_TeamPrj\foo\CheckGED.py", line 121, in get_indi
-    result = list(check_input_output(path, filename))
-  File "C:\Users\64937\OneDrive\Documents\SSW\555\SSW555_TeamPrj\foo\CheckGED.py", line 49, in check_input_output
-    fp.close()
-UnboundLocalError: local variable 'fp' referenced before assignment
-
-
-======================================================================
-ERROR: TestGED_us13 (unittest.loader._FailedTest)
-----------------------------------------------------------------------
-ImportError: Failed to import test module: TestGED_us13
-Traceback (most recent call last):
-  File "C:\ProgramData\Anaconda3\lib\unittest\loader.py", line 434, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "C:\ProgramData\Anaconda3\lib\unittest\loader.py", line 375, in _get_module_from_name
-    __import__(name)
-  File "C:\Users\64937\OneDrive\Documents\SSW\555\SSW555_TeamPrj\foo\tests\TestGED_us13.py", line 15, in <module>
-    dir_path='/home/travis/build/SamNormcoreWayne/SSW555_TeamPrj/docs')
-  File "C:\Users\64937\OneDrive\Documents\SSW\555\SSW555_TeamPrj\foo\GED.py", line 105, in __init__
-    self.read_indi()
-  File "C:\Users\64937\OneDrive\Documents\SSW\555\SSW555_TeamPrj\foo\GED.py", line 111, in read_indi
-    dd = get_indi(self.working_path, self.filename)
-  File "C:\Users\64937\OneDrive\Documents\SSW\555\SSW555_TeamPrj\foo\CheckGED.py", line 121, in get_indi
-    result = list(check_input_output(path, filename))
-  File "C:\Users\64937\OneDrive\Documents\SSW\555\SSW555_TeamPrj\foo\CheckGED.py", line 49, in check_input_output
-    fp.close()
-UnboundLocalError: local variable 'fp' referenced before assignment
-
-
-======================================================================
-ERROR: TestGED_us16 (unittest.loader._FailedTest)
-----------------------------------------------------------------------
-ImportError: Failed to import test module: TestGED_us16
-Traceback (most recent call last):
-  File "C:\ProgramData\Anaconda3\lib\unittest\loader.py", line 434, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "C:\ProgramData\Anaconda3\lib\unittest\loader.py", line 375, in _get_module_from_name
-    __import__(name)
-  File "C:\Users\64937\OneDrive\Documents\SSW\555\SSW555_TeamPrj\foo\tests\TestGED_us16.py", line 7, in <module>
-    a = Repository(filename='Project_t16.ged', dir_path='/home/travis/build/SamNormcoreWayne/SSW555_TeamPrj/docs')
-  File "C:\Users\64937\OneDrive\Documents\SSW\555\SSW555_TeamPrj\foo\GED.py", line 105, in __init__
-    self.read_indi()
-  File "C:\Users\64937\OneDrive\Documents\SSW\555\SSW555_TeamPrj\foo\GED.py", line 111, in read_indi
-    dd = get_indi(self.working_path, self.filename)
-  File "C:\Users\64937\OneDrive\Documents\SSW\555\SSW555_TeamPrj\foo\CheckGED.py", line 121, in get_indi
-    result = list(check_input_output(path, filename))
-  File "C:\Users\64937\OneDrive\Documents\SSW\555\SSW555_TeamPrj\foo\CheckGED.py", line 49, in check_input_output
-    fp.close()
-UnboundLocalError: local variable 'fp' referenced before assignment
-
+test_family_01_01 (TestGED_us16.Test_us16_01)
+Test us16_male_last_names() for famil 1 ... ok
+test_family_01_02 (TestGED_us16.Test_us16_01)
+Test us16_male_last_names() for famil 2 ... ok
+test_family_01_03 (TestGED_us16.Test_us16_01)
+Test us16_male_last_names() for famil 3 ... ok
+test_family_02_01 (TestGED_us16.Test_us16_02)
+Test us16_male_last_names() for famil 1 ... ok
+test_family_02_02 (TestGED_us16.Test_us16_02)
+Test us16_male_last_names() for famil 2 ... ok
+test_family_02_03 (TestGED_us16.Test_us16_02)
+Test us16_male_last_names() for famil 3 ... ok
 
 ----------------------------------------------------------------------
-Ran 50 tests in 0.039s
+Ran 55 tests in 0.040s
 
-FAILED (errors=4)
+OK
