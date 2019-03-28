@@ -672,6 +672,31 @@ class Repository():
                             raise TypeError("Wrong birthday between siblings")
             return True
 
+    # us17 No marriages to children
+    def us17_No_marriages_to_children(self):
+        '''Parents should not marry any of their children'''
+        for fam_1 in self.Familis.values():
+            for fam_2 in self.Familis.values():
+                if fam_1.hus_id != "NA" and fam_1.wife_id != "NA":
+                    
+                    if fam_1.hus_id in fam_2.child_id and fam_1.wife_id == fam_2.wife_id:
+                        return f"The father {fam_1.hus_id} of {fam_1.fam_ID} marriages to children {fam_2.child_id}"
+                    elif fam_1.wife_id in fam_2.child_id and fam_1.hus_id == fam_2.hus_id:
+                        return f"The mother {fam_1.wife_id} of {fam_1.fam_ID} marriages to children {fam_2.child_id}"
+        else:
+            return "No marriages to children"
+    
+    # us18 Siblings should not marry
+    def us18_Siblings_should_not_marry(self):
+        '''Siblings should not marry one another'''
+        for fam_1 in self.Familis.values():
+            for fam_2 in self.Familis.values():
+                # family can't only have child ID with parents' ID "NA"
+                if fam_1.hus_id in fam_2.child_id and fam_1.wife_id in fam_2.child_id:
+                    return f"The Siblings of {fam_2.fam_ID} marriages"
+        else:
+            return "No Siblings marriages"
+
 def main():
     path = input("Input path: ")
     filename = input("Input filename: ")
