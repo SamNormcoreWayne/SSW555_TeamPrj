@@ -671,6 +671,36 @@ class Repository():
                         if ((child_1._bday - child_2._bday).days > 2) or ((child_1._bday - child_2._bday).days < 240):
                             raise TypeError("Wrong birthday between siblings")
             return True
+    
+    # us_21 Correct gender for role
+    def us21_correct_gender(self):
+    "Husband in family should be male and wife in family should be female"
+    for fam in self.Familis.values():
+        if self.People[fam.hus_id]._gender != "M" or self.People[fam.wife_id]._gender != "F":
+            raise ValueError(f'The role of {fam.fam_ID} is incorrect')
+    else:
+        return 'corret'
+
+    # us_22 Unique IDs
+    def us22_unique_fam_IDs(self):
+        '''All family IDs should be unique'''
+        count_fam_id = []
+        for fam_1 in self.Familis.values():
+            count_fam_id.append(fam_1.fam_ID)
+         if len(count_fam_id) != len(set(count_fam_id)):
+        raise ValueError("family IDs are not unique")
+    else:
+        return "All family IDs are unique"
+
+    def us22_unique_indi_IDs(self):
+    '''All individual IDs should be unique'''
+    count_indi_id = []
+    for indi_1 in self.People.values():
+        count_indi_id.append(indi_1._id)
+    if len(count_indi_id) != len(set(count_indi_id)):
+        raise ValueError("Individual IDs are not unique")
+    else:
+        return "All individuals IDs are unique"
 
 def main():
     path = input("Input path: ")
@@ -678,7 +708,6 @@ def main():
     rep = Repository(filename=filename, dir_path=path)
     rep.individual_pt()
     rep.output_family()
-
 
 
 if __name__ == "__main__":
