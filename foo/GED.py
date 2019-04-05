@@ -536,40 +536,32 @@ class Repository():
             return "No Children"
 
     #us_14
-    def us14_multiple_birth_less_5(self, fam_id):
+    def us14_multiple_birth_less_5(self):
         """Given a fam_id, check for all child's birthday within the family, no more than 5 siblings should be born at the same time"""
-        fam = self.Familis[fam_id]
-        result = ''
+        for fam_id, fam in self.Familis.items():
 
-        if len(fam.child_id) < 5:
-            result = 'Good'
-        
-        else:
-            dd = defaultdict(int)
-            for i in fam.child_id:  #Initiate the defaultdict if there is nothing in dd.keys()
-                if dd.keys() == []:
-                    dd[self.People[i]._bday] += 1
-                else:
-                    for date in dd.keys():  #If there is something in dd,keys(), compare the birthday of new child_id with all existing key in dd.keys()
-                        dt1 = datetime.datetime.strptime(self.People[i]._bday, '%d %b %Y')
-                        dt2 = datetime.datetime.strptime(date, '%d %b %Y')
-                        days = abs(dt1 - dt2).days      #How many dates in between birthday of new child_id and one existing key in dd
-                        if 0 <= days <= 1:  #If within one date, add to existing key
-                            dd[date] += 1
-                            break
-                    
+            if len(fam.child_id) >= 5:  #Check for family with more than 5 children
+
+                dd = defaultdict(int)
+                for i in fam.child_id:  #Initiate the defaultdict if there is nothing in dd.keys()
+                    if dd.keys() == []:
+                        dd[self.People[i]._bday] += 1
                     else:
-                        dd[self.People[i]._bday] += 1   #If more than one date, count as new key.
-            
-            for num in dd.values():
-                if num >= 5:
-                    result  = 'Error: Multiple birth more than 5'
-                    break
-            
-            else:
-                result = 'Good'
+                        for date in dd.keys():  #If there is something in dd,keys(), compare the birthday of new child_id with all existing key in dd.keys()
+                            dt1 = datetime.datetime.strptime(self.People[i]._bday, '%d %b %Y')
+                            dt2 = datetime.datetime.strptime(date, '%d %b %Y')
+                            days = abs(dt1 - dt2).days      #How many dates in between birthday of new child_id and one existing key in dd
+                            if 0 <= days <= 1:  #If within one date, add to existing key
+                                dd[date] += 1
+                                break
+                        
+                        else:
+                            dd[self.People[i]._bday] += 1   #If more than one date, count as new key.
+                
+                for num in dd.values():
+                    if num >= 5:
+                        print(f"Error: FAMILY<{fam_id}>, US14: Multiple birth more than 5!")
 
-        return f"ID: {fam_id}, Reslut: {result}"
 
     #us_11
     def US11_No_Bigamy(self):
@@ -600,30 +592,20 @@ class Repository():
 
 
     #us_16
-    def us16_male_last_names(self, fam_id):
+    def us16_male_last_names(self):
         """Check within a family to see if husband's lastname matches with child's lastname"""
-        fam = self.Familis[fam_id]
-        hus_lastname = ''
-        child_lastname = []
-        if fam.hus_id == 'NA':
-            raise ValueError("Husband not found")
-        elif fam.child_id == ['NA']:
-            raise ValueError("Child not found")
-        else:
-            hus_lastname = (self.People[fam.hus_id]._name).rstrip('/').split('/').pop()
-            for i in fam.child_id:
-                child_lastname.append((self.People[i]._name).rstrip('/').split('/').pop())
+        for fam in self.Familis.values():
+            hus_lastname = ''
+            child_lastname = []
+            if fam.hus_id != 'NA' and fam.child_id != ['NA']:
+                hus_lastname = (self.People[fam.hus_id]._name).rstrip('/').split('/').pop()
+                for i in fam.child_id:
+                    child_lastname.append((self.People[i]._name).rstrip('/').split('/').pop())
 
-            for i in child_lastname:
-                if i != hus_lastname:
-                    result = "Error: Last names don't match"
-                    break
-            else:
-                result = "Good"
-        
-        print(hus_lastname, child_lastname)
-        
-        return f"ID: {fam_id}, Result: {result}"
+                for i in child_lastname:
+                    if i != hus_lastname:
+                        print(f"Error: FAMILY:<{fam.fam_ID}>, US16: Last names don't match")
+
 
     #us_13
     def us13_sibling_spacing(self, fam_id):
@@ -661,6 +643,8 @@ def main():
     rep.output_family()
     rep.us02_birth_b4_marriage()
     rep.us05_marriage_b4_death()
+    rep.us16_male_last_names()
+    rep.us14_multiple_birth_less_5()
 
 
 
