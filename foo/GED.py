@@ -371,6 +371,8 @@ class Repository():
             elif (ind_date_1 is None) or (ind_date_2 is None):
                 # print("ANOMALY: FAMILY: us06: {ind_ID_1} or {ind_ID_2} death date not exist".format(ind_ID_1=ind_ID_1, ind_ID_2=ind_ID_2))
                 raise ValueError("ANOMALY: FAMILY: us06: {ind_ID_1} or {ind_ID_2} death date not exist".format(ind_ID_1=ind_ID_1, ind_ID_2=ind_ID_2))
+            else:
+                return True
 
     # us_07
     def us07_age_less_150(self, individual_ID):
