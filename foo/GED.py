@@ -193,6 +193,8 @@ class Repository():
     # us_01
     def us_01_birth_b4_now(self):
         for person in self.People.values():
+            if person._bday == 'N/A':
+                print("ERROR: INDIVIDUAL: us01: {id} birthday not exist".format(id=person._id))
             yield datetime.datetime.strptime(person._bday, '%d %b %Y')
 
     # us_02
@@ -355,13 +357,20 @@ class Repository():
             fam_date = self.store_divorce_date(fam_ID)
             ind_date_1 = self.store_death_date(ind_ID_1)
             ind_date_2 = self.store_death_date(ind_ID_2)
-        except ValueError:
-            raise ValueError("Check Individual ID or Family ID")
+        except ValueError as e:
+            if e == "Check Individual ID":
+                # print("ERROR: INDIVIDUAL: us06: Individual not exist")
+                raise ValueError("ERROR: INDIVIDUAL: us06: Individual not exist")
+            if e == "Check Family ID":
+                # print("ERROR: FAMILY: us06: Family not exist")
+                raise ValueError("ERROR: INDIVIDUAL: us06: Individual not exist")
         else:
-            if (fam_date is None) or (ind_date_1 is None) or (ind_date_2 is None):
-                raise ValueError("Birthday or divorce date does not exist")
-            else:
-                return True
+            if (fam_date is None):
+                # print("ANOMALY: FAMILY: us06: {fam_ID} divorce data not exist".format(fam_ID=fam_ID))
+                raise ValueError("ANOMALY: FAMILY: us06: {fam_ID} divorce data not exist".format(fam_ID=fam_ID))
+            elif (ind_date_1 is None) or (ind_date_2 is None):
+                # print("ANOMALY: FAMILY: us06: {ind_ID_1} or {ind_ID_2} death date not exist".format(ind_ID_1=ind_ID_1, ind_ID_2=ind_ID_2))
+                raise ValueError("ANOMALY: FAMILY: us06: {ind_ID_1} or {ind_ID_2} death date not exist".format(ind_ID_1=ind_ID_1, ind_ID_2=ind_ID_2))
 
     # us_07
     def us07_age_less_150(self, individual_ID):
@@ -524,13 +533,13 @@ class Repository():
             if fam.wife_id != 'NA':
                 wife = self.getPeople(fam.wife_id)
                 if wife._age == "N/A":
-                    raise TypeError("Wife age does not exist. ")
+                    raise TypeError("ERROR: INDIVIDUAL: us12: Wife age does not exist. ")
             else:
                 wife = None
             if fam.hus_id != 'NA':
                 hus = self.getPeople(fam.hus_id)
                 if hus._age == "N/A":
-                    raise TypeError("Husband age does not exist. ")
+                    raise TypeError("ERROR: INDIVIDUAL: us12: Husband age does not exist. ")
             else:
                 hus = None
             if fam.child_id != ['NA']:
@@ -543,13 +552,13 @@ class Repository():
             if (childs is not None):
                 for child in childs:
                     if child._age == "N/A":
-                        raise TypeError("Child {id} age does not exist.".format(id=child._id))
+                        raise TypeError("ERROR: INDIVIDUAL: us12: Child {id} age does not exist.".format(id=child._id))
 
                 for child in childs:
                     if ((wife._age - child._age) > 60) and (wife is not None):
-                        raise TypeError("Mother is too young or child {id} is too old!".format(id=child._id))
+                        raise TypeError("ANORMALY: INDIVIDUAL: us12: Mother is too young or child {id} is too old!".format(id=child._id))
                     if ((hus._age - child._age) > 80) and (hus is not None):
-                        raise TypeError("Father is too young or child {id} is too old!".format(id=child._id))
+                        raise TypeError("ANORMALY: INDIVIDUAL: us12: Father is too young or child {id} is too old!".format(id=child._id))
                 return True
             return "No Children"
 
@@ -654,7 +663,7 @@ class Repository():
                     child_lst.append(self.getPeople(id))
                 break
         else:
-            raise KeyError
+            raise KeyError("ERROR: FAMILY: us13: {fam_id} not exist".format(fam_id))
         
         if len(child_lst) <= 1:
             """
@@ -669,7 +678,7 @@ class Repository():
                             It cannot be the same person
                         """
                         if ((child_1._bday - child_2._bday).days > 2) or ((child_1._bday - child_2._bday).days < 240):
-                            raise TypeError("Wrong birthday between siblings")
+                            raise TypeError("ANORMALY: INDIVIDUAL: us13: Wrong birthday between siblings {child_id_1}, {child_id_2}".format(child_1, child_2))
             return True
 
 def main():
@@ -678,7 +687,18 @@ def main():
     rep = Repository(filename=filename, dir_path=path)
     rep.individual_pt()
     rep.output_family()
-
+    try:
+        rep.us13_sibling_spacing("@F5@")
+        rep.compare_divrdate_ddate("@F3@", "@I2@", "@I3@")
+    except ValueError as e:
+        print(e)
+    except KeyError as ke:
+        print(ke)
+    rep.us_01_birth_b4_now()
+    try:
+        rep.us12_parents_not_2_old()
+    except TypeError as te:
+        print(te)
 
 
 if __name__ == "__main__":
