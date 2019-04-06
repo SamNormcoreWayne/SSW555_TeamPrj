@@ -194,8 +194,9 @@ class Repository():
     def us_01_birth_b4_now(self):
         for person in self.People.values():
             if person._bday == 'N/A':
-                print("ERROR: INDIVIDUAL: us01: {id} birthday not exist".format(id=person._id))
-            yield datetime.datetime.strptime(person._bday, '%d %b %Y')
+                yield("ERROR: INDIVIDUAL: us01: {id} birthday not exist".format(id=person._id))
+            else:
+                yield datetime.datetime.strptime(person._bday, '%d %b %Y')
 
     # us_02
     def us02_birth_b4_marriage(self, fam_id):
@@ -665,7 +666,7 @@ class Repository():
                     child_lst.append(self.getPeople(id))
                 break
         else:
-            raise KeyError("ERROR: FAMILY: us13: {fam_id} not exist".format(fam_id))
+            raise KeyError("ERROR: FAMILY: us13: {fam_id} not exist".format(fam_id=fam_id))
         
         if len(child_lst) <= 1:
             """
@@ -679,24 +680,24 @@ class Repository():
                         """
                             It cannot be the same person
                         """
-                        if ((child_1._bday - child_2._bday).days > 2) or ((child_1._bday - child_2._bday).days < 240):
+                        if ((datetime.datetime.strptime(child_1._bday, '%d %b %Y').days - datetime.datetime.strptime(child_2._bday, '%d %b %Y')).days > 2) or ((datetime.datetime.strptime(child_1._bday, '%d %b %Y').days - datetime.datetime.strptime(child_2._bday, '%d %b %Y')).days < 240):
                             raise TypeError("ANORMALY: INDIVIDUAL: us13: Wrong birthday between siblings {child_id_1}, {child_id_2}".format(child_1, child_2))
             return True
 
 def main():
-    path = input("Input path: ")
-    filename = input("Input filename: ")
-    rep = Repository(filename=filename, dir_path=path)
+    docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
+    rep = Repository(filename = "what_a_mass.ged", dir_path = os.path.join(docs_dir, 'docs'))
     rep.individual_pt()
     rep.output_family()
+    
     try:
-        rep.us13_sibling_spacing("@F5@")
-        rep.compare_divrdate_ddate("@F3@", "@I2@", "@I3@")
-    except ValueError as e:
-        print(e)
+        rep.us13_sibling_spacing("@F10@")
     except KeyError as ke:
         print(ke)
-    rep.us_01_birth_b4_now()
+    try:
+        rep.compare_divrdate_ddate("@F4@", "@I10@", "@I11@")
+    except ValueError as e:
+        print(e)
     try:
         rep.us12_parents_not_2_old()
     except TypeError as te:
