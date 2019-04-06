@@ -689,8 +689,24 @@ class Repository():
                 if len(same_bday) == 1:
                     print(f"ANOMALY: INDIVIDULE:<{ind_id}>, US23: Name:<{individule._name}>, <{len(same_name)}> duplicate names were found; No duplicate birthday were found")
                 else:
-                    print(f"ANOMALY: INDIVIDULE:<{ind_id}>, US23: Name:<{individule._name}>, ERROR: Found individule with same name and birthday!")
+                    print(f"ERROR: INDIVIDULE:<{ind_id}>, US23: Name:<{individule._name}>, ERROR: Found individule with same name and birthday!")
 
+    #us_24
+    def us24_unique_family_by_spouse(self):
+        """Go through instances of Families and check for same spouses' names and marriage dates"""
+        for fam_id, fam in self.Familis.items():
+            if fam.mar_date != 'NA':
+                count = 0
+                mdt = []
+                for i in self.Familis.values():
+                    if i.hus_id == fam.hus_id and i.wife_id == fam.wife_id:
+                        mdt.append(i.mar_date)
+                        count += 1
+                if count > 1:
+                    for date in mdt:
+                        if date == fam.mar_date:
+                            print(f"ERROR: FAMILY:<{fam_id}>, US24: Families with same spouses and same marriage!")
+                    
 
 def main():
     path = input("Input path: ")
@@ -699,6 +715,7 @@ def main():
     rep.individual_pt()
     rep.output_family()
     rep.us23_unique_name_and_birthday()
+    rep.us24_unique_family_by_spouse()
 
 
 
