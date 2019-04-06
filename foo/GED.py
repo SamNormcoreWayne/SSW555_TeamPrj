@@ -674,40 +674,45 @@ class Repository():
     
     # us_21 Correct gender for role
     def us21_correct_gender(self):
-    "Husband in family should be male and wife in family should be female"
-    for fam in self.Familis.values():
-        if self.People[fam.hus_id]._gender != "M" or self.People[fam.wife_id]._gender != "F":
-            raise ValueError(f'The role of {fam.fam_ID} is incorrect')
-    else:
-        return 'corret'
+        '''Husband in family should be male and wife in family should be female'''
+        for fam in self.Familis.values():
+            if fam.hus_id != "NA" and fam.wife_id != "NA":
+                if self.People[fam.hus_id]._gender != "M" or self.People[fam.wife_id]._gender != "F":
+                    print(f"ERROR: US21: FAMILY:<{fam.fam_ID}> The role is incorrect")
+            else:
+                print(f"ANOMALY: US21: Family{fam.fam_ID}> can't compare if the roles of parents are correct")
 
     # us_22 Unique IDs
     def us22_unique_fam_IDs(self):
         '''All family IDs should be unique'''
         count_fam_id = []
-        for fam_1 in self.Familis.values():
-            count_fam_id.append(fam_1.fam_ID)
-         if len(count_fam_id) != len(set(count_fam_id)):
-        raise ValueError("family IDs are not unique")
-    else:
-        return "All family IDs are unique"
+        for fam in self.Familis.values():
+            count_fam_id.append(fam.fam_ID)
+            if len(count_fam_id) != len(set(count_fam_id)):
+                print(f"ERROR: US22: FAMILY:<{fam.fam_ID}> is not unique")
+
+
 
     def us22_unique_indi_IDs(self):
-    '''All individual IDs should be unique'''
-    count_indi_id = []
-    for indi_1 in self.People.values():
-        count_indi_id.append(indi_1._id)
-    if len(count_indi_id) != len(set(count_indi_id)):
-        raise ValueError("Individual IDs are not unique")
-    else:
-        return "All individuals IDs are unique"
+        '''All individual IDs should be unique'''
+        count_indi_id = []
+        for indi_1 in self.People.values():
+            count_indi_id.append(indi_1._id)
+            if len(count_indi_id) != len(set(count_indi_id)):
+                print(f"ERROR: US22: INDIVIDUAL:<{indi_1._id}> is not unique")
+
 
 def main():
-    path = input("Input path: ")
-    filename = input("Input filename: ")
+    '''path = input("Input path: ")
+    filename = input("Input filename: ")'''
+    path = r"D:\sit study\SSW555\PJ"
+    filename = r"Project01_Xiaomeng Xu.ged"
     rep = Repository(filename=filename, dir_path=path)
     rep.individual_pt()
     rep.output_family()
+    rep.us21_correct_gender()
+    rep.us22_unique_fam_IDs()
+    rep.us22_unique_indi_IDs()
 
 
 if __name__ == "__main__":
