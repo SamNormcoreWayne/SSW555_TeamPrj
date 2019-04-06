@@ -673,27 +673,23 @@ class Repository():
             return True
 
     #us_23
-    def us23_unique_name_and_birthday(self, ind_id):
+    def us23_unique_name_and_birthday(self):
         """Go through instances of individuals and check for same names and birthdays"""
-        individule = self.People[ind_id]
-        same_name = []
-        same_bday = []
-        for i in self.People.keys():
-            if self.People[i]._name == individule._name:
-                same_name.append(i)
-        
-        if len(same_name) == 1:
-            result = f"ID:{ind_id}, Name:{individule._name}, No duplicate names were found"
-        else:
-            for j in same_name:
-                if self.People[j]._bday == individule._bday:
-                    same_bday.append(j)
-            if len(same_bday) == 1:
-                result = f"ID:{ind_id}, Name:{individule._name}, {len(same_name)} duplicate names were found; No duplicate birthday were found"
-            else:
-                raise ValueError(f"ID:{ind_id}, Name:{individule._name}, ERROR: Found individule with same name and birthday!")
-        
-        return result
+        for ind_id, individule in self.People.items():
+            same_name = []
+            same_bday = []
+            for i in self.People.keys():
+                if self.People[i]._name == individule._name:
+                    same_name.append(i)
+            
+            if len(same_name) > 1:
+                for j in same_name:
+                    if self.People[j]._bday == individule._bday:
+                        same_bday.append(j)
+                if len(same_bday) == 1:
+                    print(f"ANOMALY: INDIVIDULE:<{ind_id}>, US23: Name:<{individule._name}>, <{len(same_name)}> duplicate names were found; No duplicate birthday were found")
+                else:
+                    print(f"ANOMALY: INDIVIDULE:<{ind_id}>, US23: Name:<{individule._name}>, ERROR: Found individule with same name and birthday!")
 
 
 def main():
@@ -702,11 +698,7 @@ def main():
     rep = Repository(filename=filename, dir_path=path)
     rep.individual_pt()
     rep.output_family()
-    for i in rep.People.keys():
-        try:
-            print(rep.us23_unique_name_and_birthday(i))
-        except ValueError as err:
-            print(err)
+    rep.us23_unique_name_and_birthday()
 
 
 
