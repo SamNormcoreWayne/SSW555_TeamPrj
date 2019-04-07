@@ -7,19 +7,8 @@ install:
   - pip install PrettyTable
 script:
   - cd foo
-  - python -m unittest tests.TestGED_us01
-  - python -m unittest tests.TestGED_us02
-  - python -m unittest tests.TestGED_us03_us04
-  - python -m unittest tests.TestGED_us05
-  - python -m unittest tests.TestGED_us06
   - python -m unittest tests.TestGED_us07
-  - python -m unittest tests.TestGED_us08
-  - python -m unittest tests.TestGED_us09
   - python -m unittest tests.TestGED_us10
   - python -m unittest tests.TestGED_us11
   - python -m unittest tests.TestGED_us15
-  - python -m unittest tests.TestGED_us16
-  - python -m unittest tests.TestGED_us12
-  - python -m unittest tests.TestGED_us13
-  - python -m unittest tests.TestGED_us14
   - python -m unittest test_report
