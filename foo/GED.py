@@ -610,6 +610,7 @@ class Repository():
     #us_16
     def us16_male_last_names(self):
         """Check within a family to see if husband's lastname matches with child's lastname"""
+        result = []
         for fam in self.Familis.values():
             hus_lastname = ''
             child_lastname = []
@@ -621,6 +622,10 @@ class Repository():
                 for i in child_lastname:
                     if i != hus_lastname:
                         print(f"Error: FAMILY:<{fam.fam_ID}>, US16: Last names don't match")
+                        result.append(f"Error: FAMILY:<{fam.fam_ID}>")
+
+        print(result)
+        return result
 
 
     #us_13
@@ -659,8 +664,8 @@ def main():
     rep.output_family()
     #rep.us02_birth_b4_marriage()
     #rep.us05_marriage_b4_death()
-    #rep.us16_male_last_names()
-    rep.us14_multiple_birth_less_5()
+    rep.us16_male_last_names()
+    #rep.us14_multiple_birth_less_5()
 
 
 

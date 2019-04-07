@@ -8,36 +8,23 @@ from GED import Repository
 docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
 a = Repository(filename='Project_t16.ged', dir_path=os.path.join(docs_dir, 'docs'))
 
-class Test_us16_01(unittest.TestCase):
+class Test_us16_a(unittest.TestCase):
     """Tests conducted on file 'Project_t16.ged'"""
 
-    def test_family_01_01(self):
-        """Test us16_male_last_names() for famil 1"""
-        self.assertRaises(ValueError, a.us16_male_last_names, '@F1@')
-
-    def test_family_01_02(self):
-        """Test us16_male_last_names() for famil 2"""
-        self.assertEqual(a.us16_male_last_names('@F2@'), "ID: @F2@, Result: Error: Last names don't match")
-
-    def test_family_01_03(self):
-        """Test us16_male_last_names() for famil 3"""
-        self.assertEqual(a.us16_male_last_names('@F3@'), "ID: @F3@, Result: Error: Last names don't match")
-
+    def test_family_a(self):
+        """Test conducted on file'Project_t16.ged'"""
+        self.assertEqual(a.us16_male_last_names(), ['Error: FAMILY:<@F2@>', 'Error: FAMILY:<@F3@>', 'Error: FAMILY:<@F4@>'])
 
 b = Repository(filename='Project01_Xiaomeng Xu.ged', dir_path=os.path.join(docs_dir, 'docs'))
 
-class Test_us16_02(unittest.TestCase):
+class Test_us16_b(unittest.TestCase):
     """Tests conducted on file 'Project01_Xiaomeng Xu.ged'"""
 
-    def test_family_02_01(self):
-        """Test us16_male_last_names() for famil 1"""
-        self.assertRaises(ValueError, b.us16_male_last_names, '@F1@')
+    def test_family_b(self):
+        """Tests conducted on file 'Project01_Xiaomeng Xu.ged'"""
+        self.assertEqual(b.us16_male_last_names(), [])
 
-    def test_family_02_02(self):
-        """Test us16_male_last_names() for famil 2"""
-        self.assertEqual(b.us16_male_last_names('@F2@'), "ID: @F2@, Result: Good")
-    
-    def test_family_02_03(self):
-        """Test us16_male_last_names() for famil 3"""
-        self.assertEqual(b.us16_male_last_names('@F3@'), "ID: @F3@, Result: Good")
 
+if __name__ == '__main__':
+    print('Running unit tests')
+    unittest.main(exit = False, verbosity= 2)
