@@ -22,7 +22,7 @@ class Test_us24_b(unittest.TestCase):
 
     def test_us24_b(self):
         """Test us24_unique_family_by_spouse()"""
-        self.assertEqual(b.us24_unique_family_by_spouse(), {})
+        self.assertEqual(b.us24_unique_family_by_spouse(), set())
 
 
 if __name__ == '__main__':
