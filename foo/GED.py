@@ -238,6 +238,7 @@ class Repository():
 
     def us03_birth_b4_death(self):
         ''' compare individual death date and married date by id in family tree'''
+        result_list = []
         for indi_id in self.People:
             birth_date = self.find_indi_bdate(indi_id)
 
@@ -246,29 +247,34 @@ class Repository():
             if birth_date is None:
                 print(
                     f"ANOMALY: US03: Individual{indi_id}> doesn't have birth date")
+                result_list.append(f"ANOMALY: US03: Individual{indi_id}> doesn't have birth date")
             elif death_date:
                 death_date = datetime.datetime.strptime(death_date, "%d %b %Y")
                 birth_date = datetime.datetime.strptime(birth_date, "%d %b %Y")
                 if death_date < birth_date:
-                    print(
-                        f"ERROR: US03: Individual{indi_id}> birth date is after death date")
+                    print(f"ERROR: US03: Individual{indi_id}> birth date is after death date")
+                    result_list.append(f"ERROR: US03: Individual{indi_id}> birth date is after death date")
+        return result_list
 
     # us_04
 
     def us04_marriage_b4_divoce(self):
         """Compare marriage date and divoce date(if available) for each family"""
+        result_list = []
 
         for fam_id in self.Familis:
             mar_date = self.Familis[fam_id].mar_date
             div_date = self.Familis[fam_id].div_date
             if mar_date == 'NA':
                 print(f"ANOMALY: US04: FAMILY:<{fam_id}> No marriage date")
+                result_list.append(f"ANOMALY: US04: FAMILY:<{fam_id}> No marriage date")
             elif div_date != 'NA':
                 mar_dt = datetime.datetime.strptime(mar_date, "%Y-%m-%d")
                 div_dt = datetime.datetime.strptime(div_date, "%Y-%m-%d")
                 if mar_dt > div_dt:  # Check if marriage date comes after divoce date
-                    print(
-                        f"ERROR: US04: FAMILY:<{fam_id}> Divoce before Marriage")
+                    print(f"ERROR: US04: FAMILY:<{fam_id}> Divoce before Marriage")
+                    result_list.append(f"ERROR: US04: FAMILY:<{fam_id}> Divoce before Marriage")
+        return result_list
 
     # us_05
     def us05_marriage_b4_death(self):
@@ -380,6 +386,7 @@ class Repository():
 
     def us08_birth_b4_parents_marriage(self):
         '''Children should be born after marriage of parents (and not more than 9 months after their divorce)'''
+        result_list = []
 
         for indi_id in self.People:
             birth_date = self.find_indi_bdate(indi_id)
@@ -389,14 +396,19 @@ class Repository():
             birth_date = datetime.datetime.strptime(birth_date, "%d %b %Y")
             if divoce_date == "Can't find!" or married_date == "Can't find!" or married_date is None:
                 print(f"ANOMALY: US08: Individual{indi_id}> Can't compare marriage date and divorce date")
+                result_list.append(f"ANOMALY: US08: Individual{indi_id}> Can't compare marriage date and divorce date")
             else:
                 married_date = datetime.datetime.strptime(married_date, "%Y-%m-%d")
                 if birth_date < married_date:
                     print(f"ERROR: US08: Individual{indi_id}> Birth date is before Marriage")
+                    result_list.append(f"ERROR: US08: Individual{indi_id}> Birth date is before Marriage")
                 if divoce_date:
                     last_date = datetime.datetime.strptime(divoce_date, "%Y-%m-%d") + datetime.timedelta(days=+270)
                     if last_date <= birth_date:
                         print(f"ERROR: US08: Individual{indi_id}> Birth date is before Marriage")
+                        result_list.append(f"ERROR: US08: Individual{indi_id}> Birth date is before Marriage")
+
+        return result_list
 
     # us_09
     def find_mother_id(self, ind_id):
@@ -441,6 +453,8 @@ class Repository():
 
     def us09_birth_b4_parents_death(self):
         '''Child should be born before death of mother and before 9 months after death of father'''
+        result_list = []
+        
         for ind_id in self.People:
 
             birth_date = self.find_indi_bdate(ind_id)
@@ -448,18 +462,22 @@ class Repository():
             mother_ddate = self.find_indi_ddate(mother_id)
             father_id = self.find_father_id(ind_id)
             father_ddate = self.find_indi_ddate(father_id)
+            
             try:
                 datetime.datetime.strptime(father_ddate, "%d %b %Y")
                 mother_ddate_dt = datetime.datetime.strptime(mother_ddate, "%d %b %Y")
                 birth_date_dt = datetime.datetime.strptime(birth_date, "%d %b %Y")
             except TypeError:
                 print(f"ANOMALY: US09: Individual{ind_id}> Can't compare birth date and parents' death date")
+                result_list.append(f"ANOMALY: US09: Individual{ind_id}> Can't compare birth date and parents' death date")
 
             else:
                 last_date = datetime.datetime.strptime(father_ddate, "%d %b %Y") + datetime.timedelta(days=+270)
                 if birth_date_dt > last_date or birth_date_dt > mother_ddate_dt:
                 
                     print(f"ERROR: US09: Individual{ind_id}> Birth date is after parents' death date")
+                    result_list.append(f"ERROR: US09: Individual{ind_id}> Birth date is after parents' death date")
+        return result_list
 
     # us_10
 
@@ -644,6 +662,7 @@ def main():
     filename = input("Input filename: ")'''
     path = r"D:\sit study\SSW555\PJ"
     filename = r"Project01_Xiaomeng Xu.ged"
+    filename = r"Project_t03.ged"
     rep = Repository(filename=filename, dir_path=path)
     rep.individual_pt()
     rep.output_family()
@@ -655,7 +674,9 @@ def main():
     rep.us09_birth_b4_parents_death()
     rep.us16_male_last_names()
     rep.us14_multiple_birth_less_5()
+    
 
 
 if __name__ == "__main__":
     main()
+    
