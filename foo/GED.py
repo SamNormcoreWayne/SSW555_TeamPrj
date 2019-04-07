@@ -691,6 +691,7 @@ class Repository():
         '''Parents should not marry any of their children'''
         family_list = list(self.Familis.values())
         i = 1
+        result_list = []
         for fam_1 in family_list:
             for fam_2 in family_list[i:]:
                 if fam_1.hus_id != "NA" and fam_1.wife_id != "NA":
@@ -698,11 +699,14 @@ class Repository():
                     if fam_1.hus_id in fam_2.child_id and fam_1.wife_id == fam_2.wife_id:
                         print(
                             f"ERROR: US17: FAMILY {fam_1.fam_ID} father {fam_1.hus_id}> marriages to children {fam_2.child_id}")
+                        result_list.append(
+                            f"ERROR: US17: FAMILY {fam_1.fam_ID} father {fam_1.hus_id}> marriages to children {fam_2.child_id}")
 
                     elif fam_1.wife_id in fam_2.child_id and fam_1.hus_id == fam_2.hus_id:
-                        print(
-                            f"ERROR: US17: FAMILY {fam_1.fam_ID} mother {fam_1.wife_id}> marriages to children {fam_2.child_id}")
+                        print(f"ERROR: US17: FAMILY {fam_1.fam_ID} mother {fam_1.wife_id}> marriages to children {fam_2.child_id}")
+                        result_list.append(f"ERROR: US17: FAMILY {fam_1.fam_ID} mother {fam_1.wife_id}> marriages to children {fam_2.child_id}")
             i += 1
+        return result_list
 
     # us18 Siblings should not marry
 
@@ -710,26 +714,32 @@ class Repository():
         '''Siblings should not marry one another'''
         family_list = list(self.Familis.values())
         i = 1
+        result_list = []
+
         for fam_1 in family_list:
             for fam_2 in family_list[i:]:
                 # family can't only have child ID with parents' ID "NA"
                 if fam_1.hus_id in fam_2.child_id and fam_1.wife_id in fam_2.child_id:
                     print(f"ERROR: US18: FAMILY {fam_2.fam_ID} marriages")
+                    result_list.append(f"ERROR: US18: FAMILY {fam_2.fam_ID} marriages")
 
             i += 1
+        return result_list
 
 
 def main():
     '''path = input("Input path: ")
     filename = input("Input filename: ")'''
     path = r"D:\sit study\SSW555\PJ"
-    filename = r"Project01_Xiaomeng Xu.ged"
-    filename = r"Project01_Pli.ged"
+    filename = r"Project_t17.ged"
+    #filename = r"Project01_Pli.ged"
     rep = Repository(filename=filename, dir_path=path)
     rep.individual_pt()
     rep.output_family()
-    rep.us17_No_marriages_to_children()
-    rep.us18_Siblings_should_not_marry()
+    a = rep.us17_No_marriages_to_children()
+    b = rep.us18_Siblings_should_not_marry()
+    print(a)
+    print(b)
 
 
 if __name__ == "__main__":
