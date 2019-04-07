@@ -198,6 +198,7 @@ class Repository():
     # us_02
     def us02_birth_b4_marriage(self):
         """For a givenn fam_id, check the family marriage date and birthday for each individual, retuen the result"""
+        result = []
         for fam_id in self.Familis.keys():
             if self.Familis[fam_id].mar_date != 'NA':
                 
@@ -210,6 +211,11 @@ class Repository():
                         bdt = datetime.datetime.strptime(self.People[child_id]._bday, '%d %b %Y')
                         if bdt < mdt:
                             print(f"ANOMALY: FAMILY:<{fam_id}>, US02: Child<{child_id}> born {bdt} before marriage on {mdt}")
+                            result.append(f"ANOMALY: FAMILY:<{fam_id}>")
+        
+        #print(result)
+        return result
+ 
                 
 
 
@@ -642,9 +648,9 @@ def main():
     rep.individual_pt()
     rep.output_family()
     rep.us02_birth_b4_marriage()
-    rep.us05_marriage_b4_death()
-    rep.us16_male_last_names()
-    rep.us14_multiple_birth_less_5()
+    #rep.us05_marriage_b4_death()
+    #rep.us16_male_last_names()
+    #rep.us14_multiple_birth_less_5()
 
 
 
