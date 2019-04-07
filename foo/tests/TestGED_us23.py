@@ -6,10 +6,10 @@ from GED import Repository
 
 
 docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
-a = Repository(filename='Project_t24.ged', dir_path=os.path.join(docs_dir, 'docs'))
+a = Repository(filename='Project_t23_t24.ged', dir_path=os.path.join(docs_dir, 'docs'))
 
 class Test_us23_a(unittest.TestCase):
-    """Tests conducted on file 'Project_t24.ged'"""
+    """Tests conducted on file 'Project_t23_t24.ged'"""
 
     def test_us23_a(self):
         """Test us23_unique_name_and_birthday()"""
