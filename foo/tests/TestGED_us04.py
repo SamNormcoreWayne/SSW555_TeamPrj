@@ -1,3 +1,10 @@
+#!/usr/bin/env python
+# coding=UTF-8
+'''
+@Author: Puzhuo Li
+@Github: https://github.com/JamesLi0217
+@Date: 2019-04-07 00:23:29
+'''
 import unittest
 import os
 from GED import Repository
@@ -6,6 +13,7 @@ from GED import Repository
 docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
 GED1 = Repository(filename='Project_t03.ged',
                   dir_path=os.path.join(docs_dir, 'docs'))
+
 
 class Test_us04_marriage_b4_divoce(unittest.TestCase):
     """These are test cases for user story 04: Check if a family's marriage date is before divoce date(if available)"""

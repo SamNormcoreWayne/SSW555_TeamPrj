@@ -24,7 +24,7 @@ class Test_us03_birth_b4_death(unittest.TestCase):
 
     def test_GED1_individual1(self):
         """Testing function on file: Project_t03.ged"""
-        self.assertRaises(['ERROR: US03: Individual@I2@> birth date is after death date',
+        self.assertEqual(['ERROR: US03: Individual@I2@> birth date is after death date',
                            'ERROR: US03: Individual@I5@> birth date is after death date'], GED1.us03_birth_b4_death())
 
 
