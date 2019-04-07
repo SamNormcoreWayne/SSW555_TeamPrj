@@ -683,6 +683,23 @@ class Repository():
                         if ((datetime.datetime.strptime(child_1._bday, '%d %b %Y').days - datetime.datetime.strptime(child_2._bday, '%d %b %Y')).days > 2) or ((datetime.datetime.strptime(child_1._bday, '%d %b %Y').days - datetime.datetime.strptime(child_2._bday, '%d %b %Y')).days < 240):
                             raise TypeError("ANORMALY: INDIVIDUAL: us13: Wrong birthday between siblings {child_id_1}, {child_id_2}".format(child_1, child_2))
             return True
+    # us_19
+    def us_19_cousins_not_marry(self, child_id):
+        child = self.People[child_id]
+        gender = child._gender
+        fam_id = self.People[child_id]._child
+        fam = self.Familis[fam_id]
+        fam_child = self.Familis[self.People[child_id]]
+        if child._spouse == 'N/A':
+            return True
+        else:
+            if gender == 'F':
+                if fam_child.hus_id in fam.child_id:
+                    return "ERROR: INDIVIDUAL: {id} marries his cousins".format(id=child_id)
+            if gender == 'M':
+                if fam_child.wife_id in fam.child_id:
+                    return "ERROR: INDIVIDUAL: {id} marries his cousins".format(id=child_id)
+        return True
 
 def main():
     docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
