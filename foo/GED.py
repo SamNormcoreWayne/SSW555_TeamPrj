@@ -311,7 +311,7 @@ class Repository():
                             print(f"ERROR: FAMILY:<{fam_id}>, US05: Individule<{key}> die on {ddt} before marriage on {mdt}")
                             result.append(f"ERROR: FAMILY:<{fam_id}>")
         
-        print(result)
+        # print(result)
         return result
 
 
@@ -345,7 +345,7 @@ class Repository():
 
         return the_date
 
-    def compare_divrdate_ddate(self, fam_ID, ind_ID_1, ind_ID_2):
+    def us_06_compare_divrdate_ddate(self, fam_ID, ind_ID_1, ind_ID_2):
         try:
             fam_date = self.store_divorce_date(fam_ID)
             ind_date_1 = self.store_death_date(ind_ID_1)
@@ -602,7 +602,7 @@ class Repository():
                         print(f"Error: FAMILY<{fam_id}>, US14: Multiple birth more than 5!")
                         result.append(f"Error: FAMILY<{fam_id}>")
     
-        print(result)
+        # print(result)
         return result
 
     # us_11
@@ -659,7 +659,7 @@ class Repository():
                         print(f"Error: FAMILY:<{fam.fam_ID}>, US16: Last names don't match")
                         result.append(f"Error: FAMILY:<{fam.fam_ID}>")
 
-        print(result)
+        # print(result)
         return result
 
     # us_13
@@ -687,25 +687,39 @@ class Repository():
                         """
                             It cannot be the same person
                         """
-                        if ((datetime.datetime.strptime(child_1._bday, '%d %b %Y').days - datetime.datetime.strptime(child_2._bday, '%d %b %Y')).days > 2) or ((datetime.datetime.strptime(child_1._bday, '%d %b %Y').days - datetime.datetime.strptime(child_2._bday, '%d %b %Y')).days < 240):
-                            raise TypeError("ANORMALY: INDIVIDUAL: us13: Wrong birthday between siblings {child_id_1}, {child_id_2}".format(child_1, child_2))
+                        if ((datetime.datetime.strptime(child_1._bday, '%d %b %Y') - datetime.datetime.strptime(child_2._bday, '%d %b %Y')).days > 2) or ((datetime.datetime.strptime(child_1._bday, '%d %b %Y') - datetime.datetime.strptime(child_2._bday, '%d %b %Y')).days < 240):
+                            raise TypeError("ANORMALY: INDIVIDUAL: us13: Wrong birthday between siblings {child_id_1}, {child_id_2}".format(child_id_1=child_1._id, child_id_2=child_2._id))
             return True
 
 
 def main():
     '''path = input("Input path: ")
     filename = input("Input filename: ")'''
-    path = r"D:\sit study\SSW555\PJ"
-    filename = r"Project01_Xiaomeng Xu.ged"
+    docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
+    rep = Repository(filename = r"what_a_mass.ged", dir_path = os.path.join(docs_dir, 'docs'))
     #filename = r"Project_t03.ged"
-    rep = Repository(filename=filename, dir_path=path)
     rep.individual_pt()
     rep.output_family()
-    #rep.us02_birth_b4_marriage()
-    #rep.us05_marriage_b4_death()
+    rep.us02_birth_b4_marriage()
+    rep.us05_marriage_b4_death()
     rep.us16_male_last_names()
-    #rep.us14_multiple_birth_less_5()
+    rep.us14_multiple_birth_less_5()
+    for fam_id in rep.Familis.keys():
+        try:
+            rep.us13_sibling_spacing(fam_id)
+        except KeyError as ke:
+            print(ke)
+        except TypeError as te:
+            print(te)
+        try:
+            rep.us_06_compare_divrdate_ddate(fam_id, "@I10@", "@I11@")
+        except ValueError as e:
+            print(e)
 
+    try:
+        rep.us12_parents_not_2_old()
+    except TypeError as te:
+        print(te)
 
 
 if __name__ == "__main__":
