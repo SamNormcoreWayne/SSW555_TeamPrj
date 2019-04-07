@@ -16,3 +16,9 @@ script:
 
   - python -m unittest tests.TestGED_us14
 
+  - python -m unittest tests.TestGED_us03
+  - python -m unittest tests.TestGED_us04
+  - python -m unittest tests.TestGED_us08
+  - python -m unittest tests.TestGED_us09
+
+  - python -m unittest test_report
