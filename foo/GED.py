@@ -718,6 +718,7 @@ class Repository():
         
         for i in result:
             print(f"ERROR: FAMILY:<{i}>, US24: Families with same spouses and same marriage!")
+        print(result)
         return result
                     
 
@@ -727,8 +728,8 @@ def main():
     rep = Repository(filename=filename, dir_path=path)
     rep.individual_pt()
     rep.output_family()
-    #rep.us23_unique_name_and_birthday()
-    rep.us24_unique_family_by_spouse()
+    rep.us23_unique_name_and_birthday()
+    #rep.us24_unique_family_by_spouse()
 
 
 
