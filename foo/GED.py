@@ -549,6 +549,7 @@ class Repository():
     #us_14
     def us14_multiple_birth_less_5(self):
         """Given a fam_id, check for all child's birthday within the family, no more than 5 siblings should be born at the same time"""
+        result = []
         for fam_id, fam in self.Familis.items():
 
             if len(fam.child_id) >= 5:  #Check for family with more than 5 children
@@ -572,6 +573,10 @@ class Repository():
                 for num in dd.values():
                     if num >= 5:
                         print(f"Error: FAMILY<{fam_id}>, US14: Multiple birth more than 5!")
+                        result.append(f"Error: FAMILY<{fam_id}>")
+    
+        print(result)
+        return result
 
 
     #us_11
@@ -653,9 +658,9 @@ def main():
     rep.individual_pt()
     rep.output_family()
     #rep.us02_birth_b4_marriage()
-    rep.us05_marriage_b4_death()
+    #rep.us05_marriage_b4_death()
     #rep.us16_male_last_names()
-    #rep.us14_multiple_birth_less_5()
+    rep.us14_multiple_birth_less_5()
 
 
 
