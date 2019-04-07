@@ -12,9 +12,8 @@ from GED import Repository
 
 
 docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
-a= Repository(filename='Project_t17.ged',
+a = Repository(filename='Project_t17.ged',
                dir_path=os.path.join(docs_dir, 'docs'))
-
 
 
 class Test_us17_No_marriages_to_children(unittest.TestCase):
@@ -25,7 +24,9 @@ class Test_us17_No_marriages_to_children(unittest.TestCase):
 
     def test_US17_No_marriages_to_children(self):
         """Test us17_sibling_spacing()"""
-        self.assertEqual(a.us17_No_marriages_to_children(),)
+        self.assertEqual(a.us17_No_marriages_to_children(), [
+                         "ERROR: US17: FAMILY @F5@ father @I7@> marriages to children ['@I7@']"])
+
 
 if __name__ == '__main__':
     print('Running unit tests')
