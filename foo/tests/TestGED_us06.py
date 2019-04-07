@@ -8,14 +8,14 @@
 import os
 import unittest
 from GED import Individual, Repository
-#from HW04_pli import store_divorce_date,store_death_date,test_compare_divrdate_ddate
+#from HW04_pli import store_divorce_date,store_death_date,test_us_06_compare_divrdate_ddate
 
 
 '''US06	Divorce before death'''
 docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
 a = Repository(filename = "Project01_Xiaomeng Xu.ged", dir_path = os.path.join(docs_dir, 'docs'))
 class TestGED(unittest.TestCase):
-    '''test store_divorce_date() ,store_death_date() and compare_divrdate_ddate()'''
+    '''test store_divorce_date() ,store_death_date() and us_06_compare_divrdate_ddate()'''
 
     def test_store_divorce_date(self):
         '''test store_divorce_date()'''
@@ -33,12 +33,12 @@ class TestGED(unittest.TestCase):
         with self.assertRaises(ValueError): # indi_id doesn't exist raise valueError
             a.store_death_date("@I8@")
 
-    def test_compare_divrdate_ddate(self):
-        '''test compare_divrdate_ddate()'''
+    def test_us_06_compare_divrdate_ddate(self):
+        '''test us_06_compare_divrdate_ddate()'''
         #a = Repository("Project01_Xiaomeng Xu.ged", os.path.join(os.getcwd(), 'docs'))
-        self.assertTrue(a.compare_divrdate_ddate("@F3@", "@I2@", "@I3@")) # death date is later than divorce 同样幸福美满没有离婚的
+        self.assertTrue(a.us_06_compare_divrdate_ddate("@F3@", "@I2@", "@I3@")) # death date is later than divorce 同样幸福美满没有离婚的
         with self.assertRaises(ValueError): # death date or divr date doesn't exist -->raise valueError
-            a.compare_divrdate_ddate("@F4@", "@I1@", "@I4@")
+            a.us_06_compare_divrdate_ddate("@F4@", "@I1@", "@I4@")
 
 if __name__ == "__main__":
     unittest.main(exit=False, verbosity=2)
