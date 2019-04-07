@@ -662,7 +662,7 @@ def main():
     filename = input("Input filename: ")'''
     path = r"D:\sit study\SSW555\PJ"
     filename = r"Project01_Xiaomeng Xu.ged"
-    filename = r"Project_t03.ged"
+    #filename = r"Project_t03.ged"
     rep = Repository(filename=filename, dir_path=path)
     rep.individual_pt()
     rep.output_family()
@@ -670,11 +670,12 @@ def main():
     rep.us03_birth_b4_death()
     rep.us04_marriage_b4_divoce()
     rep.us05_marriage_b4_death()
-    rep.us08_birth_b4_parents_marriage()
-    rep.us09_birth_b4_parents_death()
+    a=rep.us08_birth_b4_parents_marriage()
+    b=rep.us09_birth_b4_parents_death()
     rep.us16_male_last_names()
     rep.us14_multiple_birth_less_5()
-    
+    print(a)
+    print(b)
 
 
 if __name__ == "__main__":

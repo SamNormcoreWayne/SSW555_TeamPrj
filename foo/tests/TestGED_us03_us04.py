@@ -14,7 +14,7 @@ from GED import Repository
 
 
 docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
-GED1 = Repository(filename='Project01_Xiaomeng Xu.ged',
+GED1 = Repository(filename='Project_t03.ged',
                   dir_path=os.path.join(docs_dir, 'docs'))
 
 

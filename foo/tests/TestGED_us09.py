@@ -19,8 +19,7 @@ a = Repository(filename='Project01_Xiaomeng Xu.ged',
 
 class TestUS09(unittest.TestCase):
     def test_us09_birth_b4_parents_death(self):
-        self.assertTrue(a.us09_birth_b4_parents_death(), ["ERROR: US09: Individual@I1@> Birth date is after parents' death date", "ANOMALY: US09: Individual@I2@> Can't compare birth date and parents' death date", "ANOMALY: US09: Individual@I3@> Can't compare birth date and parents' death date",
-                                                          "ANOMALY: US09: Individual@I4@> Can't compare birth date and parents' death date", "ANOMALY: US09: Individual@I5@> Can't compare birth date and parents' death date", "ANOMALY: US09: Individual@I6@> Can't compare birth date and parents' death date", "ANOMALY: US09: Individual@I7@> Can't compare birth date and parents' death date"])
+        self.assertTrue(a.us09_birth_b4_parents_death(), ["ANOMALY: US09: Individual@I2@> Can't compare birth date and parents' death date", "ANOMALY: US09: Individual@I3@> Can't compare birth date and parents' death date", "ANOMALY: US09: Individual@I4@> Can't compare birth date and parents' death date", "ANOMALY: US09: Individual@I5@> Can't compare birth date and parents' death date", "ANOMALY: US09: Individual@I6@> Can't compare birth date and parents' death date", "ANOMALY: US09: Individual@I7@> Can't compare birth date and parents' death date"])
 
 
 if __name__ == '__main__':

@@ -19,8 +19,7 @@ a = Repository(filename='Project01_Xiaomeng Xu.ged',
 
 class TestUS08(unittest.TestCase):
     def test_us08_birth_b4_parents_marriage(self):
-        self.assertTrue(a.us08_birth_b4_parents_marriage(), ['ERROR: US08: Individual@I1@> Birth date is before Marriage', "ANOMALY: US08: Individual@I2@> Can't compare marriage date and divorce date", "ANOMALY: US08: Individual@I3@> Can't compare marriage date and divorce date",
-                                                             "ANOMALY: US08: Individual@I4@> Can't compare marriage date and divorce date", "ANOMALY: US08: Individual@I5@> Can't compare marriage date and divorce date", 'ERROR: US08: Individual@I6@> Birth date is before Marriage', 'ERROR: US08: Individual@I7@> Birth date is before Marriage'])
+        self.assertTrue(a.us08_birth_b4_parents_marriage(), ["ANOMALY: US08: Individual@I2@> Can't compare marriage date and divorce date", "ANOMALY: US08: Individual@I3@> Can't compare marriage date and divorce date", "ANOMALY: US08: Individual@I4@> Can't compare marriage date and divorce date", "ANOMALY: US08: Individual@I5@> Can't compare marriage date and divorce date", "ANOMALY: US08: Individual@I7@> Can't compare marriage date and divorce date"])
 
 
 if __name__ == '__main__':
