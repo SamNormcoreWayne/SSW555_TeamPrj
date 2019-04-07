@@ -12,19 +12,7 @@ from GED import Repository
 
 
 docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
-a = Repository(filename='Project01_Pli.ged',
-               dir_path=os.path.join(docs_dir, 'docs'))
 b = Repository(filename='Project01_Xiaomeng Xu.ged',
-               dir_path=os.path.join(docs_dir, 'docs'))
-c = Repository(filename='Project02.ged',
-               dir_path=os.path.join(docs_dir, 'docs'))
-d = Repository(filename='Project_t03.ged',
-               dir_path=os.path.join(docs_dir, 'docs'))
-e = Repository(filename='Project_t04.ged',
-               dir_path=os.path.join(docs_dir, 'docs'))
-f = Repository(filename='Project_t10.ged',
-               dir_path=os.path.join(docs_dir, 'docs'))
-g = Repository(filename='Project_t16.ged',
                dir_path=os.path.join(docs_dir, 'docs'))
 
 
@@ -41,13 +29,8 @@ class Test_us11_01(unittest.TestCase):
 
     def test_US11_No_Bigamy(self):
         """Test US11_No_Bigamy()"""
-        self.assertTrue(a.US11_No_Bigamy())
-        self.assertTrue(b.US11_No_Bigamy())
-        self.assertTrue(c.US11_No_Bigamy())
-        self.assertTrue(d.US11_No_Bigamy())
-        self.assertTrue(e.US11_No_Bigamy())
-        self.assertTrue(f.US11_No_Bigamy())
-        self.assertTrue(g.US11_No_Bigamy())
+        self.assertEqual(b.US11_No_Bigamy(), ['Error: US11: FAMILY<@F1@> husband @I1@ has more than 1 spounse during marriage in family @F2@!',
+                                              'Error: US11: FAMILY<@F1@> husband @I1@ has more than 1 spounse during marriage in family @F4@!'])
 
 
 if __name__ == '__main__':

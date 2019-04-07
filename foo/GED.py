@@ -356,17 +356,19 @@ class Repository():
                 return True
 
     # us_07
-    def us07_age_less_150(self, individual_ID):
+    def us07_age_less_150(self):
         # result = ''
 
         # bdt = datetime.datetime.strptime(self.People[individual_ID]._bday, '%d %b %y')
+        result_list = []
         for people in self.People.values():
-            if people._id == individual_ID:
-                if people._age > 150:
-                    raise(ValueError("The age is more than 150"))
-                else:
-                    return True
-        return False
+            if people._age > 150:
+                print(f"ERROR: US07: Individual{people._id}> age is > 150 years old")
+                result_list.append(f"ERROR: US07: Individual{people._id}> age is > 150 years old")
+        else:
+            print(f"ANOMALY: US07: Individual{people._id}> didn't record age")
+            result_list.append(f"ANOMALY: US07: Individual{people._id}> didn't record age")
+        return result_list
 
     # us_08
 
@@ -493,31 +495,29 @@ class Repository():
 
     # us_10
 
-    def us10_marriage_after_14(self, fam_id):
-        """For a given fam_id, check the family marriage date and death date for each individual belongs to this family, return the result of checking"""
-
-        result = 'No Marriage date'
-
-        # check for marriage date, if there is not marriage date, change result
-        if self.Familis[fam_id].mar_date != 'NA':
-            # If there is marriage date, covert it to datetime object
-            mdt = datetime.datetime.strptime(
-                self.Familis[fam_id].mar_date, '%Y-%m-%d')
-            hus_id = self.Familis[fam_id].hus_id
-            wife_id = self.Familis[fam_id].wife_id
-            hbdt = datetime.datetime.strptime(
-                self.People[hus_id]._bday, '%d %b %Y')
-            wbdt = datetime.datetime.strptime(
-                self.People[wife_id]._bday, '%d %b %Y')
-            hmage = mdt.year-hbdt.year - \
-                ((mdt.month, mdt.day) < (hbdt.month, hbdt.day))
-            wmage = mdt.year-wbdt.year - \
-                ((mdt.month, mdt.day) < (wbdt.month, wbdt.day))
-            if hmage < 14 or wmage < 14:
-                result = 'ERROR'
+    def us10_marriage_after_14(self):
+        """Marriage should be at least 14 years after birth of both spouses (parents must be at least 14 years old)"""
+        result_list = []
+        for fam_id in self.Familis:
+            if self.Familis[fam_id].mar_date != 'NA':
+                mdt = datetime.datetime.strptime(self.Familis[fam_id].mar_date, '%Y-%m-%d')
+                hus_id = self.Familis[fam_id].hus_id
+                wife_id = self.Familis[fam_id].wife_id
+                hbdt = datetime.datetime.strptime(
+                    self.People[hus_id]._bday, '%d %b %Y')
+                wbdt = datetime.datetime.strptime(
+                    self.People[wife_id]._bday, '%d %b %Y')
+                hmage = mdt.year-hbdt.year - \
+                    ((mdt.month, mdt.day) < (hbdt.month, hbdt.day))
+                wmage = mdt.year-wbdt.year - \
+                    ((mdt.month, mdt.day) < (wbdt.month, wbdt.day))
+                if hmage < 14 or wmage < 14:
+                    print(f"ERROR: US10: Family{fam_id}> parents are not at least 14 years old")
+                    result_list.append(f"ERROR: US10: Family{fam_id}> parents are not at least 14 years old")
             else:
-                result = 'Good'
-        return f"ID: {fam_id}, Result: {result}"
+                print(f"ANOMALY: US10: Family{fam_id}> can't compare if parents are at least 14 years old")
+                result_list.append(f"ANOMALY: US10: Family{fam_id}> can't compare if parents are at least 14 years old")
+        return result_list
 
 # us_12
     def us12_parents_not_2_old(self):
@@ -599,30 +599,36 @@ class Repository():
     # us_11
 
     def US11_No_Bigamy(self):
-      # For a given ind_id, check if the individual has more than 1 spounse during each marriage
-        for fam_1 in self.Familis.values():
-            for fam_2 in self.Familis.values():
+        ''' For a given ind_id, check if the individual has more than 1 spounse during each marriage'''
+        result_list = []
+
+        family_list = list(self.Familis.values())
+        i = 1
+        for fam_1 in family_list:
+            for fam_2 in family_list[i:]:
                 if fam_1.fam_ID != fam_2.fam_ID:
                     if fam_1.hus_id == fam_2.hus_id or fam_1.wife_id == fam_2.wife_id:
                         if fam_1.div_date == 'NA' and fam_2.div_date == 'NA':
-                            return 'bigamy'
+                            print(f"Error: US11: FAMILY<{fam_1.fam_ID}> husband {fam_1.hus_id} has more than 1 spounse during marriage in family {fam_2.fam_ID}!")
+                            result_list.append(f"Error: US11: FAMILY<{fam_1.fam_ID}> husband {fam_1.hus_id} has more than 1 spounse during marriage in family {fam_2.fam_ID}!")
+
                         elif fam_1.mar_date < fam_2.mar_date and fam_1.div_date > fam_2.mar_date:
-                            return 'bigamy'
-        else:
-            return True
+                            print(f"Error: US11: FAMILY<{fam_1.fam_ID}> husband {fam_1.hus_id} has more than 1 spounse during marriage in family {fam_2.fam_ID}!")
+                            result_list.append(f"Error: US11: FAMILY<{fam_1.fam_ID}> husband {fam_1.hus_id} has more than 1 spounse during marriage in family {fam_2.fam_ID}!")
+
+                i += 1
+        return result_list
 
     # us_15
     def US15_Fewer_15_Child(self):
-      # For a given fam_id, check if the family has more than 15 children
+        '''For a given fam_id, check if the family has more than 15 children'''
+        result_list = []
 
         for family in self.Familis.values():
             if len(family.child_id) >= 15:
-                flag = False
-                break
-        else:
-            flag = True
-
-        return flag
+                print(f"Error: US15: FAMILY<{family.fam_ID}> has more than 15 children!")
+                result_list.append(f"Error: US15: FAMILY<{family.fam_ID}> has more than 15 children!")
+        return result_list
 
     # us_16
 
