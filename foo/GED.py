@@ -338,16 +338,19 @@ class Repository():
                 return True
 
     # us_07
-    def us07_age_less_150(self, individual_ID):
+    def us07_age_less_150(self):
         # result = ''
 
         # bdt = datetime.datetime.strptime(self.People[individual_ID]._bday, '%d %b %y')
+        result_list = []
         for people in self.People.values():
             if people._age > 150:
-                print(
-                    f"ERROR: US07: Individual{indi_id}> age is > 150 years old")
+                print(f"ERROR: US07: Individual{people._id}> age is > 150 years old")
+                result_list.append(f"ERROR: US07: Individual{people._id}> age is > 150 years old")
         else:
-            print(f"ANOMALY: US07: Individual{indi_id}> didn't record age")
+            print(f"ANOMALY: US07: Individual{people._id}> didn't record age")
+            result_list.append(f"ANOMALY: US07: Individual{people._id}> didn't record age")
+        return result_list
 
     # us_08
 
@@ -474,7 +477,7 @@ class Repository():
 
     def us10_marriage_after_14(self):
         """Marriage should be at least 14 years after birth of both spouses (parents must be at least 14 years old)"""
-
+        result_list = []
         for fam_id in self.Familis:
             if self.Familis[fam_id].mar_date != 'NA':
                 mdt = datetime.datetime.strptime(self.Familis[fam_id].mar_date, '%Y-%m-%d')
@@ -490,8 +493,11 @@ class Repository():
                     ((mdt.month, mdt.day) < (wbdt.month, wbdt.day))
                 if hmage < 14 or wmage < 14:
                     print(f"ERROR: US10: Family{fam_id}> parents are not at least 14 years old")
+                    result_list.append(f"ERROR: US10: Family{fam_id}> parents are not at least 14 years old")
             else:
                 print(f"ANOMALY: US10: Family{fam_id}> can't compare if parents are at least 14 years old")
+                result_list.append(f"ANOMALY: US10: Family{fam_id}> can't compare if parents are at least 14 years old")
+        return result_list
 
 
 
@@ -572,6 +578,8 @@ class Repository():
 
     def US11_No_Bigamy(self):
         ''' For a given ind_id, check if the individual has more than 1 spounse during each marriage'''
+        result_list = []
+
         family_list = list(self.Familis.values())
         i = 1
         for fam_1 in family_list:
@@ -580,18 +588,28 @@ class Repository():
                     if fam_1.hus_id == fam_2.hus_id or fam_1.wife_id == fam_2.wife_id:
                         if fam_1.div_date == 'NA' and fam_2.div_date == 'NA':
                             print(f"Error: US11: FAMILY<{fam_1.fam_ID}> husband {fam_1.hus_id} has more than 1 spounse during marriage in family {fam_2.fam_ID}!")
+                            result_list.append(f"Error: US11: FAMILY<{fam_1.fam_ID}> husband {fam_1.hus_id} has more than 1 spounse during marriage in family {fam_2.fam_ID}!")
+
                         elif fam_1.mar_date < fam_2.mar_date and fam_1.div_date > fam_2.mar_date:
                             print(f"Error: US11: FAMILY<{fam_1.fam_ID}> husband {fam_1.hus_id} has more than 1 spounse during marriage in family {fam_2.fam_ID}!")
+                            result_list.append(f"Error: US11: FAMILY<{fam_1.fam_ID}> husband {fam_1.hus_id} has more than 1 spounse during marriage in family {fam_2.fam_ID}!")
+
                 i += 1
+        return result_list
+
 
     # us_15
 
     def US15_Fewer_15_Child(self):
         '''For a given fam_id, check if the family has more than 15 children'''
+        result_list = []
 
         for family in self.Familis.values():
             if len(family.child_id) >= 15:
                 print(f"Error: US15: FAMILY<{family}> has more than 15 children!")
+                result_list.append(f"Error: US15: FAMILY<{family}> has more than 15 children!")
+        return result_list
+
 
     # us_16
 
@@ -643,8 +661,10 @@ class Repository():
 
 
 def main():
-    path = input("Input path: ")
-    filename = input("Input filename: ")
+    '''path = input("Input path: ")
+    filename = input("Input filename: ")'''
+    path = r"D:\sit study\SSW555\PJ"
+    filename = r"Project01_Xiaomeng Xu.ged"
     rep = Repository(filename=filename, dir_path=path)
     rep.individual_pt()
     rep.output_family()
@@ -659,6 +679,14 @@ def main():
     rep.us14_multiple_birth_less_5()
     rep.US15_Fewer_15_Child()
     rep.us16_male_last_names()
+    a= rep.us07_age_less_150()
+    b = rep.us10_marriage_after_14()
+    c= rep.US11_No_Bigamy()
+    d =rep.US15_Fewer_15_Child()
+    print(a)
+    print(b)
+    print(c)
+    print(d)
 
 
 if __name__ == "__main__":

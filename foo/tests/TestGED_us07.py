@@ -1,3 +1,10 @@
+#!/usr/bin/env python
+# coding=UTF-8
+'''
+@Author: Puzhuo Li
+@Github: https://github.com/JamesLi0217
+@Date: 2019-04-05 23:15:39
+'''
 # @author: zz2
 # Test for us_10
 # @update: 2/25/2019
@@ -15,35 +22,7 @@ from GED import Repository
 
 
 class TestGedcom(unittest.TestCase):
-    '''
-    @classmethod
-    def setUpClass(cls):
-        sys.path.append(os.path.dirname(os.getcwd()))
-        from gedcom import Repository
-        print("Test starts")
     
-    @classmethod
-    def tearDownClass(cls):
-        print("Test ends.")
-    '''
-
-    """def test_birth_b4_now(self):
-        '''
-            This a test case for us04. If you are working on us10, please ignore this test case. 
-        '''
-        a = Repository("Project01_Xiaomeng Xu.ged", ros.path.join(docs_dir, 'docs'))
-        result = datetime.datetime.strptime(a.us_01_birth_b4_now(), "%d %b %Y")
-        current_time = datetime.datetime.now()
-        for people in a.People:
-            with self.subTest():
-                self.assertFalse(people._bday, "")
-                self.assertFalse(people.dday, "")
-        self.assertLess((result - current_time).days, 0)
-        self.assertGreater((current_time - result).days, 0)
-        with self.assertRaises(TypeError):
-            datetime.datetime.strftime(result)
-        self.assertTrue((current_time - result).days > 0)
-        self.assertFalse((current_time - result).days < 0)"""
 
     def test_age_less_150(self):
         """
