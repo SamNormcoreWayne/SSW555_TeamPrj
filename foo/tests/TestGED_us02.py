@@ -12,11 +12,11 @@ class Test_us02_birth_b4_marriage(unittest.TestCase):
     
     def test_GED1(self):
         """Testing function on file: Project01_Xiaomeng Xu.ged"""
-        self.assertEqual(GED1.us02_birth_b4_marriage(), '[]')    
+        self.assertEqual(GED1.us02_birth_b4_marriage(), [])    
     
     def test_GED2(self):
         """Testing function on file: TestGED_us02.ged"""
-        self.assertEqual(GED2.us02_birth_b4_marriage(), "['ANOMALY: FAMILY:<@F2@>', 'ANOMALY: FAMILY:<@F3@>', 'ANOMALY: FAMILY:<@F4@>']")
+        self.assertEqual(GED2.us02_birth_b4_marriage(), ['ANOMALY: FAMILY:<@F2@>', 'ANOMALY: FAMILY:<@F3@>', 'ANOMALY: FAMILY:<@F4@>'])
 
 
 
