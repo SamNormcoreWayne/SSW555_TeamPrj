@@ -675,6 +675,7 @@ class Repository():
     #us_23
     def us23_unique_name_and_birthday(self):
         """Go through instances of individuals and check for same names and birthdays"""
+        result = []
         for ind_id, individule in self.People.items():
             same_name = []
             same_bday = []
@@ -688,24 +689,36 @@ class Repository():
                         same_bday.append(j)
                 if len(same_bday) == 1:
                     print(f"ANOMALY: INDIVIDULE:<{ind_id}>, US23: Name:<{individule._name}>, <{len(same_name)}> duplicate names were found; No duplicate birthday were found")
+                    result.append(f"ANOMALY: INDIVIDULE:<{ind_id}>")
                 else:
                     print(f"ERROR: INDIVIDULE:<{ind_id}>, US23: Name:<{individule._name}>, ERROR: Found individule with same name and birthday!")
+                    result.append(f"ERROR: INDIVIDULE:<{ind_id}>")
+
+        print(result)
+        return result
 
     #us_24
     def us24_unique_family_by_spouse(self):
         """Go through instances of Families and check for same spouses' names and marriage dates"""
+        result = set()
         for fam_id, fam in self.Familis.items():
             if fam.mar_date != 'NA':
                 count = 0
-                mdt = []
+                mdt = {}
                 for i in self.Familis.values():
-                    if i.hus_id == fam.hus_id and i.wife_id == fam.wife_id:
-                        mdt.append(i.mar_date)
-                        count += 1
-                if count > 1:
-                    for date in mdt:
+                    if i.mar_date != 'NA':
+                        if i.fam_ID != fam.fam_ID:
+                            if self.People[i.hus_id]._name == self.People[fam.hus_id]._name and self.People[i.wife_id]._name == self.People[fam.wife_id]._name:
+                                mdt[i.fam_ID] = i.mar_date
+
+                if mdt:
+                    for fam_id, date in mdt.items():
                         if date == fam.mar_date:
-                            print(f"ERROR: FAMILY:<{fam_id}>, US24: Families with same spouses and same marriage!")
+                            result.add(fam_id)
+        
+        for i in result:
+            print(f"ERROR: FAMILY:<{i}>, US24: Families with same spouses and same marriage!")
+        return result
                     
 
 def main():
@@ -714,7 +727,7 @@ def main():
     rep = Repository(filename=filename, dir_path=path)
     rep.individual_pt()
     rep.output_family()
-    rep.us23_unique_name_and_birthday()
+    #rep.us23_unique_name_and_birthday()
     rep.us24_unique_family_by_spouse()
 
 
