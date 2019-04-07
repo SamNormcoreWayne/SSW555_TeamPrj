@@ -606,8 +606,8 @@ class Repository():
 
         for family in self.Familis.values():
             if len(family.child_id) >= 15:
-                print(f"Error: US15: FAMILY<{family}> has more than 15 children!")
-                result_list.append(f"Error: US15: FAMILY<{family}> has more than 15 children!")
+                print(f"Error: US15: FAMILY<{family.fam_ID}> has more than 15 children!")
+                result_list.append(f"Error: US15: FAMILY<{family.fam_ID}> has more than 15 children!")
         return result_list
 
 
@@ -664,7 +664,7 @@ def main():
     '''path = input("Input path: ")
     filename = input("Input filename: ")'''
     path = r"D:\sit study\SSW555\PJ"
-    filename = r"Project01_Xiaomeng Xu.ged"
+    filename = r"Project_t15.ged"
     rep = Repository(filename=filename, dir_path=path)
     rep.individual_pt()
     rep.output_family()
@@ -679,14 +679,6 @@ def main():
     rep.us14_multiple_birth_less_5()
     rep.US15_Fewer_15_Child()
     rep.us16_male_last_names()
-    a= rep.us07_age_less_150()
-    b = rep.us10_marriage_after_14()
-    c= rep.US11_No_Bigamy()
-    d =rep.US15_Fewer_15_Child()
-    print(a)
-    print(b)
-    print(c)
-    print(d)
 
 
 if __name__ == "__main__":

@@ -22,27 +22,18 @@ from GED import Repository
 
 
 class TestGedcom(unittest.TestCase):
-    
 
     def test_age_less_150(self):
         """
-            For developer:
             This test case is for us07
-            You do not have to implement T07.01 because it has been implemented in project3 or project 2.
         """
         docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
-        a = Repository("Project01_Xiaomeng Xu.ged", os.path.join(docs_dir, 'docs'))
-        for people in a.People.values():
-            with self.subTest("Individual id: {}".format(people._id)):
-                self.assertNotEqual(people._bday, "")
-                self.assertNotEqual(people._age, "")
-                """
-                    To make sure every one has birthday and age.
-                """
-        self.assertEqual(a.us07_age_less_150('@I2@'), True)
-        """
-            If the age is more than 150 then should raise a ValueError and print("The age is more than 150")
-        """
+        a = Repository("Project01_Xiaomeng Xu.ged",
+                       os.path.join(docs_dir, 'docs'))
+
+        self.assertEqual(a.us07_age_less_150(), [
+                         "ANOMALY: US07: Individual@I7@> didn't record age"])
+
 
 if __name__ == "__main__":
     unittest.main(exit=False, verbosity=2)
