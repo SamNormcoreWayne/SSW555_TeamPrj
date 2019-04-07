@@ -288,6 +288,7 @@ class Repository():
     # us_05
     def us05_marriage_b4_death(self):
         """For a given fam_id, check the family marriage date and death date for each individual belongs to this family, return the result of checking"""
+        result = []
         for fam_id in self.Familis.keys():
 
             if self.Familis[fam_id].mar_date != 'NA':
@@ -307,6 +308,10 @@ class Repository():
                         ddt = datetime.datetime.strptime(value, '%d %b %Y')
                         if ddt < mdt:
                             print(f"ERROR: FAMILY:<{fam_id}>, US05: Individule<{key}> die on {ddt} before marriage on {mdt}")
+                            result.append(f"ERROR: FAMILY:<{fam_id}>")
+        
+        print(result)
+        return result
 
 
     # us_06
@@ -647,8 +652,8 @@ def main():
     rep = Repository(filename=filename, dir_path=path)
     rep.individual_pt()
     rep.output_family()
-    rep.us02_birth_b4_marriage()
-    #rep.us05_marriage_b4_death()
+    #rep.us02_birth_b4_marriage()
+    rep.us05_marriage_b4_death()
     #rep.us16_male_last_names()
     #rep.us14_multiple_birth_less_5()
 
