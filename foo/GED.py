@@ -674,6 +674,8 @@ class Repository():
 
     # us_20
     def us20_aunts_uncle(self, child_id):
+        if child_id not in self.People.keys():
+            raise ValueError("ERROR: INDIVIDUAL: us20: Cannot find {id} in this GED file".format(id=child_id))
         child = self.People[child_id]
         gender = child._gender
         fam_id = self.People[child_id]._child
