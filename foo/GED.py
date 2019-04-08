@@ -686,7 +686,7 @@ class Repository():
     # us_19
     def us_19_cousins_not_marry(self, child_id):
         if child_id not in self.People.keys():
-            ValueError("ERROR: INDIVIDUAL: Cannot find {id} in this GED file.".format(id=child_id))
+            raise ValueError("ERROR: INDIVIDUAL: Cannot find {id} in this GED file.".format(id=child_id))
         child = self.People[child_id]
         gender = child._gender
         fam_id = self.People[child_id]._child
