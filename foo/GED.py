@@ -186,6 +186,7 @@ class Repository():
             table.add_row([family.fam_ID, family.mar_date, family.div_date,
                            family.hus_id, hus_name, family.wife_id, wife_name, family.child_id])
 
+        print('Families')
         print(table.get_string(sortby='ID'))
         return table.get_string(sortby='ID')
 
@@ -693,17 +694,28 @@ class Repository():
 
 
 def main():
-    '''path = input("Input path: ")
-    filename = input("Input filename: ")'''
-    docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
-    rep = Repository(filename = r"what_a_mass.ged", dir_path = os.path.join(docs_dir, 'docs'))
+    path = input("Input path: ")
+    filename = input("Input filename: ")
+    rep = Repository(filename = filename, dir_path = path)
+    '''docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
+    rep = Repository(filename = r"what_a_mass.ged", dir_path = os.path.join(docs_dir, 'docs'))'''
     #filename = r"Project_t03.ged"
     rep.individual_pt()
     rep.output_family()
+    rep.us_01_birth_b4_now()
     rep.us02_birth_b4_marriage()
+    rep.us03_birth_b4_death()
+    rep.us04_marriage_b4_divoce()
     rep.us05_marriage_b4_death()
-    rep.us16_male_last_names()
+    rep.us07_age_less_150()
+    rep.us08_birth_b4_parents_marriage()
+    rep.us09_birth_b4_parents_death()
+    rep.us10_marriage_after_14()
+    rep.US11_No_Bigamy()
     rep.us14_multiple_birth_less_5()
+    rep.US15_Fewer_15_Child()
+    rep.us16_male_last_names()
+
     for fam_id in rep.Familis.keys():
         try:
             rep.us13_sibling_spacing(fam_id)
