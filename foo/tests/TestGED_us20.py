@@ -10,6 +10,7 @@ a = Repository(filename='Project01_Xiaomeng Xu.ged', dir_path=os.path.join(docs_
 
 class TestUS20(unittest.TestCase):
     def test_us20_aunts_uncle(self):
-        self.assertTrue(a.us20_aunts_uncle("@I1@"))
+        with self.assertRaises(KeyError):
+            self.assertTrue(a.us20_aunts_uncle("@I1@"))
         with self.assertRaises(ValueError):
             a.us20_aunts_uncle("@I234@")
