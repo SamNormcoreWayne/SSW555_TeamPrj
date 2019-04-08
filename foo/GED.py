@@ -725,10 +725,12 @@ class Repository():
 def main():
     '''path = input("Input path: ")
     filename = input("Input filename: ")'''
-    path = r"D:\sit study\SSW555\PJ"
+    #path = r"D:\sit study\SSW555\PJ"
+    path = r"/Users/daiyuping/Documents/GitHub/SSW555_TeamPrj/docs"
     filename = r"Project_t17.ged"
     #filename = r"Project01_Pli.ged"
     rep = Repository(filename=filename, dir_path=path)
+    #rep = Repository(r"/Users/daiyuping/Documents/GitHub/SSW555_TeamPrj/docs",r"Project_t17.ged")
     rep.individual_pt()
     rep.output_family()
     a = rep.us17_No_marriages_to_children()
