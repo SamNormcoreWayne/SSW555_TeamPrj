@@ -12,7 +12,7 @@ from GED import Repository
 
 
 docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
-a = Repository(filename='Project01_Xiaomeng Xu.ged',
+a = Repository(filename='Project_t17.ged',
                dir_path=os.path.join(docs_dir, 'docs'))
 
 
