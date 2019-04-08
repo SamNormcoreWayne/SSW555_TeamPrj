@@ -691,7 +691,10 @@ class Repository():
         gender = child._gender
         fam_id = self.People[child_id]._child
         fam = self.Familis[fam_id]
-        fam_child = self.Familis[self.People[child_id]]
+        try:
+            fam_child = self.Familis[self.People[child_id]._spouse]
+        except KeyError:
+            raise KeyError("ANORMALY: INDIVIDUAL: us20: {id} is a single dog.")
         if child._spouse == 'N/A':
             return True
         else:
