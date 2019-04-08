@@ -686,7 +686,7 @@ class Repository():
             fam_mom = self.Familis[self.People[mother_id]._child]
             fam_dad = self.Familis[self.People[father_id]._child]
         except KeyError:
-            raise KeyError("ANORMALY: INDIVIDUAL: us20: {mom} or {dad} parents information not exists".format(mom=fam_mom, dad=fam_dad))
+            raise KeyError("ANORMALY: INDIVIDUAL: us20: {mom} or {dad} parents information not exists".format(mom=mother_id, dad=father_id))
         if (len(fam_mom.child_id) == 1) and (len(fam_dad.child_id) == 1):
             return "ANORMALY: INDIVIDUAL: us_20: {id} has no uncle or anuts".format(id=child_id)
         if child._spouse == 'N/A':
