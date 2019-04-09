@@ -193,10 +193,11 @@ class Repository():
     # us_01
     def us_01_birth_b4_now(self):
         for person in self.People.values():
-            if person._bday == 'N/A':
-                yield("ERROR: INDIVIDUAL: us01: {id} birthday not exist".format(id=person._id))
+            bd = datetime.datetime.strptime(person._bday, '%d %b %Y')
+            if bd > datetime.datetime.now():
+                yield("ERROR: INDIVIDUAL: us01: {id} is not born".format(id=person._id))
             else:
-                yield datetime.datetime.strptime(person._bday, '%d %b %Y')
+                yield bd
 
     # us_02
     def us02_birth_b4_marriage(self):
@@ -556,20 +557,20 @@ class Repository():
                 for child in fam.child_id:
                     childs.append(self.getPeople(child))
             else:
-                childs = None
+                print("ANORMALY: FAMILY: us12: {id} has no children".format(id=fam.fam_ID))
+                continue
+            for child in childs:
+                if child._age == "N/A":
+                    raise TypeError("ERROR: INDIVIDUAL: us12: Child {id} age does not exist.".format(id=child._id))
 
-            if (childs is not None):
-                for child in childs:
-                    if child._age == "N/A":
-                        raise TypeError("ERROR: INDIVIDUAL: us12: Child {id} age does not exist.".format(id=child._id))
-
-                for child in childs:
-                    if ((wife._age - child._age) > 60) and (wife is not None):
-                        raise TypeError("ANORMALY: INDIVIDUAL: us12: Mother is too young or child {id} is too old!".format(id=child._id))
-                    if ((hus._age - child._age) > 80) and (hus is not None):
-                        raise TypeError("ANORMALY: INDIVIDUAL: us12: Father is too young or child {id} is too old!".format(id=child._id))
-                return True
-            return "No Children"
+            for child in childs:
+                if wife is None or hus is None:
+                    raise ValueError("ERROR: INDIVIDUAL: us12: Child {id} has not parents".format(id=child._id))
+                if ((wife._age - child._age) > 60):
+                    raise TypeError("ANORMALY: INDIVIDUAL: us12: Mother is too young or child {id} is too old!".format(id=child._id))
+                if ((hus._age - child._age) > 80):
+                    raise TypeError("ANORMALY: INDIVIDUAL: us12: Father is too young or child {id} is too old!".format(id=child._id))
+        return True
 
     # us_14
     def us14_multiple_birth_less_5(self):
@@ -898,7 +899,9 @@ def main():
     #filename = r"Project_t03.ged"
     rep.individual_pt()
     rep.output_family()
-    rep.us_01_birth_b4_now()
+    for s in rep.us_01_birth_b4_now():
+        if isinstance(s, str):
+            print(s)
     rep.us02_birth_b4_marriage()
     rep.us03_birth_b4_death()
     rep.us04_marriage_b4_divoce()
@@ -958,6 +961,8 @@ def main():
         rep.us12_parents_not_2_old()
     except TypeError as te:
         print(te)
+    except ValueError as e:
+        print(e)
 
 
 if __name__ == "__main__":
