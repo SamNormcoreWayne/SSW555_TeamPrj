@@ -203,7 +203,7 @@ class Repository():
         """For a givenn fam_id, check the family marriage date and birthday for each individual, retuen the result"""
         result = []
         for fam_id in self.Familis.keys():
-            if self.Familis[fam_id].mar_date != 'NA':
+            if self.Familis[fam_id].mar_date != 'NA' and self.Familis[fam_id].child_id != ['NA']:
 
                 mdt = datetime.datetime.strptime(
                     self.Familis[fam_id].mar_date, '%Y-%m-%d')
@@ -897,6 +897,12 @@ def main():
     rep.us14_multiple_birth_less_5()
     rep.US15_Fewer_15_Child()
     rep.us16_male_last_names()
+    rep.us17_No_marriages_to_children()
+    rep.us18_Siblings_should_not_marry()
+    #rep.us_19_cousins_not_marry()
+    #rep.us20_aunts_uncle()
+    rep.us21_correct_gender()
+    rep.us22_unique_fam_IDs()
     rep.us23_unique_name_and_birthday()
     rep.us24_unique_family_by_spouse()
 
