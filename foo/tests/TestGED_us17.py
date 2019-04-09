@@ -25,7 +25,7 @@ class Test_us17_No_marriages_to_children(unittest.TestCase):
     def test_US17_No_marriages_to_children(self):
         """Test us17_sibling_spacing()"""
         self.assertEqual(a.us17_No_marriages_to_children(), [
-                         "ERROR: US17: FAMILY @F5@ father @I7@> marriages to children ['@I7@']"])
+                         "ERROR: US17: FAMILY @F2@ mother @I5@> marriages to children @I7@"])
 
 
 if __name__ == '__main__':
