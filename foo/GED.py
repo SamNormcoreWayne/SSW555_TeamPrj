@@ -792,6 +792,38 @@ class Repository():
                     return "ERROR: INDIVIDUAL: {id} marries his cousins".format(id=child_id)
         return True
 
+    # us_20
+    def us20_aunts_uncle(self, child_id):
+        if child_id not in self.People.keys():
+            raise ValueError("ERROR: INDIVIDUAL: us20: Cannot find {id} in this GED file".format(id=child_id))
+        child = self.People[child_id]
+        gender = child._gender
+        fam_id = self.People[child_id]._child
+        fam = self.Familis[fam_id]
+        father_id = fam.hus_id
+        mother_id = fam.wife_id
+        try:
+            fam_mom = self.Familis[self.People[mother_id]._child]
+            fam_dad = self.Familis[self.People[father_id]._child]
+        except KeyError:
+            raise KeyError("ANORMALY: INDIVIDUAL: us20: {mom} or {dad} parents information not exists".format(mom=mother_id, dad=father_id))
+        if (len(fam_mom.child_id) == 1) and (len(fam_dad.child_id) == 1):
+            return "ANORMALY: INDIVIDUAL: us_20: {id} has no uncle or anuts".format(id=child_id)
+        if child._spouse == 'N/A':
+            return True
+        else:
+            child_fam = self.Familis[child._spouse]
+            if gender == 'F':
+                if child_fam.hus_id in fam_mom.child_id:
+                    return "ERROR: INDIVIDUAL: us_20: {id} marries aunt or uncle".format(id=child_id)
+                if child_fam.hus_id in fam_dad.child_id:
+                    return "ERROR: INDIVIDUAL: us_20: {id} marries aunt or uncle".format(id=child_id)
+            if gender == 'M':
+                if child_fam.wife_id in fam_mom.child_id:
+                    return "ERROR: INDIVIDUAL: us_20: {id} marries aunt or uncle".format(id=child_id)
+                if child_fam.wife_id in fam_dad.child_id:
+                    return "ERROR: INDIVIDUAL: us_20: {id} marries aunt or uncle".format(id=child_id)
+            return True
 def main():
     path = input("Input path: ")
     filename = input("Input filename: ")
