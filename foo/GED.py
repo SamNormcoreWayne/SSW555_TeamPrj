@@ -824,6 +824,57 @@ class Repository():
                 if child_fam.wife_id in fam_dad.child_id:
                     return "ERROR: INDIVIDUAL: us_20: {id} marries aunt or uncle".format(id=child_id)
             return True
+            
+    #us_23
+    def us23_unique_name_and_birthday(self):
+        """Go through instances of individuals and check for same names and birthdays"""
+        result = []
+        for ind_id, individule in self.People.items():
+            same_name = []
+            same_bday = []
+            for i in self.People.keys():
+                if self.People[i]._name == individule._name:
+                    same_name.append(i)
+            
+            if len(same_name) > 1:
+                for j in same_name:
+                    if self.People[j]._bday == individule._bday:
+                        same_bday.append(j)
+                if len(same_bday) == 1:
+                    print(f"ANOMALY: INDIVIDULE:<{ind_id}>, US23: Name:<{individule._name}>, <{len(same_name)}> duplicate names were found; No duplicate birthday were found")
+                    result.append(f"ANOMALY: INDIVIDULE:<{ind_id}>")
+                else:
+                    print(f"ERROR: INDIVIDULE:<{ind_id}>, US23: Name:<{individule._name}>, ERROR: Found individule with same name and birthday!")
+                    result.append(f"ERROR: INDIVIDULE:<{ind_id}>")
+
+        print(result)
+        return result
+
+    #us_24
+    def us24_unique_family_by_spouse(self):
+        """Go through instances of Families and check for same spouses' names and marriage dates"""
+        result = set()
+        for fam_id, fam in self.Familis.items():
+            if fam.mar_date != 'NA':
+                count = 0
+                mdt = {}
+                for i in self.Familis.values():
+                    if i.mar_date != 'NA':
+                        if i.fam_ID != fam.fam_ID:
+                            if self.People[i.hus_id]._name == self.People[fam.hus_id]._name and self.People[i.wife_id]._name == self.People[fam.wife_id]._name:
+                                mdt[i.fam_ID] = i.mar_date
+
+                if mdt:
+                    for fam_id, date in mdt.items():
+                        if date == fam.mar_date:
+                            result.add(fam_id)
+        
+        for i in result:
+            print(f"ERROR: FAMILY:<{i}>, US24: Families with same spouses and same marriage!")
+        print(result)
+        return result
+                    
+
 def main():
     path = input("Input path: ")
     filename = input("Input filename: ")
@@ -846,6 +897,8 @@ def main():
     rep.us14_multiple_birth_less_5()
     rep.US15_Fewer_15_Child()
     rep.us16_male_last_names()
+    rep.us23_unique_name_and_birthday()
+    rep.us24_unique_family_by_spouse()
 
     for fam_id in rep.Familis.keys():
         try:
@@ -858,6 +911,7 @@ def main():
             rep.us_06_compare_divrdate_ddate(fam_id, "@I10@", "@I11@")
         except ValueError as e:
             print(e)
+
 
     try:
         rep.us12_parents_not_2_old()
