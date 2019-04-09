@@ -772,24 +772,26 @@ class Repository():
     # us_19
     def us_19_cousins_not_marry(self, child_id):
         if child_id not in self.People.keys():
-            raise ValueError("ERROR: INDIVIDUAL: Cannot find {id} in this GED file.".format(id=child_id))
+            raise ValueError("ERROR: INDIVIDUAL: us19: Cannot find {id} in this GED file.".format(id=child_id))
         child = self.People[child_id]
         gender = child._gender
         fam_id = self.People[child_id]._child
+        if fam_id == 'N/A':
+            return "ANORMALY: INDIVIDUAL: us19: {id} does not have family. Poor guy. ".format(id=child_id)
         fam = self.Familis[fam_id]
         try:
             fam_child = self.Familis[self.People[child_id]._spouse]
         except KeyError:
-            raise KeyError("ANORMALY: INDIVIDUAL: us20: {id} is a single dog.")
+            raise KeyError("ANORMALY: INDIVIDUAL: us19: {id} is a single dog.")
         if child._spouse == 'N/A':
             return True
         else:
             if gender == 'F':
                 if fam_child.hus_id in fam.child_id:
-                    return "ERROR: INDIVIDUAL: {id} marries his cousins".format(id=child_id)
+                    return "ERROR: INDIVIDUAL: us19: {id} marries his cousins".format(id=child_id)
             if gender == 'M':
                 if fam_child.wife_id in fam.child_id:
-                    return "ERROR: INDIVIDUAL: {id} marries his cousins".format(id=child_id)
+                    return "ERROR: INDIVIDUAL: us19: {id} marries his cousins".format(id=child_id)
         return True
 
     # us_20
@@ -799,14 +801,29 @@ class Repository():
         child = self.People[child_id]
         gender = child._gender
         fam_id = self.People[child_id]._child
+        if fam_id == 'N/A':
+            return "ANORMALY: INDIVIDUAL: us20: {id} does not have family".format(id=child_id)
         fam = self.Familis[fam_id]
         father_id = fam.hus_id
         mother_id = fam.wife_id
+        if mother_id == 'N/A':
+            return "ANORMALY: INDIVIDUAL: us20: {id} does not have mom".format(id=child_id)
+        if father_id == 'N/A':
+            return "ANORMALY: INDIVIDUAL: us20: {id} does not have dad".format(id=child_id)
+        mom = self.People[mother_id]
+        dad = self.People[father_id]
+        if mom._child == 'N/A':
+            return "ERROR: INDIVIDUAL: us20: {id} does not have children".format(id=mother_id)
+        if dad._child == 'N/A':
+            return "ERROR: INDIVIDUAL: us20: {id} does not have children".format(id=father_id)
         try:
-            fam_mom = self.Familis[self.People[mother_id]._child]
-            fam_dad = self.Familis[self.People[father_id]._child]
+            fam_mom = self.Familis[mom._child]
         except KeyError:
-            raise KeyError("ANORMALY: INDIVIDUAL: us20: {mom} or {dad} parents information not exists".format(mom=mother_id, dad=father_id))
+            raise KeyError("ANORMALY: INDIVIDUAL: us20: {mom} parents information not exists".format(mom=mother_id))
+        try:
+            fam_dad = self.Familis[dad._child]
+        except KeyError:
+            raise KeyError("ANORMALY: INDIVIDUAL: us20: {dad} parents information not exists".format(dad=father_id))
         if (len(fam_mom.child_id) == 1) and (len(fam_dad.child_id) == 1):
             return "ANORMALY: INDIVIDUAL: us_20: {id} has no uncle or anuts".format(id=child_id)
         if child._spouse == 'N/A':
@@ -824,7 +841,7 @@ class Repository():
                 if child_fam.wife_id in fam_dad.child_id:
                     return "ERROR: INDIVIDUAL: us_20: {id} marries aunt or uncle".format(id=child_id)
             return True
-            
+
     #us_23
     def us23_unique_name_and_birthday(self):
         """Go through instances of individuals and check for same names and birthdays"""
@@ -876,11 +893,12 @@ class Repository():
                     
 
 def main():
-    path = input("Input path: ")
-    filename = input("Input filename: ")
-    rep = Repository(filename = filename, dir_path = path)
-    '''docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
-    rep = Repository(filename = r"what_a_mass.ged", dir_path = os.path.join(docs_dir, 'docs'))'''
+    # path = input("Input path: ")
+    # filename = input("Input filename: ")
+    docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
+    rep = Repository(filename = r"what_a_mass.ged", dir_path = os.path.join(docs_dir, 'docs'))
+    # rep = Repository(filename = filename, dir_path = path)
+
     #filename = r"Project_t03.ged"
     rep.individual_pt()
     rep.output_family()
@@ -899,8 +917,29 @@ def main():
     rep.us16_male_last_names()
     rep.us17_No_marriages_to_children()
     rep.us18_Siblings_should_not_marry()
+
     #rep.us_19_cousins_not_marry()
+    for people_id in rep.People.keys():
+        try:
+            s = rep.us_19_cousins_not_marry(people_id)
+            if s is not True:
+                print(s)
+        except ValueError as e:
+            print(e)
+        except KeyError as ke:
+            print(ke)
+
     #rep.us20_aunts_uncle()
+    for people_id in rep.People.keys():
+        try:
+            s = rep.us20_aunts_uncle(people_id)
+            if s is not True:
+                print(s)
+        except KeyError as ke:
+            print(ke)
+        except ValueError as e:
+            print(e)
+
     rep.us21_correct_gender()
     rep.us22_unique_fam_IDs()
     rep.us23_unique_name_and_birthday()
