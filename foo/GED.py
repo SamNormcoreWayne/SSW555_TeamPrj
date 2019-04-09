@@ -734,6 +734,42 @@ class Repository():
 
 
 
+    # us17 No marriages to children
+    def us17_No_marriages_to_children(self):
+        '''Parents should not marry any of their children'''
+        family_list = list(self.Familis.values())
+        result_list = []
+        for fam_1 in family_list:
+            for fam_2 in family_list:
+                if fam_1.hus_id != "NA" and fam_1.wife_id != "NA":
+
+                    if fam_1.hus_id in fam_2.child_id and fam_1.wife_id == fam_2.wife_id:
+                        print(
+                            f"ERROR: US17: FAMILY {fam_1.fam_ID} father {fam_1.hus_id}> marriages to children {fam_2.child_id}")
+                        result_list.append(
+                            f"ERROR: US17: FAMILY {fam_1.fam_ID} father {fam_1.hus_id}> marriages to children {fam_2.child_id}")
+
+                    elif fam_1.wife_id in fam_2.child_id and fam_1.hus_id == fam_2.hus_id:
+                        print(f"ERROR: US17: FAMILY {fam_1.fam_ID} mother {fam_1.wife_id}> marriages to children {fam_2.child_id}")
+                        result_list.append(f"ERROR: US17: FAMILY {fam_1.fam_ID} mother {fam_1.wife_id}> marriages to children {fam_2.child_id}")
+        return result_list
+
+    # us18 Siblings should not marry
+
+    def us18_Siblings_should_not_marry(self):
+        '''Siblings should not marry one another'''
+        family_list = list(self.Familis.values())
+        result_list = []
+
+        for fam_1 in family_list:
+            for fam_2 in family_list:
+                # family can't only have child ID with parents' ID "NA"
+                if fam_1.hus_id in fam_2.child_id and fam_1.wife_id in fam_2.child_id:
+                    print(f"ERROR: US18: FAMILY {fam_2.fam_ID} marriages")
+                    result_list.append(f"ERROR: US18: FAMILY {fam_2.fam_ID} marriages")
+        return result_list
+
+
 def main():
     path = input("Input path: ")
     filename = input("Input filename: ")
