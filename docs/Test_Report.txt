@@ -1,0 +1,195 @@
+travis_time:start:216e29af
+[0K$ python -m unittest tests.TestGED_us02
+.ANOMALY: FAMILY:<@F2@>, US02: Child<@I7@> born 2000-01-01 00:00:00 before marriage on 2006-09-15 00:00:00
+ANOMALY: FAMILY:<@F3@>, US02: Child<@I1@> born 1979-05-16 00:00:00 before marriage on 2005-05-05 00:00:00
+ANOMALY: FAMILY:<@F4@>, US02: Child<@I6@> born 2002-07-04 00:00:00 before marriage on 2003-12-30 00:00:00
+.
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+OK
+travis_time:end:216e29af:start=1554672839981383039,finish=1554672840089709190,duration=108326151
+[0K[32;1mThe command "python -m unittest tests.TestGED_us02" exited with 0.[0m
+
+travis_time:start:0ad24d12
+[0K$ python -m unittest tests.TestGED_us05
+.ERROR: FAMILY:<@F2@>, US05: Individule<@I5@> die on 2001-09-11 00:00:00 before marriage on 2006-09-15 00:00:00
+ERROR: FAMILY:<@F3@>, US05: Individule<@I2@> die on 2001-03-14 00:00:00 before marriage on 2005-05-05 00:00:00
+ERROR: FAMILY:<@F3@>, US05: Individule<@I3@> die on 2001-03-14 00:00:00 before marriage on 2005-05-05 00:00:00
+.
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+OK
+travis_time:end:0ad24d12:start=1554672840093849564,finish=1554672840177164526,duration=83314962
+[0K[32;1mThe command "python -m unittest tests.TestGED_us05" exited with 0.[0m
+
+travis_time:start:029cb644
+[0K$ python -m unittest tests.TestGED_us16
+Error: FAMILY:<@F2@>, US16: Last names don't match
+Error: FAMILY:<@F3@>, US16: Last names don't match
+Error: FAMILY:<@F4@>, US16: Last names don't match
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+OK
+travis_time:end:029cb644:start=1554672840181589640,finish=1554672840266572974,duration=84983334
+[0K[32;1mThe command "python -m unittest tests.TestGED_us16" exited with 0.[0m
+
+travis_time:start:10e69728
+[0K$ python -m unittest tests.TestGED_us14
+.Error: FAMILY<@F4@>, US14: Multiple birth more than 5!
+.
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+OK
+travis_time:end:10e69728:start=1554672840270838314,finish=1554672840354113564,duration=83275250
+[0K[32;1mThe command "python -m unittest tests.TestGED_us14" exited with 0.[0m
+
+travis_time:start:261e2d68
+[0K$ python -m unittest tests.TestGED_us03
+ERROR: US03: Individual@I2@> birth date is after death date
+ERROR: US03: Individual@I5@> birth date is after death date
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+travis_time:end:261e2d68:start=1554672840358662996,finish=1554672840438447598,duration=79784602
+[0K[32;1mThe command "python -m unittest tests.TestGED_us03" exited with 0.[0m
+
+travis_time:start:0176ced4
+[0K$ python -m unittest tests.TestGED_us04
+ANOMALY: US04: FAMILY:<@F1@> No marriage date
+ERROR: US04: FAMILY:<@F2@> Divoce before Marriage
+ERROR: US04: FAMILY:<@F3@> Divoce before Marriage
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+travis_time:end:0176ced4:start=1554672840442737481,finish=1554672840522271808,duration=79534327
+[0K[32;1mThe command "python -m unittest tests.TestGED_us04" exited with 0.[0m
+
+travis_time:start:028274c7
+[0K$ python -m unittest tests.TestGED_us08
+ANOMALY: US08: Individual@I2@> Can't compare marriage date and divorce date
+ANOMALY: US08: Individual@I3@> Can't compare marriage date and divorce date
+ANOMALY: US08: Individual@I4@> Can't compare marriage date and divorce date
+ANOMALY: US08: Individual@I5@> Can't compare marriage date and divorce date
+ANOMALY: US08: Individual@I7@> Can't compare marriage date and divorce date
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+travis_time:end:028274c7:start=1554672840526526651,finish=1554672840606575231,duration=80048580
+[0K[32;1mThe command "python -m unittest tests.TestGED_us08" exited with 0.[0m
+
+travis_time:start:0afbb65a
+[0K$ python -m unittest tests.TestGED_us09
+ANOMALY: US09: Individual@I2@> Can't compare birth date and parents' death date
+ANOMALY: US09: Individual@I3@> Can't compare birth date and parents' death date
+ANOMALY: US09: Individual@I4@> Can't compare birth date and parents' death date
+ANOMALY: US09: Individual@I5@> Can't compare birth date and parents' death date
+ANOMALY: US09: Individual@I6@> Can't compare birth date and parents' death date
+ANOMALY: US09: Individual@I7@> Can't compare birth date and parents' death date
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+travis_time:end:0afbb65a:start=1554672840611085859,finish=1554672840691572288,duration=80486429
+[0K[32;1mThe command "python -m unittest tests.TestGED_us09" exited with 0.[0m
+
+travis_time:start:055ab540
+[0K$ python -m unittest tests.TestGED_us07
+ANOMALY: US07: Individual@I7@> didn't record age
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.006s
+
+OK
+travis_time:end:055ab540:start=1554672840695867198,finish=1554672840775084590,duration=79217392
+[0K[32;1mThe command "python -m unittest tests.TestGED_us07" exited with 0.[0m
+
+travis_time:start:03b77617
+[0K$ python -m unittest tests.TestGED_us10
+ANOMALY: US10: Family@F1@> can't compare if parents are at least 14 years old
+ANOMALY: US10: Family@F2@> can't compare if parents are at least 14 years old
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+travis_time:end:03b77617:start=1554672840779432685,finish=1554672840860117569,duration=80684884
+[0K[32;1mThe command "python -m unittest tests.TestGED_us10" exited with 0.[0m
+
+travis_time:start:045ab942
+[0K$ python -m unittest tests.TestGED_us11
+Error: US11: FAMILY<@F1@> husband @I1@ has more than 1 spounse during marriage in family @F2@!
+Error: US11: FAMILY<@F1@> husband @I1@ has more than 1 spounse during marriage in family @F4@!
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+travis_time:end:045ab942:start=1554672840864505975,finish=1554672840945011894,duration=80505919
+[0K[32;1mThe command "python -m unittest tests.TestGED_us11" exited with 0.[0m
+
+travis_time:start:00099865
+[0K$ python -m unittest tests.TestGED_us15
+Error: US15: FAMILY<@F3@> has more than 15 children!
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+travis_time:end:00099865:start=1554672840949381006,finish=1554672841035582605,duration=86201599
+[0K[32;1mThe command "python -m unittest tests.TestGED_us15" exited with 0.[0m
+
+travis_time:start:0174a374
+[0K$ python -m unittest tests.TestGED_us01
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.007s
+
+OK
+travis_time:end:0174a374:start=1554672841040090266,finish=1554672841121465881,duration=81375615
+[0K[32;1mThe command "python -m unittest tests.TestGED_us01" exited with 0.[0m
+
+travis_time:start:287ed3b3
+[0K$ python -m unittest tests.TestGED_us06
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.000s
+
+OK
+travis_time:end:287ed3b3:start=1554672841125932678,finish=1554672841208914971,duration=82982293
+[0K[32;1mThe command "python -m unittest tests.TestGED_us06" exited with 0.[0m
+
+travis_time:start:0b368624
+[0K$ python -m unittest tests.TestGED_us12
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+travis_time:end:0b368624:start=1554672841213420983,finish=1554672841305389916,duration=91968933
+[0K[32;1mThe command "python -m unittest tests.TestGED_us12" exited with 0.[0m
+
+travis_time:start:00063e61
+[0K$ python -m unittest tests.TestGED_us13
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+travis_time:end:00063e61:start=1554672841309932270,finish=1554672841390419556,duration=80487286
+[0K[32;1mThe command "python -m unittest tests.TestGED_us13" exited with 0.[0m
+
+
+
+Done. Your build exited with 0.

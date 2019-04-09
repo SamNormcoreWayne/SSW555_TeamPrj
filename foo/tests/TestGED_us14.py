@@ -5,23 +5,19 @@ import os
 from GED import Repository
 
 docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
-a = Repository(filename='Project_t14.ged', dir_path=os.path.join(docs_dir, 'docs'))
+a = Repository(filename='Project01_Xiaomeng Xu.ged', dir_path=os.path.join(docs_dir, 'docs'))
+b = Repository(filename='Project_t14.ged', dir_path=os.path.join(docs_dir, 'docs'))
 
 class test_us_14(unittest.TestCase):
-    """Test us14_multiple_birth_less_5
-        tests condicted on file 'Project_t14.ged'"""
+    """Test us14_multiple_birth_less_5"""
 
-    def test_family_01(self):
-        """test us14_multiple_birth_less_5 on family 1"""
-        self.assertEqual(a.us14_multiple_birth_less_5('@F1@'), 'ID: @F1@, Reslut: Good')
+    def test_family_a(self):
+        """test conduct on file 'Project01_Xiaomeng Xu.ged'"""
+        self.assertEqual(a.us14_multiple_birth_less_5(), [])
 
-    def test_family_02(self):
-        """test us14_multiple_birth_less_5 on family 2"""
-        self.assertEqual(a.us14_multiple_birth_less_5('@F2@'), 'ID: @F2@, Reslut: Good')
-
-    def test_family_04(self):
-        """test us14_multiple_birth_less_5 on family 4"""
-        self.assertEqual(a.us14_multiple_birth_less_5('@F4@'), 'ID: @F4@, Reslut: Error: Multiple birth more than 5')
+    def test_family_b(self):
+        """test conduct on file 'Project_t14.ged'"""
+        self.assertEqual(b.us14_multiple_birth_less_5(), ['Error: FAMILY<@F4@>'])
 
 
 if __name__ == '__main__':

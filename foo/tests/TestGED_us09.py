@@ -1,3 +1,10 @@
+#!/usr/bin/env python
+# coding=UTF-8
+'''
+@Author: Puzhuo Li
+@Github: https://github.com/JamesLi0217
+@Date: 2019-04-05 23:15:39
+'''
 import unittest
 import datetime
 import sys
@@ -6,21 +13,15 @@ from GED import Repository
 
 
 docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
-a = Repository(filename='Project01_Xiaomeng Xu.ged', dir_path=os.path.join(docs_dir, 'docs'))
+a = Repository(filename='Project01_Xiaomeng Xu.ged',
+               dir_path=os.path.join(docs_dir, 'docs'))
+
 
 class TestUS09(unittest.TestCase):
     def test_us09_birth_b4_parents_death(self):
-        self.assertTrue(a.us09_birth_b4_parents_death('@I1@'))
-        
-        self.assertTrue(a.us09_birth_b4_parents_death('@I6@'))
-        self.assertTrue(a.us09_birth_b4_parents_death('@I7@'))
-        with self.assertRaises(ValueError):
-            a.us09_birth_b4_parents_death('@I2@')
-            a.us09_birth_b4_parents_death('@I3@')
-            a.us09_birth_b4_parents_death('@I10@')
-            a.us09_birth_b4_parents_death('@I4@')
-            a.us09_birth_b4_parents_death('@I5@')
+        self.assertTrue(a.us09_birth_b4_parents_death(), ["ANOMALY: US09: Individual@I2@> Can't compare birth date and parents' death date", "ANOMALY: US09: Individual@I3@> Can't compare birth date and parents' death date", "ANOMALY: US09: Individual@I4@> Can't compare birth date and parents' death date", "ANOMALY: US09: Individual@I5@> Can't compare birth date and parents' death date", "ANOMALY: US09: Individual@I6@> Can't compare birth date and parents' death date", "ANOMALY: US09: Individual@I7@> Can't compare birth date and parents' death date"])
+
 
 if __name__ == '__main__':
     print('Running unit tests')
-    unittest.main(exit = False, verbosity= 2)
+    unittest.main(exit=False, verbosity=2)

@@ -1,0 +1,89 @@
+ Inidividuals
++-------+--------------------+--------+-------------+-----+-------+-------------+-------+--------+
+|   ID  |        Name        | Gender |   Birthday  | Age | Alive |    Death    | Child | Spouse |
++-------+--------------------+--------+-------------+-----+-------+-------------+-------+--------+
+| @I10@ |   Harry /Stark/    |   F    |  8 JUL 2002 |  16 |  True |     N/A     |  @F4@ |  N/A   |
+| @I11@ |    Hory /Stark/    |   M    |  8 JUL 2002 |  16 |  True |     N/A     |  @F4@ |  N/A   |
+| @I12@ |    Hory /Stark/    |   F    |  8 JUL 2002 |  16 |  True |     N/A     |  @F4@ |  N/A   |
+| @I13@ |    Hory /Stark/    |   F    |  8 JUL 2002 |  16 |  True |     N/A     |  @F4@ |  N/A   |
+| @I14@ |    Adam /Stark/    |   M    |  1 JAN 1700 | 151 | False |  1 JAN 1851 |  @F3@ |  @F5@  |
+| @I15@ |    Zhihua /Pan/    |   F    |  9 AUG 1880 | 138 |  True |     N/A     |  N/A  |  @F5@  |
+| @I16@ |  Dingshan /Ping/   |   F    | 25 MAR 1781 | 238 |  True |     N/A     |  @F5@ |  N/A   |
+| @I17@ |   Happy /Stark/    |   F    |  2 NOV 2001 |  17 |  True |     N/A     |  @F4@ |  N/A   |
+|  @I1@ |    Tony /Stark/    |   M    | 16 MAY 1979 |  39 |  True |     N/A     |  @F3@ |  @F4@  |
+|  @I2@ |   Howard /Stark/   |   M    |  1 OCT 1949 |  -1 | False |  1 OCT 1948 |  N/A  |  @F3@  |
+|  @I3@ | Maria /Carbonell/  |   F    |  4 JUL 1953 |  47 | False | 14 MAR 2001 |  N/A  |  @F3@  |
+|  @I4@ |   Pepper /Potts/   |   F    | 24 NOV 1980 |  38 |  True |     N/A     |  N/A  |  @F4@  |
+|  @I5@ | Natasha /Romanoff/ |   F    | 21 MAY 1976 |  -1 | False | 20 MAY 1976 |  N/A  |  @F2@  |
+|  @I6@ |   Harry /Stark/    |   M    |  4 JUL 2002 |  16 |  True |     N/A     |  @F4@ |  N/A   |
+|  @I7@ |   Bucky /Stark/    |   M    |  1 JAN 2000 |  19 |  True |     N/A     |  @F2@ |  N/A   |
+|  @I8@ |    Toby /Stark/    |   M    | 17 MAY 2020 |  -1 | False | 17 APR 2020 |  @F3@ |  N/A   |
+|  @I9@ |   Harry /Stark/    |   F    |  8 JUL 2002 |  16 |  True |     N/A     |  @F4@ |  N/A   |
++-------+--------------------+--------+-------------+-----+-------+-------------+-------+--------+
+
+Families
++------+------------+------------+------------+----------------+---------+--------------------+---------------------------------------------------------------+
+|  ID  |  Married   |  Divorced  | Husband ID |  Husband Name  | Wife ID |     Wife Name      |                            Children                           |
++------+------------+------------+------------+----------------+---------+--------------------+---------------------------------------------------------------+
+| @F1@ |     NA     |     NA     |    @I1@    |  Tony /Stark/  |    NA   |         NA         |                             ['NA']                            |
+| @F2@ | 2006-09-15 | 2001-09-11 |    @I1@    |  Tony /Stark/  |   @I5@  | Natasha /Romanoff/ |                            ['@I7@']                           |
+| @F3@ | 1980-07-03 | 1979-05-04 |    @I2@    | Howard /Stark/ |   @I3@  | Maria /Carbonell/  |                   ['@I1@', '@I8@', '@I14@']                   |
+| @F4@ | 1994-10-30 |     NA     |    @I1@    |  Tony /Stark/  |   @I4@  |   Pepper /Potts/   | ['@I6@', '@I9@', '@I10@', '@I11@', '@I12@', '@I13@', '@I17@'] |
+| @F5@ | 1892-06-02 | 1891-10-07 |   @I14@    |  Adam /Stark/  |  @I15@  |    Zhihua /Pan/    |                           ['@I16@']                           |
++------+------------+------------+------------+----------------+---------+--------------------+---------------------------------------------------------------+
+ANOMALY: FAMILY:<@F2@>, US02: Child<@I7@> born 2000-01-01 00:00:00 before marriage on 2006-09-15 00:00:00
+ANOMALY: FAMILY:<@F3@>, US02: Child<@I1@> born 1979-05-16 00:00:00 before marriage on 1980-07-03 00:00:00
+ANOMALY: FAMILY:<@F3@>, US02: Child<@I14@> born 1700-01-01 00:00:00 before marriage on 1980-07-03 00:00:00
+ANOMALY: FAMILY:<@F5@>, US02: Child<@I16@> born 1781-03-25 00:00:00 before marriage on 1892-06-02 00:00:00
+ERROR: US03: Individual@I2@> birth date is after death date
+ERROR: US03: Individual@I5@> birth date is after death date
+ERROR: US03: Individual@I8@> birth date is after death date
+ANOMALY: US04: FAMILY:<@F1@> No marriage date
+ERROR: US04: FAMILY:<@F2@> Divoce before Marriage
+ERROR: US04: FAMILY:<@F3@> Divoce before Marriage
+ERROR: US04: FAMILY:<@F5@> Divoce before Marriage
+ERROR: FAMILY:<@F2@>, US05: Individule<@I5@> die on 1976-05-20 00:00:00 before marriage on 2006-09-15 00:00:00
+ERROR: FAMILY:<@F3@>, US05: Individule<@I2@> die on 1948-10-01 00:00:00 before marriage on 1980-07-03 00:00:00
+ERROR: FAMILY:<@F5@>, US05: Individule<@I14@> die on 1851-01-01 00:00:00 before marriage on 1892-06-02 00:00:00
+ERROR: US07: Individual@I14@> age is > 150 years old
+ERROR: US07: Individual@I16@> age is > 150 years old
+ANOMALY: US07: Individual@I17@> didn't record age
+ERROR: US08: Individual@I1@> Birth date is before Marriage
+ANOMALY: US08: Individual@I2@> Can't compare marriage date and divorce date
+ANOMALY: US08: Individual@I3@> Can't compare marriage date and divorce date
+ANOMALY: US08: Individual@I4@> Can't compare marriage date and divorce date
+ANOMALY: US08: Individual@I5@> Can't compare marriage date and divorce date
+ERROR: US08: Individual@I7@> Birth date is before Marriage
+ERROR: US08: Individual@I8@> Birth date is before Marriage
+ERROR: US08: Individual@I14@> Birth date is before Marriage
+ANOMALY: US08: Individual@I15@> Can't compare marriage date and divorce date
+ERROR: US08: Individual@I16@> Birth date is before Marriage
+ERROR: US09: Individual@I1@> Birth date is after parents' death date
+ANOMALY: US09: Individual@I2@> Can't compare birth date and parents' death date
+ANOMALY: US09: Individual@I3@> Can't compare birth date and parents' death date
+ANOMALY: US09: Individual@I4@> Can't compare birth date and parents' death date
+ANOMALY: US09: Individual@I5@> Can't compare birth date and parents' death date
+ANOMALY: US09: Individual@I6@> Can't compare birth date and parents' death date
+ANOMALY: US09: Individual@I7@> Can't compare birth date and parents' death date
+ERROR: US09: Individual@I8@> Birth date is after parents' death date
+ANOMALY: US09: Individual@I9@> Can't compare birth date and parents' death date
+ANOMALY: US09: Individual@I10@> Can't compare birth date and parents' death date
+ANOMALY: US09: Individual@I11@> Can't compare birth date and parents' death date
+ANOMALY: US09: Individual@I12@> Can't compare birth date and parents' death date
+ANOMALY: US09: Individual@I13@> Can't compare birth date and parents' death date
+ANOMALY: US09: Individual@I15@> Can't compare birth date and parents' death date
+ANOMALY: US09: Individual@I16@> Can't compare birth date and parents' death date
+ANOMALY: US09: Individual@I17@> Can't compare birth date and parents' death date
+ANOMALY: US10: Family@F1@> can't compare if parents are at least 14 years old
+ERROR: US10: Family@F4@> parents are not at least 14 years old
+ERROR: US10: Family@F5@> parents are not at least 14 years old
+Error: US11: FAMILY<@F1@> husband @I1@ has more than 1 spounse during marriage in family @F4@!
+Error: FAMILY<@F4@>, US14: Multiple birth more than 5!
+Error: FAMILY:<@F5@>, US16: Last names don't match
+ANOMALY: FAMILY: us06: @F1@ divorce data not exist
+ANOMALY: FAMILY: us06: @I10@ or @I11@ death date not exist
+ANORMALY: INDIVIDUAL: us13: Wrong birthday between siblings @I1@, @I8@
+ANOMALY: FAMILY: us06: @I10@ or @I11@ death date not exist
+ANORMALY: INDIVIDUAL: us13: Wrong birthday between siblings @I6@, @I9@
+ANOMALY: FAMILY: us06: @F4@ divorce data not exist
+ANOMALY: FAMILY: us06: @I10@ or @I11@ death date not exist

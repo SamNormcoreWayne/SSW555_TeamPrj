@@ -1,3 +1,10 @@
+#!/usr/bin/env python
+# coding=UTF-8
+'''
+@Author: Puzhuo Li
+@Github: https://github.com/JamesLi0217
+@Date: 2019-04-05 23:15:39
+'''
 # @author: zz2
 # Test for us_10
 # @update: 2/25/2019
@@ -15,55 +22,18 @@ from GED import Repository
 
 
 class TestGedcom(unittest.TestCase):
-    '''
-    @classmethod
-    def setUpClass(cls):
-        sys.path.append(os.path.dirname(os.getcwd()))
-        from gedcom import Repository
-        print("Test starts")
-    
-    @classmethod
-    def tearDownClass(cls):
-        print("Test ends.")
-    '''
-
-    """def test_birth_b4_now(self):
-        '''
-            This a test case for us04. If you are working on us10, please ignore this test case. 
-        '''
-        a = Repository("Project01_Xiaomeng Xu.ged", ros.path.join(docs_dir, 'docs'))
-        result = datetime.datetime.strptime(a.us_01_birth_b4_now(), "%d %b %Y")
-        current_time = datetime.datetime.now()
-        for people in a.People:
-            with self.subTest():
-                self.assertFalse(people._bday, "")
-                self.assertFalse(people.dday, "")
-        self.assertLess((result - current_time).days, 0)
-        self.assertGreater((current_time - result).days, 0)
-        with self.assertRaises(TypeError):
-            datetime.datetime.strftime(result)
-        self.assertTrue((current_time - result).days > 0)
-        self.assertFalse((current_time - result).days < 0)"""
 
     def test_age_less_150(self):
         """
-            For developer:
             This test case is for us07
-            You do not have to implement T07.01 because it has been implemented in project3 or project 2.
         """
         docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
-        a = Repository("Project01_Xiaomeng Xu.ged", os.path.join(docs_dir, 'docs'))
-        for people in a.People.values():
-            with self.subTest("Individual id: {}".format(people._id)):
-                self.assertNotEqual(people._bday, "")
-                self.assertNotEqual(people._age, "")
-                """
-                    To make sure every one has birthday and age.
-                """
-        self.assertEqual(a.us07_age_less_150('@I2@'), True)
-        """
-            If the age is more than 150 then should raise a ValueError and print("The age is more than 150")
-        """
+        a = Repository("Project01_Xiaomeng Xu.ged",
+                       os.path.join(docs_dir, 'docs'))
+
+        self.assertEqual(a.us07_age_less_150(), [
+                         "ANOMALY: US07: Individual@I7@> didn't record age"])
+
 
 if __name__ == "__main__":
     unittest.main(exit=False, verbosity=2)
