@@ -740,18 +740,18 @@ class Repository():
         family_list = list(self.Familis.values())
         result_list = []
         for fam_1 in family_list:
-            for fam_2 in family_list:
-                if fam_1.hus_id != "NA" and fam_1.wife_id != "NA":
-
+            if fam_1.hus_id != "NA" and fam_1.wife_id != "NA":
+                for fam_2 in family_list:
+                
                     if fam_1.hus_id in fam_2.child_id and fam_1.wife_id == fam_2.wife_id:
                         print(
-                            f"ERROR: US17: FAMILY {fam_1.fam_ID} father {fam_1.hus_id}> marriages to children {fam_2.child_id}")
+                            f"ERROR: US17: FAMILY {fam_2.fam_ID} mother {fam_2.wife_id}> marriages to children {fam_1.hus_id}")
                         result_list.append(
-                            f"ERROR: US17: FAMILY {fam_1.fam_ID} father {fam_1.hus_id}> marriages to children {fam_2.child_id}")
+                            f"ERROR: US17: FAMILY {fam_2.fam_ID} mother {fam_2.wife_id}> marriages to children {fam_1.hus_id}")
 
                     elif fam_1.wife_id in fam_2.child_id and fam_1.hus_id == fam_2.hus_id:
-                        print(f"ERROR: US17: FAMILY {fam_1.fam_ID} mother {fam_1.wife_id}> marriages to children {fam_2.child_id}")
-                        result_list.append(f"ERROR: US17: FAMILY {fam_1.fam_ID} mother {fam_1.wife_id}> marriages to children {fam_2.child_id}")
+                        print(f"ERROR: US17: FAMILY {fam_2.fam_ID} father {fam_2.hus_id}> marriages to children {fam_1.wife_id}")
+                        result_list.append(f"ERROR: US17: FAMILY {fam_2.fam_ID} father {fam_2.hus_id}> marriages to children {fam_1.wife_id}")
         return result_list
 
     # us18 Siblings should not marry
@@ -893,11 +893,12 @@ class Repository():
                     
 
 def main():
-    # path = input("Input path: ")
-    # filename = input("Input filename: ")
-    docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
-    rep = Repository(filename = r"what_a_mass.ged", dir_path = os.path.join(docs_dir, 'docs'))
-    # rep = Repository(filename = filename, dir_path = path)
+    path = input("Input path: ")
+    filename = input("Input filename: ")
+    rep = Repository(filename = filename, dir_path = path)
+    #docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
+    #rep = Repository(filename = r"what_a_mass.ged", dir_path = os.path.join(docs_dir, 'docs'))
+    
 
     #filename = r"Project_t03.ged"
     rep.individual_pt()
