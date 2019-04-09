@@ -782,7 +782,7 @@ class Repository():
         try:
             fam_child = self.Familis[self.People[child_id]._spouse]
         except KeyError:
-            raise KeyError("ANORMALY: INDIVIDUAL: us19: {id} is a single dog.")
+            raise KeyError("ANORMALY: INDIVIDUAL: us19: {id} is a single dog.".format(id=child_id))
         if child._spouse == 'N/A':
             return True
         else:
@@ -812,10 +812,6 @@ class Repository():
             return "ANORMALY: INDIVIDUAL: us20: {id} does not have dad".format(id=child_id)
         mom = self.People[mother_id]
         dad = self.People[father_id]
-        if mom._child == 'N/A':
-            return "ERROR: INDIVIDUAL: us20: {id} does not have children".format(id=mother_id)
-        if dad._child == 'N/A':
-            return "ERROR: INDIVIDUAL: us20: {id} does not have children".format(id=father_id)
         try:
             fam_mom = self.Familis[mom._child]
         except KeyError:
@@ -864,7 +860,7 @@ class Repository():
                     print(f"ERROR: INDIVIDULE:<{ind_id}>, US23: Name:<{individule._name}>, ERROR: Found individule with same name and birthday!")
                     result.append(f"ERROR: INDIVIDULE:<{ind_id}>")
 
-        print(result)
+        # print(result)
         return result
 
     #us_24
@@ -888,7 +884,7 @@ class Repository():
         
         for i in result:
             print(f"ERROR: FAMILY:<{i}>, US24: Families with same spouses and same marriage!")
-        print(result)
+        # print(result)
         return result
                     
 
