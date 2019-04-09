@@ -769,6 +769,28 @@ class Repository():
                     result_list.append(f"ERROR: US18: FAMILY {fam_2.fam_ID} marriages")
         return result_list
 
+    # us_19
+    def us_19_cousins_not_marry(self, child_id):
+        if child_id not in self.People.keys():
+            raise ValueError("ERROR: INDIVIDUAL: Cannot find {id} in this GED file.".format(id=child_id))
+        child = self.People[child_id]
+        gender = child._gender
+        fam_id = self.People[child_id]._child
+        fam = self.Familis[fam_id]
+        try:
+            fam_child = self.Familis[self.People[child_id]._spouse]
+        except KeyError:
+            raise KeyError("ANORMALY: INDIVIDUAL: us20: {id} is a single dog.")
+        if child._spouse == 'N/A':
+            return True
+        else:
+            if gender == 'F':
+                if fam_child.hus_id in fam.child_id:
+                    return "ERROR: INDIVIDUAL: {id} marries his cousins".format(id=child_id)
+            if gender == 'M':
+                if fam_child.wife_id in fam.child_id:
+                    return "ERROR: INDIVIDUAL: {id} marries his cousins".format(id=child_id)
+        return True
 
 def main():
     path = input("Input path: ")
