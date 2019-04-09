@@ -12,9 +12,10 @@ from GED import Repository
 
 
 docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
-a = Repository(filename='Project_t17.ged',
-               dir_path=os.path.join(docs_dir, 'docs'))
-
+a = Repository(filename='Project_t17.ged',dir_path=os.path.join(docs_dir, 'docs'))
+'''path = r"/Users/daiyuping/Documents/GitHub/SSW555_TeamPrj/docs"
+filename = r"Project_t17.ged"
+a = Repository(filename=filename, dir_path=path)'''
 
 class Test_us17_No_marriages_to_children(unittest.TestCase):
     """Tests conducted on file 
@@ -23,11 +24,16 @@ class Test_us17_No_marriages_to_children(unittest.TestCase):
     """
 
     def test_US17_No_marriages_to_children(self):
-        """Test us17_sibling_spacing()"""
+        """Test No_marriages_to_children()"""
         self.assertEqual(a.us17_No_marriages_to_children(), [
-                         "ERROR: US17: FAMILY @F2@ mother @I5@> marriages to children @I7@"])
+                         "ERROR: US17: FAMILY @F5@ father @I7@> marriages to children ['@I7@']"])
 
 
 if __name__ == '__main__':
     print('Running unit tests')
     unittest.main(exit=False, verbosity=2)
+    '''path = r"/Users/daiyuping/Documents/GitHub/SSW555_TeamPrj/docs"
+    filename = r"Project_t17.ged"
+    a = Repository(filename=filename, dir_path=path)
+    b=a.us17_No_marriages_to_children()
+    print(b)'''

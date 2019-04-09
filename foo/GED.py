@@ -193,17 +193,18 @@ class Repository():
     # us_01
     def us_01_birth_b4_now(self):
         for person in self.People.values():
-            if person._bday == 'N/A':
-                yield("ERROR: INDIVIDUAL: us01: {id} birthday not exist".format(id=person._id))
+            bd = datetime.datetime.strptime(person._bday, '%d %b %Y')
+            if bd > datetime.datetime.now():
+                yield("ERROR: INDIVIDUAL: us01: {id} is not born".format(id=person._id))
             else:
-                yield datetime.datetime.strptime(person._bday, '%d %b %Y')
+                yield bd
 
     # us_02
     def us02_birth_b4_marriage(self):
         """For a givenn fam_id, check the family marriage date and birthday for each individual, retuen the result"""
         result = []
         for fam_id in self.Familis.keys():
-            if self.Familis[fam_id].mar_date != 'NA':
+            if self.Familis[fam_id].mar_date != 'NA' and self.Familis[fam_id].child_id != ['NA']:
 
                 mdt = datetime.datetime.strptime(
                     self.Familis[fam_id].mar_date, '%Y-%m-%d')
@@ -556,20 +557,20 @@ class Repository():
                 for child in fam.child_id:
                     childs.append(self.getPeople(child))
             else:
-                childs = None
+                print("ANORMALY: FAMILY: us12: {id} has no children".format(id=fam.fam_ID))
+                continue
+            for child in childs:
+                if child._age == "N/A":
+                    raise TypeError("ERROR: INDIVIDUAL: us12: Child {id} age does not exist.".format(id=child._id))
 
-            if (childs is not None):
-                for child in childs:
-                    if child._age == "N/A":
-                        raise TypeError("ERROR: INDIVIDUAL: us12: Child {id} age does not exist.".format(id=child._id))
-
-                for child in childs:
-                    if ((wife._age - child._age) > 60) and (wife is not None):
-                        raise TypeError("ANORMALY: INDIVIDUAL: us12: Mother is too young or child {id} is too old!".format(id=child._id))
-                    if ((hus._age - child._age) > 80) and (hus is not None):
-                        raise TypeError("ANORMALY: INDIVIDUAL: us12: Father is too young or child {id} is too old!".format(id=child._id))
-                return True
-            return "No Children"
+            for child in childs:
+                if wife is None or hus is None:
+                    raise ValueError("ERROR: INDIVIDUAL: us12: Child {id} has not parents".format(id=child._id))
+                if ((wife._age - child._age) > 60):
+                    raise TypeError("ANORMALY: INDIVIDUAL: us12: Mother is too young or child {id} is too old!".format(id=child._id))
+                if ((hus._age - child._age) > 80):
+                    raise TypeError("ANORMALY: INDIVIDUAL: us12: Father is too young or child {id} is too old!".format(id=child._id))
+        return True
 
     # us_14
     def us14_multiple_birth_less_5(self):
@@ -691,18 +692,216 @@ class Repository():
                         if ((datetime.datetime.strptime(child_1._bday, '%d %b %Y') - datetime.datetime.strptime(child_2._bday, '%d %b %Y')).days > 2) or ((datetime.datetime.strptime(child_1._bday, '%d %b %Y') - datetime.datetime.strptime(child_2._bday, '%d %b %Y')).days < 240):
                             raise TypeError("ANORMALY: INDIVIDUAL: us13: Wrong birthday between siblings {child_id_1}, {child_id_2}".format(child_id_1=child_1._id, child_id_2=child_2._id))
             return True
+    
+    # us_21 Correct gender for role
+    def us21_correct_gender(self):
+        '''Husband in family should be male and wife in family should be female'''
+        result_list = []
+        for fam in self.Familis.values():
+            if fam.hus_id != "NA" and fam.wife_id != "NA":
+                if self.People[fam.hus_id]._gender != "M" or self.People[fam.wife_id]._gender != "F":
+                    print(f"ERROR: US21: FAMILY:<{fam.fam_ID}> The role is incorrect")
+                    result_list.append(f"ERROR: US21: FAMILY:<{fam.fam_ID}> The role is incorrect")
+            else:
+                print(f"ANOMALY: US21: Family{fam.fam_ID}> can't compare if the roles of parents are correct")
+                result_list.append(f"ANOMALY: US21: Family{fam.fam_ID}> can't compare if the roles of parents are correct")
+        return result_list
 
+    # us_22 Unique IDs
+    def us22_unique_fam_IDs(self):
+        '''All family IDs should be unique'''
+        count_fam_id = []
+        result_list = []
+        for fam in self.Familis.values():
+            count_fam_id.append(fam.fam_ID)
+            if len(count_fam_id) != len(set(count_fam_id)):
+                print(f"ERROR: US22: FAMILY:<{fam.fam_ID}> is not unique")
+                result_list.append(f"ERROR: US22: FAMILY:<{fam.fam_ID}> is not unique")
+        return result_list
+
+
+
+    def us22_unique_indi_IDs(self):
+        '''All individual IDs should be unique'''
+        count_indi_id = []
+        result_list = []
+
+        for indi_1 in self.People.values():
+            count_indi_id.append(indi_1._id)
+            if len(count_indi_id) != len(set(count_indi_id)):
+                print(f"ERROR: US22: INDIVIDUAL:<{indi_1._id}> is not unique")
+                result_list.append(f"ERROR: US22: INDIVIDUAL:<{indi_1._id}> is not unique")
+        return result_list
+
+
+
+    # us17 No marriages to children
+    def us17_No_marriages_to_children(self):
+        '''Parents should not marry any of their children'''
+        family_list = list(self.Familis.values())
+        result_list = []
+        for fam_1 in family_list:
+            if fam_1.hus_id != "NA" and fam_1.wife_id != "NA":
+                for fam_2 in family_list:
+                
+                    if fam_1.hus_id in fam_2.child_id and fam_1.wife_id == fam_2.wife_id:
+                        print(
+                            f"ERROR: US17: FAMILY {fam_2.fam_ID} mother {fam_2.wife_id}> marriages to children {fam_1.hus_id}")
+                        result_list.append(
+                            f"ERROR: US17: FAMILY {fam_2.fam_ID} mother {fam_2.wife_id}> marriages to children {fam_1.hus_id}")
+
+                    elif fam_1.wife_id in fam_2.child_id and fam_1.hus_id == fam_2.hus_id:
+                        print(f"ERROR: US17: FAMILY {fam_2.fam_ID} father {fam_2.hus_id}> marriages to children {fam_1.wife_id}")
+                        result_list.append(f"ERROR: US17: FAMILY {fam_2.fam_ID} father {fam_2.hus_id}> marriages to children {fam_1.wife_id}")
+        return result_list
+
+    # us18 Siblings should not marry
+
+    def us18_Siblings_should_not_marry(self):
+        '''Siblings should not marry one another'''
+        family_list = list(self.Familis.values())
+        result_list = []
+
+        for fam_1 in family_list:
+            for fam_2 in family_list:
+                # family can't only have child ID with parents' ID "NA"
+                if fam_1.hus_id in fam_2.child_id and fam_1.wife_id in fam_2.child_id:
+                    print(f"ERROR: US18: FAMILY {fam_2.fam_ID} marriages")
+                    result_list.append(f"ERROR: US18: FAMILY {fam_2.fam_ID} marriages")
+        return result_list
+
+    # us_19
+    def us_19_cousins_not_marry(self, child_id):
+        if child_id not in self.People.keys():
+            raise ValueError("ERROR: INDIVIDUAL: us19: Cannot find {id} in this GED file.".format(id=child_id))
+        child = self.People[child_id]
+        gender = child._gender
+        fam_id = self.People[child_id]._child
+        if fam_id == 'N/A':
+            return "ANORMALY: INDIVIDUAL: us19: {id} does not have family. Poor guy. ".format(id=child_id)
+        fam = self.Familis[fam_id]
+        try:
+            fam_child = self.Familis[self.People[child_id]._spouse]
+        except KeyError:
+            raise KeyError("ANORMALY: INDIVIDUAL: us19: {id} is a single dog.".format(id=child_id))
+        if child._spouse == 'N/A':
+            return True
+        else:
+            if gender == 'F':
+                if fam_child.hus_id in fam.child_id:
+                    return "ERROR: INDIVIDUAL: us19: {id} marries his cousins".format(id=child_id)
+            if gender == 'M':
+                if fam_child.wife_id in fam.child_id:
+                    return "ERROR: INDIVIDUAL: us19: {id} marries his cousins".format(id=child_id)
+        return True
+
+    # us_20
+    def us20_aunts_uncle(self, child_id):
+        if child_id not in self.People.keys():
+            raise ValueError("ERROR: INDIVIDUAL: us20: Cannot find {id} in this GED file".format(id=child_id))
+        child = self.People[child_id]
+        gender = child._gender
+        fam_id = self.People[child_id]._child
+        if fam_id == 'N/A':
+            return "ANORMALY: INDIVIDUAL: us20: {id} does not have family".format(id=child_id)
+        fam = self.Familis[fam_id]
+        father_id = fam.hus_id
+        mother_id = fam.wife_id
+        if mother_id == 'N/A':
+            return "ANORMALY: INDIVIDUAL: us20: {id} does not have mom".format(id=child_id)
+        if father_id == 'N/A':
+            return "ANORMALY: INDIVIDUAL: us20: {id} does not have dad".format(id=child_id)
+        mom = self.People[mother_id]
+        dad = self.People[father_id]
+        try:
+            fam_mom = self.Familis[mom._child]
+        except KeyError:
+            raise KeyError("ANORMALY: INDIVIDUAL: us20: {mom} parents information not exists".format(mom=mother_id))
+        try:
+            fam_dad = self.Familis[dad._child]
+        except KeyError:
+            raise KeyError("ANORMALY: INDIVIDUAL: us20: {dad} parents information not exists".format(dad=father_id))
+        if (len(fam_mom.child_id) == 1) and (len(fam_dad.child_id) == 1):
+            return "ANORMALY: INDIVIDUAL: us_20: {id} has no uncle or anuts".format(id=child_id)
+        if child._spouse == 'N/A':
+            return True
+        else:
+            child_fam = self.Familis[child._spouse]
+            if gender == 'F':
+                if child_fam.hus_id in fam_mom.child_id:
+                    return "ERROR: INDIVIDUAL: us_20: {id} marries aunt or uncle".format(id=child_id)
+                if child_fam.hus_id in fam_dad.child_id:
+                    return "ERROR: INDIVIDUAL: us_20: {id} marries aunt or uncle".format(id=child_id)
+            if gender == 'M':
+                if child_fam.wife_id in fam_mom.child_id:
+                    return "ERROR: INDIVIDUAL: us_20: {id} marries aunt or uncle".format(id=child_id)
+                if child_fam.wife_id in fam_dad.child_id:
+                    return "ERROR: INDIVIDUAL: us_20: {id} marries aunt or uncle".format(id=child_id)
+            return True
+
+    #us_23
+    def us23_unique_name_and_birthday(self):
+        """Go through instances of individuals and check for same names and birthdays"""
+        result = []
+        for ind_id, individule in self.People.items():
+            same_name = []
+            same_bday = []
+            for i in self.People.keys():
+                if self.People[i]._name == individule._name:
+                    same_name.append(i)
+            
+            if len(same_name) > 1:
+                for j in same_name:
+                    if self.People[j]._bday == individule._bday:
+                        same_bday.append(j)
+                if len(same_bday) == 1:
+                    print(f"ANOMALY: INDIVIDULE:<{ind_id}>, US23: Name:<{individule._name}>, <{len(same_name)}> duplicate names were found; No duplicate birthday were found")
+                    result.append(f"ANOMALY: INDIVIDULE:<{ind_id}>")
+                else:
+                    print(f"ERROR: INDIVIDULE:<{ind_id}>, US23: Name:<{individule._name}>, ERROR: Found individule with same name and birthday!")
+                    result.append(f"ERROR: INDIVIDULE:<{ind_id}>")
+
+        # print(result)
+        return result
+
+    #us_24
+    def us24_unique_family_by_spouse(self):
+        """Go through instances of Families and check for same spouses' names and marriage dates"""
+        result = set()
+        for fam_id, fam in self.Familis.items():
+            if fam.mar_date != 'NA':
+                count = 0
+                mdt = {}
+                for i in self.Familis.values():
+                    if i.mar_date != 'NA':
+                        if i.fam_ID != fam.fam_ID:
+                            if self.People[i.hus_id]._name == self.People[fam.hus_id]._name and self.People[i.wife_id]._name == self.People[fam.wife_id]._name:
+                                mdt[i.fam_ID] = i.mar_date
+
+                if mdt:
+                    for fam_id, date in mdt.items():
+                        if date == fam.mar_date:
+                            result.add(fam_id)
+        
+        for i in result:
+            print(f"ERROR: FAMILY:<{i}>, US24: Families with same spouses and same marriage!")
+        # print(result)
+        return result
+                    
 
 def main():
     path = input("Input path: ")
     filename = input("Input filename: ")
     rep = Repository(filename = filename, dir_path = path)
-    '''docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
-    rep = Repository(filename = r"what_a_mass.ged", dir_path = os.path.join(docs_dir, 'docs'))'''
+    #docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
+    #rep = Repository(filename = r"what_a_mass.ged", dir_path = os.path.join(docs_dir, 'docs'))
+
     #filename = r"Project_t03.ged"
     rep.individual_pt()
     rep.output_family()
-    rep.us_01_birth_b4_now()
+    for s in rep.us_01_birth_b4_now():
+        if isinstance(s, str):
+            print(s)
     rep.us02_birth_b4_marriage()
     rep.us03_birth_b4_death()
     rep.us04_marriage_b4_divoce()
@@ -715,6 +914,35 @@ def main():
     rep.us14_multiple_birth_less_5()
     rep.US15_Fewer_15_Child()
     rep.us16_male_last_names()
+    rep.us17_No_marriages_to_children()
+    rep.us18_Siblings_should_not_marry()
+
+    #rep.us_19_cousins_not_marry()
+    for people_id in rep.People.keys():
+        try:
+            s = rep.us_19_cousins_not_marry(people_id)
+            if s is not True:
+                print(s)
+        except ValueError as e:
+            print(e)
+        except KeyError as ke:
+            print(ke)
+
+    #rep.us20_aunts_uncle()
+    for people_id in rep.People.keys():
+        try:
+            s = rep.us20_aunts_uncle(people_id)
+            if s is not True:
+                print(s)
+        except KeyError as ke:
+            print(ke)
+        except ValueError as e:
+            print(e)
+
+    rep.us21_correct_gender()
+    rep.us22_unique_fam_IDs()
+    rep.us23_unique_name_and_birthday()
+    rep.us24_unique_family_by_spouse()
 
     for fam_id in rep.Familis.keys():
         try:
@@ -728,10 +956,13 @@ def main():
         except ValueError as e:
             print(e)
 
+
     try:
         rep.us12_parents_not_2_old()
     except TypeError as te:
         print(te)
+    except ValueError as e:
+        print(e)
 
 
 if __name__ == "__main__":

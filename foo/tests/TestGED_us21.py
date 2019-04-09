@@ -3,7 +3,7 @@
 '''
 @Author: Puzhuo Li
 @Github: https://github.com/JamesLi0217
-@Date: 2019-04-07 00:44:27
+@Date: 2019-03-23 21:55:01
 '''
 import unittest
 import sys
@@ -12,20 +12,18 @@ from GED import Repository
 
 
 docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
-a = Repository(filename='Project_t17.ged',
+b = Repository(filename='Project01_Xiaomeng Xu.ged',
                dir_path=os.path.join(docs_dir, 'docs'))
 
 
-class Test_us17_No_marriages_to_children(unittest.TestCase):
+class Test_us21_correct_gender(unittest.TestCase):
     """Tests conducted on file 
-    'Project_t17.ged'
-
+    'Project01_Xiaomeng Xu.ged'
     """
 
-    def test_US17_No_marriages_to_children(self):
-        """Test us17_sibling_spacing()"""
-        self.assertEqual(a.us17_No_marriages_to_children(), [
-                         "ERROR: US17: FAMILY @F2@ mother @I5@> marriages to children @I7@"])
+    def test_US21_correct_gender(self):
+        """Test us21_correct_gender()"""
+        self.assertEqual(b.us21_correct_gender(), ["ANOMALY: US21: Family@F1@> can't compare if the roles of parents are correct"])
 
 
 if __name__ == '__main__':

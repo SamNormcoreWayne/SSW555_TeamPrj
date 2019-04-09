@@ -3,8 +3,9 @@
 '''
 @Author: Puzhuo Li
 @Github: https://github.com/JamesLi0217
-@Date: 2019-04-07 00:44:27
+@Date: 2019-04-07 01:57:53
 '''
+
 import unittest
 import sys
 import os
@@ -12,20 +13,22 @@ from GED import Repository
 
 
 docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
-a = Repository(filename='Project_t17.ged',
+b = Repository(filename='Project01_Xiaomeng Xu.ged',
                dir_path=os.path.join(docs_dir, 'docs'))
 
 
-class Test_us17_No_marriages_to_children(unittest.TestCase):
+class Test_us22_unique_IDs(unittest.TestCase):
     """Tests conducted on file 
-    'Project_t17.ged'
-
+    'Project01_Xiaomeng Xu.ged'
     """
 
-    def test_US17_No_marriages_to_children(self):
-        """Test us17_sibling_spacing()"""
-        self.assertEqual(a.us17_No_marriages_to_children(), [
-                         "ERROR: US17: FAMILY @F2@ mother @I5@> marriages to children @I7@"])
+    def test_US22_unique_fam_IDs(self):
+        """Test us22_unique_fam_IDs()"""
+        self.assertEqual(b.us22_unique_fam_IDs(), [])
+    
+    def test_US22_unique_indi_IDs(self):
+        """Test us22_unique_indi_IDs()"""
+        self.assertEqual(b.us22_unique_indi_IDs(), [])
 
 
 if __name__ == '__main__':
