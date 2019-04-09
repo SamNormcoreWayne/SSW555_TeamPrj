@@ -890,12 +890,11 @@ class Repository():
                     
 
 def main():
-    path = input("Input path: ")
-    filename = input("Input filename: ")
-    rep = Repository(filename = filename, dir_path = path)
-    #docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
-    #rep = Repository(filename = r"what_a_mass.ged", dir_path = os.path.join(docs_dir, 'docs'))
-    
+    # path = input("Input path: ")
+    # filename = input("Input filename: ")
+    # rep = Repository(filename = filename, dir_path = path)
+    docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
+    rep = Repository(filename = r"what_a_mass.ged", dir_path = os.path.join(docs_dir, 'docs'))
 
     #filename = r"Project_t03.ged"
     rep.individual_pt()

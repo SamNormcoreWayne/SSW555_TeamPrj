@@ -712,5 +712,29 @@
 <-- 2|DATE|Y|30 OCT 1994
 --> 1 _CURRENT Y
 <-- 1|_CURRENT|N|Y
+--> 0 @F9@ FAM
+<-- 0|FAM|Y|@F9@
+--> 1 HUSB @I1@
+<-- 1|HUSB|Y|@I1@
+--> 1 WIFE @I10@
+<-- 1|WIFE|Y|@I10@
+--> 1 MARR
+<-- 1|MARR|Y|
+--> 2 DATE 30 OCT 2004
+<-- 2|DATE|Y|30 OCT 2004
+--> 1 _CURRENT Y
+<-- 1|_CURRENT|N|Y
+--> 0 @F10@ FAM
+<-- 0|FAM|Y|@F10@
+--> 1 HUSB @I11@
+<-- 1|HUSB|Y|@I11@
+--> 1 WIFE @I10@
+<-- 1|WIFE|Y|@I10@
+--> 1 MARR
+<-- 1|MARR|Y|
+--> 2 DATE 30 OCT 2004
+<-- 2|DATE|Y|30 OCT 2004
+--> 1 _CURRENT Y
+<-- 1|_CURRENT|N|Y
 --> 0 TRLR
 <-- 0|TRLR|Y|
