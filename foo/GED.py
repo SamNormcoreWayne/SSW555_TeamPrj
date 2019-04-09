@@ -691,6 +691,47 @@ class Repository():
                         if ((datetime.datetime.strptime(child_1._bday, '%d %b %Y') - datetime.datetime.strptime(child_2._bday, '%d %b %Y')).days > 2) or ((datetime.datetime.strptime(child_1._bday, '%d %b %Y') - datetime.datetime.strptime(child_2._bday, '%d %b %Y')).days < 240):
                             raise TypeError("ANORMALY: INDIVIDUAL: us13: Wrong birthday between siblings {child_id_1}, {child_id_2}".format(child_id_1=child_1._id, child_id_2=child_2._id))
             return True
+    
+    # us_21 Correct gender for role
+    def us21_correct_gender(self):
+        '''Husband in family should be male and wife in family should be female'''
+        result_list = []
+        for fam in self.Familis.values():
+            if fam.hus_id != "NA" and fam.wife_id != "NA":
+                if self.People[fam.hus_id]._gender != "M" or self.People[fam.wife_id]._gender != "F":
+                    print(f"ERROR: US21: FAMILY:<{fam.fam_ID}> The role is incorrect")
+                    result_list.append(f"ERROR: US21: FAMILY:<{fam.fam_ID}> The role is incorrect")
+            else:
+                print(f"ANOMALY: US21: Family{fam.fam_ID}> can't compare if the roles of parents are correct")
+                result_list.append(f"ANOMALY: US21: Family{fam.fam_ID}> can't compare if the roles of parents are correct")
+        return result_list
+
+    # us_22 Unique IDs
+    def us22_unique_fam_IDs(self):
+        '''All family IDs should be unique'''
+        count_fam_id = []
+        result_list = []
+        for fam in self.Familis.values():
+            count_fam_id.append(fam.fam_ID)
+            if len(count_fam_id) != len(set(count_fam_id)):
+                print(f"ERROR: US22: FAMILY:<{fam.fam_ID}> is not unique")
+                result_list.append(f"ERROR: US22: FAMILY:<{fam.fam_ID}> is not unique")
+        return result_list
+
+
+
+    def us22_unique_indi_IDs(self):
+        '''All individual IDs should be unique'''
+        count_indi_id = []
+        result_list = []
+
+        for indi_1 in self.People.values():
+            count_indi_id.append(indi_1._id)
+            if len(count_indi_id) != len(set(count_indi_id)):
+                print(f"ERROR: US22: INDIVIDUAL:<{indi_1._id}> is not unique")
+                result_list.append(f"ERROR: US22: INDIVIDUAL:<{indi_1._id}> is not unique")
+        return result_list
+
 
 
 def main():
