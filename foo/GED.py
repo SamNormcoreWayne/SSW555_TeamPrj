@@ -887,11 +887,38 @@ class Repository():
             print(f"ERROR: FAMILY:<{i}>, US24: Families with same spouses and same marriage!")
         # print(result)
         return result
+    
+    # US27
+    def us27_include_individual_ages(self):
+        '''Include person's current age when listing individuals'''
+        result_list = []
+        for person_id in self.People:
+            if person_id is None:
+                result_list.append(person_id)
+                print(f"ERROR: Individual:<{person_id}>, US27: not Include this person's current age when listing individuals!")
+        return result_list
+
+    # US29
+    def us29_list_deceased(self):
+        '''List all deceased individuals in a GEDCOM file'''
+        deceased = []
+        for person in self.People.values():
+            if person._alive is False:
+                deceased.append(person._id)
+            '''elif person._alive is None:
+                print(f"ANOMALY: INDIVIDULE:<{person._id}> doesn't have information about alive condition")'''
+        print(f"Result: Individual:<{deceased}>, US29: all deceased individuals!")
+        return deceased
+                
                     
 
 def main():
     path = input("Input path: ")
     filename = input("Input filename: ")
+    '''
+    path = r"/Users/daiyuping/Documents/GitHub/SSW555_TeamPrj/docs"
+    filename = r"what_a_mass.ged"
+    '''
     rep = Repository(filename = filename, dir_path = path)
     #docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
     #rep = Repository(filename = r"what_a_mass.ged", dir_path = os.path.join(docs_dir, 'docs'))
@@ -916,6 +943,8 @@ def main():
     rep.us16_male_last_names()
     rep.us17_No_marriages_to_children()
     rep.us18_Siblings_should_not_marry()
+    rep.us27_include_individual_ages()
+    rep.us29_list_deceased()
 
     #rep.us_19_cousins_not_marry()
     for people_id in rep.People.keys():
