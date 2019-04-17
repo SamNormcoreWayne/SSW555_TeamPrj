@@ -887,6 +887,13 @@ class Repository():
             print(f"ERROR: FAMILY:<{i}>, US24: Families with same spouses and same marriage!")
         # print(result)
         return result
+    
+    #us_32
+    def us32_list_all_multiple_births(self):
+        """Go through GEMCOM file and list out all multiple births"""
+        for fam_id, fam in self.Familis.items():
+            if len(fam.child_id) > 1:
+                print (f"US32: Multiple births found in FAMILY:<{fam_id}>, Children --> <{fam.child_id}>")
                     
 
 def main():
@@ -916,6 +923,7 @@ def main():
     rep.us16_male_last_names()
     rep.us17_No_marriages_to_children()
     rep.us18_Siblings_should_not_marry()
+    rep.us32_list_all_multiple_births()
 
     #rep.us_19_cousins_not_marry()
     for people_id in rep.People.keys():
