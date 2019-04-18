@@ -892,10 +892,12 @@ class Repository():
     def us27_include_individual_ages(self):
         '''Include person's current age when listing individuals'''
         result_list = []
-        for person_id in self.People:
-            if person_id is None:
-                result_list.append(person_id)
-                print(f"ERROR: Individual:<{person_id}>, US27: not Include this person's current age when listing individuals!")
+        for person in self.People.values():
+            if person._age is None:
+                result_list.append(person._id)
+                print(f"ERROR: Individual:<{person._id}>, US27: not Include this person's current age when listing individuals!")
+            '''else:
+                print(person._id)'''
         return result_list
 
     # US29
@@ -995,5 +997,13 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    #main()
+    path = r"/Users/daiyuping/Documents/GitHub/SSW555_TeamPrj/docs"
+    filename = r"what_a_mass.ged"
+    filename = r"Project_t27_29.ged"
+    filename = r"Project_t23_t24.ged"
+    
+    rep = Repository(filename = filename, dir_path = path)
+    a= rep.us27_include_individual_ages()
+    print(a)
     
