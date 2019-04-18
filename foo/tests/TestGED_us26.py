@@ -12,7 +12,7 @@ class Test_us26_a(unittest.TestCase):
 
     def test_us26_a(self):
         """Test us26_corresponding_entries()"""
-        self.assertEqual(a.us26_corresponding_entries(), {"['@I13@', '@I16@']"})
+        self.assertEqual(a.us26_corresponding_entries(), ['@I13@', '@I16@'])
 
 
 b = Repository(filename='Project01_Xiaomeng Xu.ged', dir_path=os.path.join(docs_dir, 'docs'))
@@ -22,7 +22,7 @@ class Test_us26_b(unittest.TestCase):
 
     def test_us26_b(self):
         """Test us26_corresponding_entries()"""
-        self.assertEqual(b.us26_corresponding_entries(), {'[]'})
+        self.assertEqual(b.us26_corresponding_entries(), [])
 
 
 if __name__ == '__main__':
