@@ -887,6 +887,26 @@ class Repository():
             print(f"ERROR: FAMILY:<{i}>, US24: Families with same spouses and same marriage!")
         # print(result)
         return result
+    
+    # us 30
+    def us30_list_living_married(self):
+        '''List all living married people in a GEDCOM file'''
+        result_list = []
+        for i in self.People.values():
+            if i._alive is True and i._spouse is not None:
+                result_list.append(i._id)
+        print(f"Result: all living married people:<{result_list}>, US30: all living married people in a GEDCOM file")
+        return result_list
+
+    # us 31
+    def us31_list_living_single(self):
+        '''List all living people over 30 who have never been married in a GEDCOM file'''
+        result_list = []
+        for i in self.People.values():
+            if i._alive is True and i._spouse is None and i._age > 30:
+                result_list.append(i._id)
+        print(f"Result: List all living people:<{result_list}>, US30: over 30 who have never been married in a GEDCOM file")
+        return result_list
                     
 
 def main():
