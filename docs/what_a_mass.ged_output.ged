@@ -280,6 +280,8 @@
 <-- 1|BIRT|Y|
 --> 2 DATE 8 JUL 2002
 <-- 2|DATE|Y|8 JUL 2002
+--> 1 FAMS @F7@
+<-- 1|FAMS|Y|@F7@
 --> 1 FAMC @F4@
 <-- 1|FAMC|Y|@F4@
 --> 0 @I14@ INDI
@@ -340,8 +342,8 @@
 <-- 1|BIRT|Y|
 --> 2 DATE 25 MAR 1781
 <-- 2|DATE|Y|25 MAR 1781
---> 1 FAMC @F7@
-<-- 1|FAMC|Y|@F7@
+--> 1 FAMC @F8@
+<-- 1|FAMC|Y|@F8@
 --> 0 @I17@ INDI
 <-- 0|INDI|Y|@I17@
 --> 1 NAME Happy /Stark/

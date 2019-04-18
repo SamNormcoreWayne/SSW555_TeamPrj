@@ -902,7 +902,7 @@ class Repository():
         if ind._spouse != 'N/A':
             fam = self.Familis[ind._spouse]
             if fam.hus_id != ind_id and fam.wife_id != ind_id:
-                print(f"ERROR: INDIVIDUAL:<{ind_id}> does not have corresponding record as spouse in FAMILY:<{fam.fam_ID}>")
+                print(f"ERROR: US26, INDIVIDUAL:<{ind_id}> does not have corresponding record as spouse in FAMILY:<{fam.fam_ID}>")
 
     
     def check_child(self, ind_id):
@@ -911,14 +911,14 @@ class Repository():
         if ind._child != 'N/A':
             fam = self.Familis[ind._child]
             if ind_id not in fam.child_id:
-                print(f"ERROR: INDIVIDUAL:<{ind_id}> does not have corresponding record as child in FAMILY:<{fam.fam_ID}>")
+                print(f"ERROR: US26, INDIVIDUAL:<{ind_id}> does not have corresponding record as child in FAMILY:<{fam.fam_ID}>")
 
 
     def us26_corresponding_entries(self):
         """Check for each individual if he/she has a corresponding records in a particular family"""
         for ind_id, ind in self.People.items():
             if ind._child == 'N/A' and ind._spouse == 'N/A':
-                print(f"ANOMALY: INDIVIDUAL:<{ind_id}> does not belong to any family")
+                print(f"ANOMALY: US26, INDIVIDUAL:<{ind_id}> does not belong to any family")
             
             else:
                 self.check_child(ind_id)
