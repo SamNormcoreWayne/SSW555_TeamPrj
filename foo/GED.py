@@ -870,7 +870,6 @@ class Repository():
         result = set()
         for fam_id, fam in self.Familis.items():
             if fam.mar_date != 'NA':
-                count = 0
                 mdt = {}
                 for i in self.Familis.values():
                     if i.mar_date != 'NA':
@@ -894,6 +893,43 @@ class Repository():
         for fam_id, fam in self.Familis.items():
             if len(fam.child_id) > 1:
                 print (f"US32: Multiple births found in FAMILY:<{fam_id}>, Children --> <{fam.child_id}>")
+    
+    #us_26
+
+    def check_spouse(self, ind_id):
+        """Check if one individual has corresponding reaord in family as spouse"""
+        ind = self.People[ind_id]
+        if ind._spouse != 'N/A':
+            fam = self.Familis[ind._spouse]
+            if fam.hus_id != ind_id and fam.wife_id != ind_id:
+                print(f"ERROR: INDIVIDUAL:<{ind_id}> does not have corresponding record as spouse in FAMILY:<{fam.fam_ID}>")
+
+    
+    def check_child(self, ind_id):
+        """Check if one individual has corresponding record in family as child"""
+        ind = self.People[ind_id]
+        if ind._child != 'N/A':
+            fam = self.Familis[ind._child]
+            if ind_id not in fam.child_id:
+                print(f"ERROR: INDIVIDUAL:<{ind_id}> does not have corresponding record as child in FAMILY:<{fam.fam_ID}>")
+
+
+    def us26_corresponding_entries(self):
+        """Check for each individual if he/she has a corresponding records in a particular family"""
+        for ind_id, ind in self.People.items():
+            if ind._child == 'N/A' and ind._spouse == 'N/A':
+                print(f"ANOMALY: INDIVIDUAL:<{ind_id}> does not belong to any family")
+            
+            else:
+                self.check_child(ind_id)
+                self.check_spouse(ind_id)
+            
+            
+
+
+
+
+
                     
 
 def main():
@@ -924,6 +960,7 @@ def main():
     rep.us17_No_marriages_to_children()
     rep.us18_Siblings_should_not_marry()
     rep.us32_list_all_multiple_births()
+    rep.us26_corresponding_entries()
 
     #rep.us_19_cousins_not_marry()
     for people_id in rep.People.keys():
