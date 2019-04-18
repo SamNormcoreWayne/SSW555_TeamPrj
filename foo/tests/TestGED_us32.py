@@ -12,7 +12,7 @@ class Test_us32_a(unittest.TestCase):
 
     def test_us32_a(self):
         """Test us32_list_all_multiple_births()"""
-        self.assertEqual(a.us32_list_all_multiple_births(), {"['@F3@', '@F4@']"})
+        self.assertEqual(a.us32_list_all_multiple_births(), ['@F3@', '@F4@'])
 
 b = Repository(filename='Project01_Xiaomeng Xu.ged', dir_path=os.path.join(docs_dir, 'docs'))
 
@@ -21,7 +21,7 @@ class Test_us32_b(unittest.TestCase):
 
     def test_us32_b(self):
         """Test us32_list_all_multiple_births()"""
-        self.assertEqual(b.us32_list_all_multiple_births(), {'[]'})
+        self.assertEqual(b.us32_list_all_multiple_births(), [])
 
 
 if __name__ == '__main__':
