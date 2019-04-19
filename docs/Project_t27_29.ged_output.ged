@@ -12,8 +12,8 @@
 <-- 1|SEX|Y|M
 --> 1 BIRT
 <-- 1|BIRT|Y|
---> 2 DATE 1 MAY 1902
-<-- 2|DATE|Y|1 MAY 1902
+--> 2 DATE 1 MAY 2902
+<-- 2|DATE|Y|1 MAY 2902
 --> 1 FAMS @F1@
 <-- 1|FAMS|Y|@F1@
 --> 1 FAMC @F2@
@@ -30,8 +30,6 @@
 <-- 2|_MARNM|N|WHITE
 --> 1 SEX M
 <-- 1|SEX|Y|M
---> 1 BIRT
-<-- 1|BIRT|Y|
 --> 1 FAMS @F2@
 <-- 1|FAMS|Y|@F2@
 --> 1 FAMC @F3@
@@ -50,8 +48,8 @@
 <-- 1|SEX|Y|F
 --> 1 BIRT
 <-- 1|BIRT|Y|
---> 2 DATE 1 APR 1965
-<-- 2|DATE|Y|1 APR 1965
+--> 2 DATE 1 APR 1865
+<-- 2|DATE|Y|1 APR 1865
 --> 1 FAMS @F2@
 <-- 1|FAMS|Y|@F2@
 --> 1 FAMC @F4@

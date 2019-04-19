@@ -1,3 +1,10 @@
+#!/usr/bin/env python
+# coding=UTF-8
+'''
+@Author: Puzhuo Li
+@Github: https://github.com/JamesLi0217
+@Date: 2019-04-18 22:00:22
+'''
 import unittest
 import datetime
 import sys
@@ -9,21 +16,13 @@ docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
 
 
 class Test_us27_include_individual_ages(unittest.TestCase):
-    """Tests conducted on file 'Project_t23_t24.ged'"""
-    a = Repository(filename='Project_t23_t24.ged',
+    """Tests conducted on file 'Project_t27_29.ged'"""
+    a = Repository(filename='Project_t27_29.ged',
                    dir_path=os.path.join(docs_dir, 'docs'))
 
     def test_us27_include_individual_ages(self):
         """Test us27_include_individual_ages()"""
-        self.assertEqual(a.us27_include_individual_ages(), {'@F4@', '@F7@'})
-
-
-    b = Repository(filename='Project01_Xiaomeng Xu.ged',
-                   dir_path=os.path.join(docs_dir, 'docs'))
-
-    def test_us27_include_individual_ages(self):
-        """Test us27_include_individual_ages()"""
-        self.assertEqual(b.us27_include_individual_ages(), set())
+        self.assertEqual(a.us27_include_individual_ages(), ['@I1@', '@I2@', '@I3@'])
 
 
 if __name__ == '__main__':

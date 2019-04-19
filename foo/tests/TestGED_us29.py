@@ -1,3 +1,10 @@
+#!/usr/bin/env python
+# coding=UTF-8
+'''
+@Author: Puzhuo Li
+@Github: https://github.com/JamesLi0217
+@Date: 2019-04-18 22:00:22
+'''
 import unittest
 import datetime
 import sys
@@ -15,18 +22,9 @@ class Test_us29_list_deceased(unittest.TestCase):
 
     def test_us29_list_deceased(self):
         """Test us29_list_deceased()"""
-        self.assertEqual(a.us29_list_deceased(), {'@F4@', '@F7@'})
-
-
-    b = Repository(filename='Project01_Xiaomeng Xu.ged',
-                   dir_path=os.path.join(docs_dir, 'docs'))
-
-    def test_us29_list_deceased(self):
-        """Test us29_list_deceased()"""
-        self.assertEqual(b.us29_list_deceased(), set())
+        self.assertEqual(a.us29_list_deceased(), ['@I8@'])
 
 
 if __name__ == '__main__':
     print('Running unit tests')
     unittest.main(exit=False, verbosity=2)
-

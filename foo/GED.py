@@ -131,7 +131,8 @@ class Repository():
                     self.People[i].add_spouse(dd[i][j].split('|')[3])
                 elif dd[i][j].startswith('1|FAMC|'):
                     self.People[i].add_child(dd[i][j].split('|')[3])
-            self.People[i].get_age()
+            if self.People[i]._bday != "":
+                self.People[i].get_age()
 
     def individual_pt(self):
         """Create prettytable for all instances of class Individual"""
@@ -893,11 +894,12 @@ class Repository():
         '''Include person's current age when listing individuals'''
         result_list = []
         for person in self.People.values():
-            if person._age is None:
+            if person._age is "":
                 result_list.append(person._id)
                 print(f"ERROR: Individual:<{person._id}>, US27: not Include this person's current age when listing individuals!")
-            '''else:
-                print(person._id)'''
+            elif person._age < 0 or person._age > 150:
+                result_list.append(person._id)
+                print(f"ANORMALY: Individual:<{person._id}>, US27: this person's current age is not proper!")
         return result_list
 
     # US29
@@ -997,13 +999,16 @@ def main():
 
 
 if __name__ == "__main__":
-    #main()
-    path = r"/Users/daiyuping/Documents/GitHub/SSW555_TeamPrj/docs"
+    main()
+    '''path = r"/Users/daiyuping/Documents/GitHub/SSW555_TeamPrj/docs"
+    path = r"D:\Github\SSW555_TeamPrj\docs"
     filename = r"what_a_mass.ged"
     filename = r"Project_t27_29.ged"
-    filename = r"Project_t23_t24.ged"
+    #filename = r"Project_t23_t24.ged"
     
     rep = Repository(filename = filename, dir_path = path)
     a= rep.us27_include_individual_ages()
+    b = rep.us29_list_deceased()
     print(a)
+    print(b)'''
     
