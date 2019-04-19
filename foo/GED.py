@@ -887,7 +887,19 @@ class Repository():
             print(f"ERROR: FAMILY:<{i}>, US24: Families with same spouses and same marriage!")
         # print(result)
         return result
-                    
+
+    # US25
+    def us25_unique_first_name(self):
+        child_name_dict = defaultdict(str)
+        for fam in self.Familis.values():
+            if fam.child_id != ['NA']:
+                for child in fam.child_id:
+                    if child_name_dict[self.People[child]._name] != "" and self.People[child]._bday == self.People[child_name_dict[self.People[child]._name]]._bday:
+                        print("ERROE: FAMILY: {fam_id}, US25: child {child_id_1} and child {child_id_2} have same name and birthday".format(fam_id=fam.fam_ID,child_id_1=self.People[child]._id, child_id_2=child_name_dict[self.People[child]._name]))
+                        return False
+                    child_name_dict[self.People[child]._name] = self.People[child]._id
+                print("SUCCESS: US25: FAMILY: {fam_id}, US25: No Duplicated Children.")
+        return True
 
 def main():
     path = input("Input path: ")
@@ -963,6 +975,7 @@ def main():
         print(te)
     except ValueError as e:
         print(e)
+    rep.us25_unique_first_name()
 
 
 if __name__ == "__main__":
