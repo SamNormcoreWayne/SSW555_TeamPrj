@@ -14,11 +14,11 @@ from GED import Repository
 
 docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
 
-
+a = Repository(filename='Project_t27_29.ged',
+                   dir_path=os.path.join(docs_dir, 'docs'))
 class Test_us29_list_deceased(unittest.TestCase):
     """Tests conducted on file 'Project_t23_t24.ged'"""
-    a = Repository(filename='Project_t23_t24.ged',
-                   dir_path=os.path.join(docs_dir, 'docs'))
+    
 
     def test_us29_list_deceased(self):
         """Test us29_list_deceased()"""

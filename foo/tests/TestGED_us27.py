@@ -14,11 +14,11 @@ from GED import Repository
 
 docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
 
-
+a = Repository(filename='Project_t27_29.ged',
+                   dir_path=os.path.join(docs_dir, 'docs'))
 class Test_us27_include_individual_ages(unittest.TestCase):
     """Tests conducted on file 'Project_t27_29.ged'"""
-    a = Repository(filename='Project_t27_29.ged',
-                   dir_path=os.path.join(docs_dir, 'docs'))
+    
 
     def test_us27_include_individual_ages(self):
         """Test us27_include_individual_ages()"""
