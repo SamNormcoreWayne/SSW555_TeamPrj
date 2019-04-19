@@ -996,7 +996,6 @@ def main():
     except ValueError as e:
         print(e)'''
     rep.us28_order_by_age()
-    rep.us25_unique_first_name()
 
 
 if __name__ == "__main__":
