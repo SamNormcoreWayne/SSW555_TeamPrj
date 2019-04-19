@@ -908,6 +908,7 @@ class Repository():
                 result_list.append(i._id)
         print(f"Result: List all living people:<{result_list}>, US31: over 30 who have never been married in a GEDCOM file")
         return result_list
+
     #us_32
     def us32_list_all_multiple_births(self):
         """Go through GEMCOM file and list out all multiple births"""
@@ -1050,7 +1051,7 @@ def main():
     #filename = r"Project_t03.ged"
     rep.individual_pt()
     rep.output_family()
-    '''for s in rep.us_01_birth_b4_now():
+    for s in rep.us_01_birth_b4_now():
         if isinstance(s, str):
             print(s)
     rep.us02_birth_b4_marriage()
@@ -1071,6 +1072,9 @@ def main():
     rep.us26_corresponding_entries()
     rep.us27_include_individual_ages()
     rep.us29_list_deceased()
+    rep.us30_list_living_married()
+    rep.us31_list_living_single()
+    rep.us25_unique_first_name()
 
     #rep.us_19_cousins_not_marry()
     for people_id in rep.People.keys():
@@ -1117,21 +1121,10 @@ def main():
     except TypeError as te:
         print(te)
     except ValueError as e:
-        print(e)'''
+        print(e)
     rep.us28_order_by_age()
 
 
 if __name__ == "__main__":
     main()
-    '''path = r"/Users/daiyuping/Documents/GitHub/SSW555_TeamPrj/docs"
-    path = r"D:\Github\SSW555_TeamPrj\docs"
-    filename = r"what_a_mass.ged"
-    filename = r"Project_t27_29.ged"
-    #filename = r"Project_t23_t24.ged"
-    
-    rep = Repository(filename = filename, dir_path = path)
-    a= rep.us27_include_individual_ages()
-    b = rep.us29_list_deceased()
-    print(a)
-    print(b)'''
     
