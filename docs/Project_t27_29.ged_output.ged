@@ -1,0 +1,250 @@
+--> 0 @I1@ INDI
+<-- 0|INDI|Y|@I1@
+--> 1 NAME BOB /WHITE/
+<-- 1|NAME|Y|BOB /WHITE/
+--> 2 GIVN BOB
+<-- 2|GIVN|N|BOB
+--> 2 SURN WHITE
+<-- 2|SURN|N|WHITE
+--> 2 _MARNM WHITE
+<-- 2|_MARNM|N|WHITE
+--> 1 SEX M
+<-- 1|SEX|Y|M
+--> 1 BIRT
+<-- 1|BIRT|Y|
+--> 2 DATE 1 MAY 2902
+<-- 2|DATE|Y|1 MAY 2902
+--> 1 FAMS @F1@
+<-- 1|FAMS|Y|@F1@
+--> 1 FAMC @F2@
+<-- 1|FAMC|Y|@F2@
+--> 0 @I2@ INDI
+<-- 0|INDI|Y|@I2@
+--> 1 NAME TOM /WHITE/
+<-- 1|NAME|Y|TOM /WHITE/
+--> 2 GIVN TOM
+<-- 2|GIVN|N|TOM
+--> 2 SURN WHITE
+<-- 2|SURN|N|WHITE
+--> 2 _MARNM WHITE
+<-- 2|_MARNM|N|WHITE
+--> 1 SEX M
+<-- 1|SEX|Y|M
+--> 1 FAMS @F2@
+<-- 1|FAMS|Y|@F2@
+--> 1 FAMC @F3@
+<-- 1|FAMC|Y|@F3@
+--> 0 @I3@ INDI
+<-- 0|INDI|Y|@I3@
+--> 1 NAME JANE /BROWN/
+<-- 1|NAME|Y|JANE /BROWN/
+--> 2 GIVN JANE
+<-- 2|GIVN|N|JANE
+--> 2 SURN BROWN
+<-- 2|SURN|N|BROWN
+--> 2 _MARNM WHITE
+<-- 2|_MARNM|N|WHITE
+--> 1 SEX F
+<-- 1|SEX|Y|F
+--> 1 BIRT
+<-- 1|BIRT|Y|
+--> 2 DATE 1 APR 1865
+<-- 2|DATE|Y|1 APR 1865
+--> 1 FAMS @F2@
+<-- 1|FAMS|Y|@F2@
+--> 1 FAMC @F4@
+<-- 1|FAMC|Y|@F4@
+--> 0 @I4@ INDI
+<-- 0|INDI|Y|@I4@
+--> 1 NAME GORCE /WILSON/
+<-- 1|NAME|Y|GORCE /WILSON/
+--> 2 GIVN GORCE
+<-- 2|GIVN|N|GORCE
+--> 2 SURN WILSON
+<-- 2|SURN|N|WILSON
+--> 2 _MARNM WHITE
+<-- 2|_MARNM|N|WHITE
+--> 1 SEX F
+<-- 1|SEX|Y|F
+--> 1 BIRT
+<-- 1|BIRT|Y|
+--> 2 DATE 17 FEB 1993
+<-- 2|DATE|Y|17 FEB 1993
+--> 1 FAMS @F1@
+<-- 1|FAMS|Y|@F1@
+--> 0 @I5@ INDI
+<-- 0|INDI|Y|@I5@
+--> 1 NAME MIKE /BROWN/
+<-- 1|NAME|Y|MIKE /BROWN/
+--> 2 GIVN MIKE
+<-- 2|GIVN|N|MIKE
+--> 2 SURN BROWN
+<-- 2|SURN|N|BROWN
+--> 2 _MARNM BROWN
+<-- 2|_MARNM|N|BROWN
+--> 1 SEX M
+<-- 1|SEX|Y|M
+--> 1 BIRT
+<-- 1|BIRT|Y|
+--> 2 DATE 6 FEB 1945
+<-- 2|DATE|Y|6 FEB 1945
+--> 1 FAMS @F4@
+<-- 1|FAMS|Y|@F4@
+--> 0 @I6@ INDI
+<-- 0|INDI|Y|@I6@
+--> 1 NAME JOE /WLLIAMS/
+<-- 1|NAME|Y|JOE /WLLIAMS/
+--> 2 GIVN JOE
+<-- 2|GIVN|N|JOE
+--> 2 SURN WLLIAMS
+<-- 2|SURN|N|WLLIAMS
+--> 2 _MARNM BROWN
+<-- 2|_MARNM|N|BROWN
+--> 1 SEX F
+<-- 1|SEX|Y|F
+--> 1 BIRT
+<-- 1|BIRT|Y|
+--> 2 DATE 5 MAR 1945
+<-- 2|DATE|Y|5 MAR 1945
+--> 1 FAMS @F4@
+<-- 1|FAMS|Y|@F4@
+--> 0 @I7@ INDI
+<-- 0|INDI|Y|@I7@
+--> 1 NAME ARON /WHITE/
+<-- 1|NAME|Y|ARON /WHITE/
+--> 2 GIVN ARON
+<-- 2|GIVN|N|ARON
+--> 2 SURN WHITE
+<-- 2|SURN|N|WHITE
+--> 2 _MARNM WHITE
+<-- 2|_MARNM|N|WHITE
+--> 1 SEX M
+<-- 1|SEX|Y|M
+--> 1 BIRT
+<-- 1|BIRT|Y|
+--> 2 DATE 3 OCT 1944
+<-- 2|DATE|Y|3 OCT 1944
+--> 1 FAMS @F3@
+<-- 1|FAMS|Y|@F3@
+--> 1 FAMS @F5@
+<-- 1|FAMS|Y|@F5@
+--> 0 @I8@ INDI
+<-- 0|INDI|Y|@I8@
+--> 1 NAME MARY /MILLER/
+<-- 1|NAME|Y|MARY /MILLER/
+--> 2 GIVN MARY
+<-- 2|GIVN|N|MARY
+--> 2 SURN MILLER
+<-- 2|SURN|N|MILLER
+--> 2 _MARNM WHITE
+<-- 2|_MARNM|N|WHITE
+--> 1 SEX F
+<-- 1|SEX|Y|F
+--> 1 BIRT
+<-- 1|BIRT|Y|
+--> 2 DATE 14 MAR 1944
+<-- 2|DATE|Y|14 MAR 1944
+--> 1 DEAT Y
+<-- 1|DEAT|Y|Y
+--> 2 DATE 4 SEP 1970
+<-- 2|DATE|Y|4 SEP 1970
+--> 1 FAMS @F3@
+<-- 1|FAMS|Y|@F3@
+--> 0 @I9@ INDI
+<-- 0|INDI|Y|@I9@
+--> 1 NAME SUSAN /SMITH/
+<-- 1|NAME|Y|SUSAN /SMITH/
+--> 2 GIVN SUSAN
+<-- 2|GIVN|N|SUSAN
+--> 2 SURN SMITH
+<-- 2|SURN|N|SMITH
+--> 2 _MARNM WHITE
+<-- 2|_MARNM|N|WHITE
+--> 1 SEX F
+<-- 1|SEX|Y|F
+--> 1 BIRT
+<-- 1|BIRT|Y|
+--> 2 DATE 4 AUG 1950
+<-- 2|DATE|Y|4 AUG 1950
+--> 1 FAMS @F5@
+<-- 1|FAMS|Y|@F5@
+--> 0 @I10@ INDI
+<-- 0|INDI|Y|@I10@
+--> 1 NAME JACK /WHITE/
+<-- 1|NAME|Y|JACK /WHITE/
+--> 2 GIVN JACK
+<-- 2|GIVN|N|JACK
+--> 2 SURN WHITE
+<-- 2|SURN|N|WHITE
+--> 2 _MARNM WHITE
+<-- 2|_MARNM|N|WHITE
+--> 1 SEX M
+<-- 1|SEX|Y|M
+--> 1 BIRT
+<-- 1|BIRT|Y|
+--> 2 DATE 1 APR 1978
+<-- 2|DATE|Y|1 APR 1978
+--> 1 FAMC @F5@
+<-- 1|FAMC|Y|@F5@
+--> 0 @F1@ FAM
+<-- 0|FAM|Y|@F1@
+--> 1 HUSB @I1@
+<-- 1|HUSB|Y|@I1@
+--> 1 WIFE @I4@
+<-- 1|WIFE|Y|@I4@
+--> 1 _CURRENT Y
+<-- 1|_CURRENT|N|Y
+--> 0 @F2@ FAM
+<-- 0|FAM|Y|@F2@
+--> 1 HUSB @I2@
+<-- 1|HUSB|Y|@I2@
+--> 1 WIFE @I3@
+<-- 1|WIFE|Y|@I3@
+--> 1 CHIL @I1@
+<-- 1|CHIL|Y|@I1@
+--> 1 _CURRENT Y
+<-- 1|_CURRENT|N|Y
+--> 0 @F3@ FAM
+<-- 0|FAM|Y|@F3@
+--> 1 HUSB @I7@
+<-- 1|HUSB|Y|@I7@
+--> 1 WIFE @I8@
+<-- 1|WIFE|Y|@I8@
+--> 1 CHIL @I2@
+<-- 1|CHIL|Y|@I2@
+--> 1 MARR
+<-- 1|MARR|Y|
+--> 2 DATE 1 JAN 1963
+<-- 2|DATE|Y|1 JAN 1963
+--> 1 ANUL
+<-- 1|ANUL|N|
+--> 2 DATE 4 SEP 1970
+<-- 2|DATE|Y|4 SEP 1970
+--> 1 _CURRENT N
+<-- 1|_CURRENT|N|N
+--> 0 @F5@ FAM
+<-- 0|FAM|Y|@F5@
+--> 1 HUSB @I7@
+<-- 1|HUSB|Y|@I7@
+--> 1 WIFE @I9@
+<-- 1|WIFE|Y|@I9@
+--> 1 CHIL @I10@
+<-- 1|CHIL|Y|@I10@
+--> 1 MARR
+<-- 1|MARR|Y|
+--> 2 DATE 1 NOV 1972
+<-- 2|DATE|Y|1 NOV 1972
+--> 1 _CURRENT Y
+<-- 1|_CURRENT|N|Y
+--> 0 @F4@ FAM
+<-- 0|FAM|Y|@F4@
+--> 1 HUSB @I5@
+<-- 1|HUSB|Y|@I5@
+--> 1 WIFE @I6@
+<-- 1|WIFE|Y|@I6@
+--> 1 CHIL @I3@
+<-- 1|CHIL|Y|@I3@
+--> 1 _CURRENT Y
+<-- 1|_CURRENT|N|Y
+--> 0 TRLR
+<-- 0|TRLR|Y|
