@@ -903,9 +903,9 @@ class Repository():
         '''List all living people over 30 who have never been married in a GEDCOM file'''
         result_list = []
         for i in self.People.values():
-            if i._alive is True and i._spouse is None and i._age > 30:
+            if i._alive is True and i._spouse =="N/A" and i._age > 30:
                 result_list.append(i._id)
-        print(f"Result: List all living people:<{result_list}>, US30: over 30 who have never been married in a GEDCOM file")
+        print(f"Result: List all living people:<{result_list}>, US31: over 30 who have never been married in a GEDCOM file")
         return result_list
                     
 
