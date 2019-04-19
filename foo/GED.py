@@ -16,6 +16,7 @@
 
 import os
 import datetime
+import operator
 from prettytable import PrettyTable
 from CheckGED import get_fam, get_indi
 from collections import defaultdict
@@ -887,19 +888,50 @@ class Repository():
             print(f"ERROR: FAMILY:<{i}>, US24: Families with same spouses and same marriage!")
         # print(result)
         return result
-                    
+
+    # US28
+    def sortFuc(self, people_ID):
+        return self.People[people_ID]._age
+
+    def us28_order_by_age(self):
+        """
+            Sort the coloumn of Child in Family by children age
+
+            @param {self}
+            @return {PrettyTable}
+        """
+        for family in self.Familis.values():
+            if family.child_id != ['NA']:
+                family.child_id.sort(reverse=True,key=self.sortFuc)
+        field_name = ['ID', 'Married', 'Divorced', 'Husband ID',
+                      'Husband Name', 'Wife ID', 'Wife Name', 'Children']
+        table = PrettyTable(field_names=field_name)
+        hus_name = 'NA'
+        wife_name = 'NA'
+        for family in self.Familis.values():
+            if family.hus_id != 'NA':
+                hus_name = self.get_people_name(family.hus_id)
+            if family.wife_id != 'NA':
+                wife_name = self.get_people_name(family.wife_id)
+            table.add_row([family.fam_ID, family.mar_date, family.div_date,
+                           family.hus_id, hus_name, family.wife_id, wife_name, family.child_id])
+
+        print('us28: ')
+        print(table.get_string(sortby='ID'))
+        return True
+
 
 def main():
-    path = input("Input path: ")
-    filename = input("Input filename: ")
-    rep = Repository(filename = filename, dir_path = path)
-    #docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
-    #rep = Repository(filename = r"what_a_mass.ged", dir_path = os.path.join(docs_dir, 'docs'))
+    #path = input("Input path: ")
+    #filename = input("Input filename: ")
+    #rep = Repository(filename = filename, dir_path = path)
+    docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
+    rep = Repository(filename = r"what_a_mass.ged", dir_path = os.path.join(docs_dir, 'docs'))
 
     #filename = r"Project_t03.ged"
     rep.individual_pt()
     rep.output_family()
-    for s in rep.us_01_birth_b4_now():
+    '''for s in rep.us_01_birth_b4_now():
         if isinstance(s, str):
             print(s)
     rep.us02_birth_b4_marriage()
@@ -962,7 +994,9 @@ def main():
     except TypeError as te:
         print(te)
     except ValueError as e:
-        print(e)
+        print(e)'''
+    rep.us28_order_by_age()
+    rep.us25_unique_first_name()
 
 
 if __name__ == "__main__":
