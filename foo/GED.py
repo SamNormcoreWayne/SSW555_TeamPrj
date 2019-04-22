@@ -109,6 +109,8 @@ class Repository():
         """Read through file, combine information for each person and create a istance of Individual"""
         dd = get_indi(self.working_path, self.filename)
         for i in dd.keys():
+            if i in self.People.keys():
+                print(f"ERROR: US22: INDIVIDUAL:<{i}> is not unique")
             self.People[i] = Individual(i)
 
     def read_detail(self):
@@ -719,7 +721,7 @@ class Repository():
             if len(count_fam_id) != len(set(count_fam_id)):
                 print(f"ERROR: US22: FAMILY:<{fam.fam_ID}> is not unique")
                 result_list.append(f"ERROR: US22: FAMILY:<{fam.fam_ID}> is not unique")
-        print("US22: A modified or a without-duplication table is here: ")
+        print("US22: A modified or a without-duplication family table is here: ")
         self.output_family()
         return result_list
 
@@ -735,6 +737,8 @@ class Repository():
             if len(count_indi_id) != len(set(count_indi_id)):
                 print(f"ERROR: US22: INDIVIDUAL:<{indi_1._id}> is not unique")
                 result_list.append(f"ERROR: US22: INDIVIDUAL:<{indi_1._id}> is not unique")
+        print("US22: A modified or a without-duplication individual table is here: ")
+        self.individual_pt()
         return result_list
 
 
