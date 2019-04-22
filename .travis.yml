@@ -1,0 +1,36 @@
+dist: xenial
+language: python
+python:
+  - 3.7
+sudo: true
+install:
+  - pip install PrettyTable
+script:
+  - cd foo
+ 
+  - python -m unittest tests.TestGED_us01
+  - python -m unittest tests.TestGED_us02
+  - python -m unittest tests.TestGED_us03
+  - python -m unittest tests.TestGED_us04
+  - python -m unittest tests.TestGED_us05
+  - python -m unittest tests.TestGED_us06
+  - python -m unittest tests.TestGED_us07
+  - python -m unittest tests.TestGED_us08
+  - python -m unittest tests.TestGED_us09
+  - python -m unittest tests.TestGED_us10
+  - python -m unittest tests.TestGED_us11
+  - python -m unittest tests.TestGED_us12
+  - python -m unittest tests.TestGED_us13
+  - python -m unittest tests.TestGED_us14
+  - python -m unittest tests.TestGED_us15
+  - python -m unittest tests.TestGED_us16
+  - python -m unittest tests.TestGED_us17
+  - python -m unittest tests.TestGED_us18
+  - python -m unittest tests.TestGED_us19
+  - python -m unittest tests.TestGED_us20
+  - python -m unittest tests.TestGED_us21
+  - python -m unittest tests.TestGED_us22
+  - python -m unittest tests.TestGED_us23
+  - python -m unittest tests.TestGED_us24
+  - python -m unittest test_report
+
