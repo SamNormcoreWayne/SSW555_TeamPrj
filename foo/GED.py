@@ -16,6 +16,7 @@
 
 import os
 import datetime
+import operator
 from prettytable import PrettyTable
 from CheckGED import get_fam, get_indi
 from collections import defaultdict
@@ -109,6 +110,8 @@ class Repository():
         """Read through file, combine information for each person and create a istance of Individual"""
         dd = get_indi(self.working_path, self.filename)
         for i in dd.keys():
+            if i in self.People.keys():
+                print(f"ERROR: US22: INDIVIDUAL:<{i}> is not unique")
             self.People[i] = Individual(i)
 
     def read_detail(self):
@@ -131,7 +134,8 @@ class Repository():
                     self.People[i].add_spouse(dd[i][j].split('|')[3])
                 elif dd[i][j].startswith('1|FAMC|'):
                     self.People[i].add_child(dd[i][j].split('|')[3])
-            self.People[i].get_age()
+            if self.People[i]._bday != "":
+                self.People[i].get_age()
 
     def individual_pt(self):
         """Create prettytable for all instances of class Individual"""
@@ -152,6 +156,8 @@ class Repository():
             # print(fam_dic)
             new_family = Family(fam_dic['fam_ID'], fam_dic['mar_date'], fam_dic['div_date'],
                                 fam_dic['hus'], fam_dic['wife'], fam_dic['children'])
+            if fam_dic['fam_ID'] in self.Familis.keys():
+                print(f"ERROR: US22: FAMILY:<{fam_dic['fam_ID']}> is not unique")
             self.Familis[fam_dic['fam_ID']] = new_family
 
     def getPeople(self, ID):
@@ -717,6 +723,8 @@ class Repository():
             if len(count_fam_id) != len(set(count_fam_id)):
                 print(f"ERROR: US22: FAMILY:<{fam.fam_ID}> is not unique")
                 result_list.append(f"ERROR: US22: FAMILY:<{fam.fam_ID}> is not unique")
+        print("US22: A modified or a without-duplication family table is here: ")
+        self.output_family()
         return result_list
 
 
@@ -731,6 +739,8 @@ class Repository():
             if len(count_indi_id) != len(set(count_indi_id)):
                 print(f"ERROR: US22: INDIVIDUAL:<{indi_1._id}> is not unique")
                 result_list.append(f"ERROR: US22: INDIVIDUAL:<{indi_1._id}> is not unique")
+        print("US22: A modified or a without-duplication individual table is here: ")
+        self.individual_pt()
         return result_list
 
 
@@ -870,7 +880,6 @@ class Repository():
         result = set()
         for fam_id, fam in self.Familis.items():
             if fam.mar_date != 'NA':
-                count = 0
                 mdt = {}
                 for i in self.Familis.values():
                     if i.mar_date != 'NA':
@@ -887,11 +896,162 @@ class Repository():
             print(f"ERROR: FAMILY:<{i}>, US24: Families with same spouses and same marriage!")
         # print(result)
         return result
+    
+    # us 30
+    def us30_list_living_married(self):
+        '''List all living married people in a GEDCOM file'''
+        result_list = []
+        for i in self.People.values():
+            if i._alive is True and i._spouse is not None:
+                result_list.append(i._id)
+        print(f"Result: all living married people:<{result_list}>, US30: all living married people in a GEDCOM file")
+        return result_list
+
+    # us 31
+    def us31_list_living_single(self):
+        '''List all living people over 30 who have never been married in a GEDCOM file'''
+        result_list = []
+        for i in self.People.values():
+            if i._alive is True and i._spouse =="N/A" and i._age > 30:
+                result_list.append(i._id)
+        print(f"Result: List all living people:<{result_list}>, US31: over 30 who have never been married in a GEDCOM file")
+        return result_list
+
+    #us_32
+    def us32_list_all_multiple_births(self):
+        """Go through GEMCOM file and list out all multiple births"""
+        result = []
+        for fam_id, fam in self.Familis.items():
+            if len(fam.child_id) > 1:
+                print (f"US32: Multiple births found in FAMILY:<{fam_id}>, Children --> <{fam.child_id}>")
+                result.append(fam_id)
+        
+        return result
+
+    
+    #us_26
+
+    def check_spouse(self, ind_id):
+        """Check if one individual has corresponding reaord in family as spouse"""
+        ind = self.People[ind_id]
+        if ind._spouse != 'N/A':
+            fam = self.Familis[ind._spouse]
+            if fam.hus_id != ind_id and fam.wife_id != ind_id:
+                print(f"ERROR: US26, INDIVIDUAL:<{ind_id}> does not have corresponding record as spouse in FAMILY:<{fam.fam_ID}>")
+                return ind_id
+
+
+    
+    def check_child(self, ind_id):
+        """Check if one individual has corresponding record in family as child"""
+        ind = self.People[ind_id]
+        if ind._child != 'N/A':
+            fam = self.Familis[ind._child]
+            if ind_id not in fam.child_id:
+                print(f"ERROR: US26, INDIVIDUAL:<{ind_id}> does not have corresponding record as child in FAMILY:<{fam.fam_ID}>")
+                return ind_id
+
+
+
+
+    def us26_corresponding_entries(self):
+        """Check for each individual if he/she has a corresponding records in a particular family"""
+        result = []
+        for ind_id, ind in self.People.items():
+            if ind._child == 'N/A' and ind._spouse == 'N/A':
+                print(f"ANOMALY: US26, INDIVIDUAL:<{ind_id}> does not belong to any family")    #Output if individual is not associated with any family
+            
+            else:
+                result.append(self.check_child(ind_id))
+                result.append(self.check_spouse(ind_id))
+
+        return [i for i in result if i != None] #For testing purposes
+            
+            
+
+
+
+
+
+    # US27
+    def us27_include_individual_ages(self):
+        '''Include person's current age when listing individuals'''
+        result_list = []
+        for person in self.People.values():
+            if person._age is "":
+                result_list.append(person._id)
+                print(f"ERROR: Individual:<{person._id}>, US27: not Include this person's current age when listing individuals!")
+            elif person._age < 0 or person._age > 150:
+                result_list.append(person._id)
+                print(f"ANORMALY: Individual:<{person._id}>, US27: this person's current age is not proper!")
+        return result_list
+
+    # US29
+    def us29_list_deceased(self):
+        '''List all deceased individuals in a GEDCOM file'''
+        deceased = []
+        for person in self.People.values():
+            if person._alive is False:
+                deceased.append(person._id)
+            '''elif person._alive is None:
+                print(f"ANOMALY: INDIVIDULE:<{person._id}> doesn't have information about alive condition")'''
+        print(f"Result: Individual:<{deceased}>, US29: all deceased individuals!")
+        return deceased
+                
                     
+
+    # US28
+    def sortFuc(self, people_ID):
+        return self.People[people_ID]._age
+
+    def us28_order_by_age(self):
+        """
+            Sort the coloumn of Child in Family by children age
+
+            @param {self}
+            @return {PrettyTable}
+        """
+        for family in self.Familis.values():
+            if family.child_id != ['NA']:
+                family.child_id.sort(reverse=True,key=self.sortFuc)
+        field_name = ['ID', 'Married', 'Divorced', 'Husband ID',
+                      'Husband Name', 'Wife ID', 'Wife Name', 'Children']
+        table = PrettyTable(field_names=field_name)
+        hus_name = 'NA'
+        wife_name = 'NA'
+        for family in self.Familis.values():
+            if family.hus_id != 'NA':
+                hus_name = self.get_people_name(family.hus_id)
+            if family.wife_id != 'NA':
+                wife_name = self.get_people_name(family.wife_id)
+            table.add_row([family.fam_ID, family.mar_date, family.div_date,
+                           family.hus_id, hus_name, family.wife_id, wife_name, family.child_id])
+
+        print('us28: ')
+        print(table.get_string(sortby='ID'))
+        return True
+
+
+    # US25
+    def us25_unique_first_name(self):
+        child_name_dict = defaultdict(str)
+        for fam in self.Familis.values():
+            if fam.child_id != ['NA']:
+                for child in fam.child_id:
+                    if child_name_dict[self.People[child]._name] != "" and self.People[child]._bday == self.People[child_name_dict[self.People[child]._name]]._bday:
+                        print("ERROE: FAMILY: {fam_id}, US25: child {child_id_1} and child {child_id_2} have same name and birthday".format(fam_id=fam.fam_ID,child_id_1=self.People[child]._id, child_id_2=child_name_dict[self.People[child]._name]))
+                        return False
+                    child_name_dict[self.People[child]._name] = self.People[child]._id
+                print("SUCCESS: US25: FAMILY: {fam_id}, US25: No Duplicated Children.")
+        return True
 
 def main():
     path = input("Input path: ")
     filename = input("Input filename: ")
+    '''
+    path = r"/Users/daiyuping/Documents/GitHub/SSW555_TeamPrj/docs"
+    filename = r"what_a_mass.ged"
+    '''
     rep = Repository(filename = filename, dir_path = path)
     #docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
     #rep = Repository(filename = r"what_a_mass.ged", dir_path = os.path.join(docs_dir, 'docs'))
@@ -916,6 +1076,13 @@ def main():
     rep.us16_male_last_names()
     rep.us17_No_marriages_to_children()
     rep.us18_Siblings_should_not_marry()
+    rep.us32_list_all_multiple_births()
+    rep.us26_corresponding_entries()
+    rep.us27_include_individual_ages()
+    rep.us29_list_deceased()
+    rep.us30_list_living_married()
+    rep.us31_list_living_single()
+    rep.us25_unique_first_name()
 
     #rep.us_19_cousins_not_marry()
     for people_id in rep.People.keys():
@@ -963,6 +1130,7 @@ def main():
         print(te)
     except ValueError as e:
         print(e)
+    rep.us28_order_by_age()
 
 
 if __name__ == "__main__":
