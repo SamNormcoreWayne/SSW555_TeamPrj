@@ -32,6 +32,14 @@ script:
   - python -m unittest tests.TestGED_us22
   - python -m unittest tests.TestGED_us23
   - python -m unittest tests.TestGED_us24
+  - python -m unittest tests.TestGED_us25
+  - python -m unittest tests.TestGED_us26
+  - python -m unittest tests.TestGED_us27
+  - python -m unittest tests.TestGED_us28
+  - python -m unittest tests.TestGED_us29
+  - python -m unittest tests.TestGED_us30
+  - python -m unittest tests.TestGED_us31
+  - python -m unittest tests.TestGED_us32
 
   - python -m unittest test_report
 
