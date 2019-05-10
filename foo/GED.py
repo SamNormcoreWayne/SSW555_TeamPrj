@@ -17,6 +17,7 @@
 import os
 import datetime
 import operator
+import random
 from prettytable import PrettyTable
 from CheckGED import get_fam, get_indi
 from collections import defaultdict
@@ -87,13 +88,14 @@ class Individual:
 
 
 class Family():
-    def __init__(self, fam_ID, married, divorced, hus, wife, child_id):
+    def __init__(self, fam_ID, married, divorced, hus, wife, child_id, income=0):
         self.fam_ID = fam_ID
         self.mar_date = married
         self.div_date = divorced
         self.hus_id = hus
         self.wife_id = wife
         self.child_id = child_id
+        self.income = income
 
 
 class Repository():
@@ -155,7 +157,7 @@ class Repository():
         for fam_dic in fam_lst:
             # print(fam_dic)
             new_family = Family(fam_dic['fam_ID'], fam_dic['mar_date'], fam_dic['div_date'],
-                                fam_dic['hus'], fam_dic['wife'], fam_dic['children'])
+                                fam_dic['hus'], fam_dic['wife'], fam_dic['children'], random.randint(20000, 50000))
             if fam_dic['fam_ID'] in self.Familis.keys():
                 print(f"ERROR: US22: FAMILY:<{fam_dic['fam_ID']}> is not unique")
             self.Familis[fam_dic['fam_ID']] = new_family
@@ -180,7 +182,7 @@ class Repository():
 
     def output_family(self):
         field_name = ['ID', 'Married', 'Divorced', 'Husband ID',
-                      'Husband Name', 'Wife ID', 'Wife Name', 'Children']
+                      'Husband Name', 'Wife ID', 'Wife Name', 'Children', 'House-hole Income']
         table = PrettyTable(field_names=field_name)
         hus_name = 'NA'
         wife_name = 'NA'
@@ -190,7 +192,7 @@ class Repository():
             if family.wife_id != 'NA':
                 wife_name = self.get_people_name(family.wife_id)
             table.add_row([family.fam_ID, family.mar_date, family.div_date,
-                           family.hus_id, hus_name, family.wife_id, wife_name, family.child_id])
+                           family.hus_id, hus_name, family.wife_id, wife_name, family.child_id, family.income])
 
         print('Families')
         print(table.get_string(sortby='ID'))
@@ -1046,15 +1048,15 @@ class Repository():
         return True
 
 def main():
+    '''
     path = input("Input path: ")
     filename = input("Input filename: ")
-    '''
     path = r"/Users/daiyuping/Documents/GitHub/SSW555_TeamPrj/docs"
     filename = r"what_a_mass.ged"
     '''
-    rep = Repository(filename = filename, dir_path = path)
-    #docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
-    #rep = Repository(filename = r"what_a_mass.ged", dir_path = os.path.join(docs_dir, 'docs'))
+    #rep = Repository(filename = filename, dir_path = path)
+    docs_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
+    rep = Repository(filename = r"what_a_mass.ged", dir_path = os.path.join(docs_dir, 'docs'))
 
     #filename = r"Project_t03.ged"
     rep.individual_pt()
