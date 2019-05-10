@@ -1,5 +1,5 @@
 # Big secret government project
-This is a project for Homeland security pruposes.
+This is a project for Homeland security purposes.
 
 This project deals with a lot of sentive personal information.
 
